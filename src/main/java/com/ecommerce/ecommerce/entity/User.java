@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="users",uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
@@ -22,25 +24,33 @@ public class User implements UserDetails {
         @SequenceGenerator(name = "users_seq_generator",sequenceName ="users_id_seq",allocationSize  =1)
         @GeneratedValue(generator = "users_seq_generator",strategy=GenerationType.SEQUENCE)
         private Integer userId;
-        @Column(name="user_name", length=50, nullable=false)
-        private String userName;
+        @Column(name="fname",length=50,nullable=false)
+        private String fname;
+        @Column(name="lname",length=50,nullable=false)
+        private String lname;
         @Column(name="email",length=50,nullable=false)
         private String email;
         @Column(name="password",length=500,nullable=false)
         private String password;
-        @Column(name="user_role",length=50,nullable=false)
-        private String userRole;
+        @Column(name="role",length=50,nullable=false)
+        private String role;
 
+        @Column(name="status",length=50,nullable=false)
+        private String status;
+
+        @Column(name="citizenship_number",length=50)
+        private String citizenshipNumber;
+
+        @Column(name="pan_number",length=50)
+        private String panNumber;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
-
-
     @Override
     public String getUsername() {
-        return this.userName;
+        return (this.fname+" "+this.lname);
     }
 
     public String getUserEmail() {

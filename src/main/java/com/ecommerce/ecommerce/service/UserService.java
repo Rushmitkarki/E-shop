@@ -12,5 +12,12 @@ public interface UserService {
     Optional<User> getById(Integer id);
     User getByIdNoOpt(Integer id);
 
+    Optional<User> getByEmail(String email);
     void deleteById(Integer id);
+
+    void setSession(User user);
+
+    void verifyUser(String email,String citizenshipNumber);
+
+    void verifySeller(String email,String panNumber);
 }

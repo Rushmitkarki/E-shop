@@ -12,8 +12,15 @@ public class UserDto {
     @NotBlank(message = "User Name is mandatory")
     @NotNull(message = "User Name is mandatory")
 
-    private String userName;
+    private String fname;
+    private String lname;
     private String email;
     private String password;
-    private String userRole;
+
+    private String role;
+    private String status;
+    private String citizenshipNumber;
+
+    private String panNumber;
+
 }
