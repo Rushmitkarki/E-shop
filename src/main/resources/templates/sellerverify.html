@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/CSS/project.css}">
     <style>
         .container {
-            background-color: #f8f9fa; /* Replace with your desired background color */
+            background-color: #ffc128; /* Replace with your desired background color */
             padding: 20px;
         }
     </style>
@@ -27,7 +27,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <div class="form-group">
-                <input type="hidden" th:field="*{email}" th:value="${email}">
+                <input th:field="*{email}" th:value="${email}" type="hidden">
                 <label for="pan-number">Please enter your pan number to verify that you are allowed to sell items</label>
                 <textarea class="form-control" id="pan-number" name="panNumber" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></textarea>
             </div>
