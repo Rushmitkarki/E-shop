@@ -43,6 +43,8 @@ public class User implements UserDetails {
 
         @Column(name="pan_number",length=50)
         private String panNumber;
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
