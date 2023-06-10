@@ -1,0 +1,135 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('../IMG/Jordans.jpg');
+    background-size: cover;
+    background-position: center;
+    
+  }
+  .navbar {
+    display: flex;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 5px;
+  }
+  
+  .logo{
+    height: 5%;
+    width: 5%;
+  }
+
+  .navbar-item {
+    display: inline-block;
+    color: black;
+    font-size: larger;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px;
+    border-right: 1px solid black;
+    padding-right: 40px;
+  }
+    
+  .h2{
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 80%;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    width: 700px;
+    overflow: hidden;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    padding: 15px;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: rgb(0, 0, 0); /* Change the color here */
+}
+
+.search-button {
+    font-size: 15px;
+    font-weight: bold ;
+    background-color: #14A9CA;
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    cursor: pointer;
+}
+
+.navbar-container {
+    width: 1200px; /* Set the desired width for the container */
+    margin-left: 180px ; /* Center the container horizontally */
+}
+
+.sec-navbar {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 3px;
+    margin-bottom: 50px;
+  }
+
+  .sec-navbar-item {
+    display: inline-block;
+    color: black;
+    font-size: larger;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+    border-right: 1px solid black;
+    padding-right: 40px;
+  }
+  
+  .cont{
+    display: flex;
+  }
+  .rectangle{
+        background-color: #ffffff;
+        width: 550px;
+        height: 250px;
+        margin-left: 180px;
+        /*margin-top: ;*/
+  }
+.text-rectangle{
+    background-color: #14A9CA;
+    width: 200px;
+    height:250px;
+
+}
+
+h3{
+    font-size: 27px;
+    font-weight: bolder;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+h4{
+    font-size: 27px;
+    font-weight: bolder;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.nrect{
+    height: 125px;
+    width: 200px;
+    margin-left: 30px;
+    background-image: url('../IMG/Jordans.jpg');
+}
+
+.erect{
+    height: 125px;
+    width: 200px;
+    margin-left: 20px;
+    background-image: url('../IMG/j4.jpg');
+}
