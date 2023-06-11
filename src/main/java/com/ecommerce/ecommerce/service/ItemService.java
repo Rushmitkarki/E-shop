@@ -16,4 +16,6 @@ public interface ItemService {
     List<Item> getByCategory(int id);
 
     List<Item> getByPartialName(String name);
+
+    List<Item> getFourItems();
 }

@@ -52,7 +52,7 @@ public class BuyerController {
 
         model.addAttribute("user",userService.getActiveUser().orElse(null));
         model.addAttribute("Categories",categoryService.getData());
-        model.addAttribute("items",itemService.getData());
+        model.addAttribute("items",itemService.getFourItems());
         return "Dashboard";
     }
 

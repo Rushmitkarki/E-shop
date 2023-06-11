@@ -63,4 +63,9 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getByPartialName(String name) {
         return itemRepo.getByPartialName(name);
     }
+
+    public List<Item> getFourItems() {
+        List<Item> allItems = getData(); // Assuming this returns a List<Item>
+        return allItems.subList(0, Math.min(allItems.size(), 4));
+    }
 }
