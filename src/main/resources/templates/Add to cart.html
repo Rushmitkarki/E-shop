@@ -11,11 +11,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title> Add to cart</title>
 
+    <style>
+        .content-section {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .seller-details {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .reviews-section {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .comment-box {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light fs-3 pt-3 pb-3" style="background-color: #FFC128">
     <div class="container-fluid " >
-        <img src="img/logo.png" alt="" width="100" height="100">
+        <img src="img/logo.png"  th:src="@{/IMG/logo.png}" alt="" width="100" height="100">
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -23,97 +50,175 @@
         <div class="collapse navbar-collapse ps-5" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item ps-5">
-                    <a class="nav-link active" aria-current="page" href="#"> <i class="fa-solid fa-house"></i>    Home</a>
+                    <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-house"></i> Home</a>
+                </li>
+                <li class="nav-item dropdown ps-5">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-list"></i>
+                        Categories
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">All Products</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li th:each="category : ${Categories}">
+                            <a class="dropdown-item" th:href="@{/item/catalog/{id}(id=${category.catId})}" th:text="${category.catName}"></a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-bars"></i>    Products</a>
+                    <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i> My Cart</a>
                 </li>
                 <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i>    My Cart</a>
+                    <a class="nav-link" href="#"><i class="fa-solid fa-user"></i> Profile</a>
                 </li>
                 <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-user"></i>   Profile</a>
+                    <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
                 </li>
-                <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i>   About Us</a>
-                </li>
-                <!--        <li class="nav-item dropdown">-->
-                <!--          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-                <!--            Dropdown-->
-                <!--          </a>-->
-                <!--          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-                <!--            <li><a class="dropdown-item" href="#">Action</a></li>-->
-                <!--            <li><a class="dropdown-item" href="#">Another action</a></li>-->
-                <!--            <li><hr class="dropdown-divider"></li>-->
-                <!--            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-                <!--          </ul>-->
-                <!--        </li>-->
-
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
-            <!--      <li class="nav-item">-->
-            <!--        <a class="nav-link" href="#">Account</a>-->
-            <!--      </li>-->
+
         </div>
     </div>
 </nav>
-<div class="row p h-100">
-    <div class="col-7 " style="background: white">
-        <div class="container mt-5 p-5">
+<main>
+    <div class="row p h-100">
+        <div class="col-7 content-section" style="background: white">
+            <div class="container mt-5 p-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="img/nike.png" class="img-fluid" alt="Item Image">
+                        </div>
+                        <div class="col-md-6">
+                            <h1 class="fw-bold mb-3">Item Name</h1>
+                            <h3 class="mb-3">Category</h3>
+                            <p class="mb-3" id="itemDescription">Item Description</p>
+                            <p class="text-muted mb-0" id="itemDescriptionFull" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget fermentum nunc. Phasellus pharetra hendrerit ex, vel porta urna aliquet non. Integer laoreet velit sit amet congue efficitur. Suspendisse cursus risus sed elit laoreet, id vestibulum est venenatis. In id lectus malesuada, faucibus risus nec, dictum velit. Sed ac lectus sit amet quam scelerisque consequat nec vel tellus. Fusce facilisis, enim a accumsan dictum, ipsum justo dapibus elit, sed suscipit enim nunc non nibh. Sed id ex a nisl vestibulum bibendum a quis turpis. Quisque pretium turpis vel nisi aliquet sagittis. Sed vulputate ante et leo tempus, a varius sapien fermentum. Sed vestibulum neque justo, sed hendrerit metus rhoncus ut.</p>
+                            <a href="#" id="showMoreBtn" class="text-primary">Show More</a>
+
+
+
+                            <form th:action="@{/cart/add}" method="post">
+                                <div class="form-group">
+                                    <label for="price">Price:</label>
+                                    <input type="text" class="form-control" id="price" value="Rs. 1000" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="quantity">Quantity:</label>
+                                    <input type="number" class="form-control" id="quantity" min="1" value="1">
+                                </div>
+                                <div class="row">
+                                    <div class="col-5">
+                                        <button type="submit" class="btn btn-primary mt-3 mb-3">Add to Cart</button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="button" class="btn btn-primary mt-3 mb-3" style="background-color: #FFC128;">Favourites</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-3">
             <div class="container">
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="img/nike.png" class="img-fluid"/>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h4>Seller Details</h4>
+                        <div class="seller-section">
+                            <p>Sold By</p>
+                            <p class="h3">Seller</p>
+                            <p>Contact: seller@example.com</p>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <h3>Men's Shoes</h3>
-                        <h5>Nike Air Force 1</h5>
-                        <p>This product is made up from Nike</p>
-
-                        <select class="form-select" style="background:mintcream " aria-label="Default select example">
-
-
-                            <option selected>Shoe Size</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-
-                        </select>
-                        <form action="/add-to-cart" method="post">
-                            <div class="form-group">
-                                <label for="quantity">Quantity</label>
-                                <input type="number" class="form-control" id="quantity" min="1" value="1">
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h4>Comments</h4>
+                        <div class="comments-section">
+                            <ul class="list-group">
+                                <li class="list-group-item">Great seller, highly recommended!</li>
+                                <li class="list-group-item">Fast shipping and excellent customer service.</li>
+                                <li class="list-group-item">The product was exactly as described.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="container">
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h4>Ratings</h4>
+                        <div class="ratings-section">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
                             </div>
-                            <button type="submit" class="btn btn-primary">Add to Cart</button>
-                        </form>
-
-                        <p>Price: Rs 70000</p>
-                        <button type="button" style="background-color: #FFC128 "class="btn btn-primary">Add to Cart</button>
-                        <p></p>
-                        <button type="button" style="background-color: #FFC128 "class="btn btn-primary" >Favourites</button>
-
-
+                            <p>4.5 out of 5 stars</p>
+                        </div>
                     </div>
-
-
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h4>Add a Comment</h4>
+                        <div class="comments-section">
+                            <form>
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="3" placeholder="Write your comment"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-3 mb-3">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h4>Rate the Seller</h4>
+                        <div class="ratings-section">
+                            <!-- Add rating form or components here -->
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3 mb-3">Submit Rating</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</main>
+<script>
+    document.getElementById("showMoreBtn").addEventListener("click", function(e) {
+        e.preventDefault();
+        var description = document.getElementById("itemDescription");
+        var descriptionFull = document.getElementById("itemDescriptionFull");
 
-
-
-
-</div>
-
+        if (description.style.display === "none") {
+            description.style.display = "block";
+            descriptionFull.style.display = "none";
+            this.textContent = "Show More";
+        } else {
+            description.style.display = "none";
+            descriptionFull.style.display = "block";
+            this.textContent = "Show Less";
+        }
+    });
+</script>
 </body>
 </html>

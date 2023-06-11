@@ -33,7 +33,7 @@ public class Item {
 
     @Lob
     @Column(name="item_image")
-    private byte[] itemImage;
+    private String itemImage;
 
     @ManyToOne
     @JoinColumn(name="cat_id", nullable=false)
