@@ -8,6 +8,8 @@ import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.repo.UserRepo;
 import com.ecommerce.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -106,6 +108,13 @@ public class UserServiceImpl implements UserService {
         else{
             System.out.println("User not found");
         }
+    }
+
+    @Override
+    public Optional<User> getActiveUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return Optional.of(getByEmail(email).orElse(new User()));
     }
 
 

@@ -14,4 +14,6 @@ public interface ItemService {
     List<Item> getData();
 
     List<Item> getByCategory(int id);
+
+    List<Item> getByPartialName(String name);
 }

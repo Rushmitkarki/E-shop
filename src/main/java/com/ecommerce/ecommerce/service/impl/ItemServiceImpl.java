@@ -1,5 +1,11 @@
 package com.ecommerce.ecommerce.service.impl;
 
+import com.ecommerce.ecommerce.dto.UserDto;
+import com.ecommerce.ecommerce.entity.User;
+import com.ecommerce.ecommerce.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.ecommerce.ecommerce.dto.ItemDto;
 import com.ecommerce.ecommerce.entity.Category;
 import com.ecommerce.ecommerce.entity.Item;
@@ -18,10 +24,14 @@ public class ItemServiceImpl implements ItemService {
     final ItemRepo itemRepo;
 
     final CategoryService categoryService;
+
+    final private UserService userService;
     @Override
     public void addItem(ItemDto itemDto,byte[] image) {
         Category category = categoryService.getByIdNoOpt(itemDto.getCategory());
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.getByEmail(email).orElse(new User());
         Item item= new Item();
         item.setItemName(itemDto.getItemName());
         item.setItemDescription(itemDto.getItemDescription());
@@ -29,6 +39,7 @@ public class ItemServiceImpl implements ItemService {
         item.setItemQuantity(itemDto.getItemQuantity());
 
         item.setCategory(category);
+        item.setUser(user);
         itemRepo.save(item);
     }
 
@@ -47,4 +58,9 @@ public class ItemServiceImpl implements ItemService {
         return itemRepo.getByCategory(id);
     }
 
+
+    @Override
+    public List<Item> getByPartialName(String name) {
+        return itemRepo.getByPartialName(name);
+    }
 }
