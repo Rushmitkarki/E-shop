@@ -16,7 +16,6 @@ public class ItemDto {
     private Integer itemPrice;
     private Integer itemQuantity;
     private String itemDescription;
-    private byte[] itemImage;
     private int category;
 
 
