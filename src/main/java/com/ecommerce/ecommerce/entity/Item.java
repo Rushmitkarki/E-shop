@@ -39,4 +39,8 @@ public class Item {
     @JoinColumn(name="cat_id", nullable=false)
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "email")
+    private User user;
+
 }

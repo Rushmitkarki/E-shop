@@ -18,7 +18,7 @@ import java.util.Base64;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/item")
+@RequestMapping("/seller/item")
 public class ItemController {
     final CategoryService categoryService;
     final ItemService itemService;
@@ -39,16 +39,9 @@ public class ItemController {
         // Call your itemService to save the itemDto object
         itemService.addItem(itemDto,imageBytes);
 
-        return "redirect:/item/add";
+        return "redirect:/seller/item/add";
     }
 
-    @GetMapping("/catalog/{Id}")
-    public String getCatalog(Model model, @PathVariable int Id){
 
-        model.addAttribute("Categories",categoryService.getData());
-        model.addAttribute("Category",categoryService.getByIdNoOpt(Id));
-        model.addAttribute("items",itemService.getByCategory(Id));
-        return "catalog";
-    }
 
 }
