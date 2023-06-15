@@ -11,6 +11,7 @@
 </head>
 <body>
 <div class="row p-50 h-100">
+     <!-- background color -->
     <div class="col-7 " style="background: white">
         <div class="container mt-5 p-5">
 
@@ -22,16 +23,17 @@
                     <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
 
                         Invalid email or password.
+                         <!-- login button-->
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
                     <div class="row pt-4">
-                        <label for="email">Email</label>
+                        <label for="email">Email</label> <!-- email field -->
                         <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email">
 
                     </div>
                     <div class="row pt-4">
-                        <label for="password">Password</label>
+                        <label for="password">Password</label> <!-- password field -->
                         <input type="password" class="form-control" id="password" placeholder="Enter your password"   name="password">
                     </div>
 
