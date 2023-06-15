@@ -50,7 +50,8 @@
     <div class="collapse navbar-collapse ps-5" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item ps-5">
-          <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-house"></i> Home</a>
+          <a class="nav-link" aria-current="page" th:href="@{/buyer/dashboard}"><i class="fa-solid fa-house"></i> Home</a>
+
         </li>
         <li class="nav-item dropdown ps-5">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -59,10 +60,10 @@
             Categories
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">All Products</a></li>
+            <li><a class="dropdown-item" th:href="@{/buyer/catalog}">All Products</a></li>
             <li><hr class="dropdown-divider"></li>
             <li th:each="category : ${Categories}">
-              <a class="dropdown-item" th:href="@{/item/catalog/{id}(id=${category.catId})}" th:text="${category.catName}"></a>
+              <a class="dropdown-item" th:href="@{/buyer/catalog/{id}(id=${category.catId})}" th:text="${category.catName}"></a>
             </li>
           </ul>
         </li>
@@ -70,20 +71,21 @@
           <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i> My Cart</a>
         </li>
         <li class="nav-item ps-5">
-          <a class="nav-link" href="#"><i class="fa-solid fa-user"></i> Profile</a>
+          <a class="nav-link" href="#"><i class="fa-solid fa-user"></i> <span th:text="${user.fname}+${user.lname}"></span></a>
         </li>
         <li class="nav-item ps-5">
           <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
         </li>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <form class="d-flex" th:action="@{/buyer/search}" th:method="post">
+        <input class="form-control me-2" type="search" name="searchName" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
       </form>
 
     </div>
   </div>
 </nav>
+
 <main>
   <div class="row p h-100">
     <div class="col-6 content-section" style="background: white">
@@ -94,22 +96,23 @@
               <img src="img/nike.png" class="img-fluid" alt="Item Image">
             </div>
             <div class="col-md-6">
-              <h1 class="fw-bold mb-3">Item Name</h1>
-              <h3 class="mb-3">Category</h3>
+              <h1 class="fw-bold mb-3" th:text="${item.itemName}">Item Name</h1>
+              <h3 class="mb-3" th:text="${item.category.catName}">Category</h3>
               <p class="mb-3" id="itemDescription">Item Description</p>
-              <p class="text-muted mb-0" id="itemDescriptionFull" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget fermentum nunc. Phasellus pharetra hendrerit ex, vel porta urna aliquet non. Integer laoreet velit sit amet congue efficitur. Suspendisse cursus risus sed elit laoreet, id vestibulum est venenatis. In id lectus malesuada, faucibus risus nec, dictum velit. Sed ac lectus sit amet quam scelerisque consequat nec vel tellus. Fusce facilisis, enim a accumsan dictum, ipsum justo dapibus elit, sed suscipit enim nunc non nibh. Sed id ex a nisl vestibulum bibendum a quis turpis. Quisque pretium turpis vel nisi aliquet sagittis. Sed vulputate ante et leo tempus, a varius sapien fermentum. Sed vestibulum neque justo, sed hendrerit metus rhoncus ut.</p>
+              <p class="text-muted mb-0" id="itemDescriptionFull" th:text="${item.itemDescription}" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget fermentum nunc. Phasellus pharetra hendrerit ex, vel porta urna aliquet non. Integer laoreet velit sit amet congue efficitur. Suspendisse cursus risus sed elit laoreet, id vestibulum est venenatis. In id lectus malesuada, faucibus risus nec, dictum velit. Sed ac lectus sit amet quam scelerisque consequat nec vel tellus. Fusce facilisis, enim a accumsan dictum, ipsum justo dapibus elit, sed suscipit enim nunc non nibh. Sed id ex a nisl vestibulum bibendum a quis turpis. Quisque pretium turpis vel nisi aliquet sagittis. Sed vulputate ante et leo tempus, a varius sapien fermentum. Sed vestibulum neque justo, sed hendrerit metus rhoncus ut.</p>
               <a href="#" id="showMoreBtn" class="text-primary">Show More</a>
 
 
 
-              <form th:action="@{/cart/add}" method="post">
+              <form th:action="@{/buyer/cart/add}" method="post">
+                <input type="hidden" name="itemId" th:value="${item.itemId}">
                 <div class="form-group">
                   <label for="price">Price:</label>
-                  <input type="text" class="form-control" id="price" value="Rs. 1000" readonly>
+                  <input type="text" class="form-control" id="price"  th:value="${item.itemPrice}" readonly>
                 </div>
                 <div class="form-group">
                   <label for="quantity">Quantity:</label>
-                  <input type="number" class="form-control" id="quantity" min="1" value="1">
+                  <input type="number" class="form-control" name="quantity" id="quantity" min="1" value="1" >
                 </div>
                 <div class="row">
                   <div class="col-5">
@@ -134,8 +137,8 @@
             <h4>Seller Details</h4>
             <div class="seller-section">
               <p>Sold By</p>
-              <p class="h3">Seller</p>
-              <p>Contact: seller@example.com</p>
+              <p class="h3" th:text="${item.user.username}">Seller</p>
+              <p th:text="${item.user.email}">Contact: seller@example.com</p>
             </div>
           </div>
         </div>
