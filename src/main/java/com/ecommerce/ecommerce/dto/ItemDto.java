@@ -18,5 +18,7 @@ public class ItemDto {
     private String itemDescription;
     private int category;
 
+    private String email;
+
 
 }

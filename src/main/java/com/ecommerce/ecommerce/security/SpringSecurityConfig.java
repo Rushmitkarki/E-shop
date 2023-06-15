@@ -3,13 +3,21 @@ package com.ecommerce.ecommerce.security;
 
 import com.ecommerce.ecommerce.config.PasswordEncoderUtil;
 import com.ecommerce.ecommerce.service.impl.SecurityUserDetailService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -32,14 +40,16 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/login","/register","/CSS/**","/JS/**","/IMG/**","/webjars/**","/save","/verify/**","/forgotPassword/**","/resetPassword/**","seller/verify/**")
                 .permitAll()
-                .requestMatchers("/dashboard")
+                .requestMatchers("/seller/**")
+                .hasAuthority("Seller")
+                .requestMatchers("/buyer/**")
                 .hasAuthority("Buyer")
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/dashboard",true)
+                .successHandler(new RoleBasedAuthenticationSuccessHandler())
                 .usernameParameter("email")
                 .permitAll()
                 .and()
@@ -47,4 +57,17 @@ public class SpringSecurityConfig {
 
         return httpSecurity.build();
     }
+    private static class RoleBasedAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+        @Override
+        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException, IOException {
+            for (GrantedAuthority authority : authentication.getAuthorities()) {
+                if (authority.getAuthority().equals("Seller")) {
+                    response.sendRedirect("/seller/dashboard");
+                    return;
+                }
+            }
+            response.sendRedirect("/buyer/dashboard");
+        }
+    }
+
 }
