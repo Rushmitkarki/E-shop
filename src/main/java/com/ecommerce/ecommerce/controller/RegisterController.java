@@ -33,7 +33,7 @@ public class RegisterController {
     ) {
 
         userService.registerUser(registrationDto);
-        return "redirect:/login?success";
+        return "redirect:/verify/"+registrationDto.getEmail();
     }
     @GetMapping("/verify/{email}")
     public String verifyUser(Model model, @PathVariable String email){
@@ -49,7 +49,16 @@ public class RegisterController {
         if(!CitizenshipValidation.validate(citizenshipNumber)){
             return "redirect:/verify/{email}?error";
         }
+
         userService.verifyUser(email,citizenshipNumber);
+        User user = userService.getByEmail(email).orElse(null);
+        if(user==null){
+            return "redirect:/verify/{email}?error";
+        }
+        if(user.getRole().equals("Seller")){
+            System.out.println(user.getRole());
+            return "redirect:/seller/verify/{email}";
+        }
         return "redirect:/login?success";
     }
 }

@@ -22,4 +22,9 @@ public class sellerController {
         userService.verifySeller(email,panNumber);
         return "redirect:/login?success";
     }
+
+    @GetMapping("/dashboard")
+    public String sellerDashboard(){
+        return "sellerDashboard";
+    }
 }
