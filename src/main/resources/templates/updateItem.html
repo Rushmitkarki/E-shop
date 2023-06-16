@@ -1,10 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" th:href="@{/CSS/project.css}">
+    <script th:src="@{/JS/project.js}"></script>
+    <title>Update Item</title>
 </head>
 <body>
-$END$
+
+<nav class="navbar navbar-expand-lg navbar-light fs-3 pt-3 pb-3" style="background-color: #FFC128">
+    <div class="container-fluid " >
+        <img src="img/logo.png" alt="" width="100" height="100">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse ps-5" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item ps-5">
+                    <a class="nav-link active" aria-current="page" href="#"> <i class="fa-solid fa-house"></i>    Home</a>
+                </li>
+                <li class="nav-item ps-5">
+                    <a class="nav-link" href="#"><i class="fa-solid fa-bars"></i>    Products</a>
+                </li>
+                <li class="nav-item ps-5">
+                    <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i>    My Cart</a>
+                </li>
+                <li class="nav-item ps-5">
+                    <a class="nav-link" href="#"><i class="fa-solid fa-user"></i>   <span th:text="${}"></span></a>
+                </li>
+                <li class="nav-item ps-5">
+                    <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i>   About Us</a>
+                </li>
+                <!--        <li class="nav-item dropdown">-->
+                <!--          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+                <!--            Dropdown-->
+                <!--          </a>-->
+                <!--          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+                <!--            <li><a class="dropdown-item" href="#">Action</a></li>-->
+                <!--            <li><a class="dropdown-item" href="#">Another action</a></li>-->
+                <!--            <li><hr class="dropdown-divider"></li>-->
+                <!--            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                <!--          </ul>-->
+                <!--        </li>-->
+
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            <!--      <li class="nav-item">-->
+            <!--        <a class="nav-link" href="#">Account</a>-->
+            <!--      </li>-->
+        </div>
+    </div>
+</nav>
+<!-- Content specific to the home page -->
+<main  >
+
+    <div class="container-fluid mt-3 pt-3">
+        <div class="h1 text-center mt-5">
+            Update Item
+        </div>
+        <div class="row">
+
+            <div class="col-8">
+                <div class="ms-4">
+
+                    <form th:action="@{/seller/item/save}" th:method="post" enctype="multipart/form-data">
+                        <div class="form-group mb-4">
+                            <label for="name">Item Id</label>
+                            <input type="text" class="form-control" id="id" name="itemId" placeholder="Enter Item Id">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="name">Item Name</label>
+                            <input type="text" class="form-control" id="name" name="itemName" placeholder="Enter Item Name">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="description">Item Description</label>
+                            <textarea type="text" class="form-control" id="description" name="itemDescription" placeholder="Enter Item Description">
+                </textarea>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="price">Item Price</label>
+                            <input type="number" class="form-control" id="price" name="itemPrice" placeholder="Enter Item Price">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="quantity">Item Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="itemQuantity" placeholder="Enter Item Quantity">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="image">Item Image</label>
+                            <input type="file" class="form-control" id="image" name="itemImage" accept="image/*" >
+                        </div>
+                        <div class="form-group mb-4 ">
+                            <div class="row">
+                                <div class="col-2  me-3`">
+                                    <label for="sel1" class="form-label">Select Category</label>
+                                    <select class="form-select" id="sel1" name="category">
+                                        <option th:each="category:${categories}" th:text="${category.catName}" th:value="${category.catId}"></option>
+
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <!-- Button to Open the Modal -->
+                                    <button type="button" style="margin-top: 30px" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                                        Add category
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="footer pt-3"></div>
+<!--Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form th:action="@{/category/add}" th:method="post">
+                    <div class="mb-3">
+                        <label for="catName" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="catName" placeholder="Enter category name" name="catName">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Category</button>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>

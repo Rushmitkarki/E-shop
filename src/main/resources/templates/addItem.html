@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" th:href="@{/CSS/project.css}">
     <script th:src="@{/JS/project.js}"></script>
-    <title>Home</title>
+    <title>Add ITem</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light fs-3 pt-3 pb-3" style="background-color: #FFC128">
@@ -99,9 +99,9 @@
                     <option th:each="category:${categories}" th:text="${category.catName}" th:value="${category.catId}"></option>
                 </select>
                 </div>
-                    <div class="col-6">
+                    <div class="col-3">
                         <!-- Button to Open the Modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <button type="button"  style="margin-top: 30px" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
                             Add category
                         </button>
                     </div>
@@ -112,6 +112,10 @@
                 </div>
         </form>
             </div>
+        </div>
+            <!--Display Image -->
+        <div class="col-2">
+            <img src="../static/IMG/Jordans.jpg" style="width: 500px;height: 500px;padding-left: 40px;border: black" class="img-fluid" alt="...">
         </div>
         </div>
     </div>
