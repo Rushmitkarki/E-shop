@@ -18,4 +18,8 @@ public interface ItemRepo extends JpaRepository<Item,Integer>{
 @Query("SELECT i FROM Item i WHERE LOWER(i.itemName) LIKE LOWER(concat('%', :partialName, '%'))")
 List<Item> getByPartialName(@Param("partialName") String partialName);
 
+
+//Get by seller
+    @Query(value="select * from Item where email = ?1", nativeQuery = true)
+    List<Item> getBySellerId(int id);
 }
