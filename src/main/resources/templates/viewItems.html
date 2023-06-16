@@ -93,7 +93,7 @@
         <div class="container">
           <div class="row">
             <div class="col-6">
-              <img src="img/nike.png" class="img-fluid" alt="Item Image">
+              <img src="img/nike.png" th:src="'data:image/png;base64,'+${imageBase64}" class="img-fluid" alt="Item Image">
             </div>
             <div class="col-md-6">
               <h1 class="fw-bold mb-3" th:text="${item.itemName}">Item Name</h1>
