@@ -65,13 +65,13 @@
                 <p class="h1" th:unless="${Category}">All Products</p>
             </div>
             <div class="row mt-4" >
-                <div class="col-lg-4 col-md-6 mb-4" th:each="product : ${items}">
+                <div class="col-lg-4 col-md-6 mb-4" th:each="item : ${items}">
                     <div class="card h-100 " >
-                        <img class="card-img-top"  alt="Product Image">
+                        <img class="card-img-top" src="../../../../item_img/logo.png" th:src="'data:image/png;base64,'+${item.imageBase64}" alt="Product Image" width="200" height="200">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${product.itemName}">Product Title</h5>
-                            <p class="card-text" th:text="${product.itemDescription}">Product Desc</p>
-                            <p class="card-text" th:text="${product.itemPrice}">Product Price</p>
+                            <h5 class="card-title" th:text="${item.itemName}">Product Title</h5>
+                            <p class="card-text" th:text="${item.itemDescription}">Product Desc</p>
+                            <p class="card-text" th:text="${item.itemPrice}">Product Price</p>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Quantity:</span>
                                 <div class="input-group-append">
@@ -85,7 +85,7 @@
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-primary add-to-cart" type="button">Add to Cart</button>
-                            <a class="btn btn-secondary details-btn" th:href="@{/buyer/item/{id}(id=${product.getItemId()})}">Details</a>
+                            <a class="btn btn-secondary details-btn" th:href="@{/buyer/item/{id}(id=${item.itemId})}">Details</a>
                         </div>
                     </div>
                 </div>

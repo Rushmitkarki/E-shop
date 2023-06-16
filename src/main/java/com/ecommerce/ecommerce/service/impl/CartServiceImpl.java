@@ -13,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +42,10 @@ public class CartServiceImpl implements CartService {
 
         cartRepo.save(cart);
 
+    }
+
+    @Override
+    public List<Cart> getDataByUserId(int UserId) {
+        return cartRepo.findByUserId(UserId);
     }
 }

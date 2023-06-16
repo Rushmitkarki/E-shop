@@ -2,10 +2,7 @@ package com.ecommerce.ecommerce.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Table
 @Entity
@@ -13,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Item {
     @Id
     @SequenceGenerator(name = "item_seq_generator",sequenceName ="item_id_seq",allocationSize  =1)
@@ -31,9 +29,11 @@ public class Item {
     @Column(name="item_description", length=2000, nullable=false)
     private String itemDescription;
 
-    @Lob
-    @Column(name="item_image")
+    @Column(name="item_image" ,length = 10485760)
     private String itemImage;
+
+    @Transient
+    private String imageBase64;
 
     @ManyToOne
     @JoinColumn(name="cat_id", nullable=false)
