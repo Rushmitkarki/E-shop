@@ -6,6 +6,7 @@ import com.ecommerce.ecommerce.entity.Item;
 import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.service.CategoryService;
 import com.ecommerce.ecommerce.service.ItemService;
+import com.ecommerce.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,8 @@ import java.util.Base64;
 public class ItemController {
     final CategoryService categoryService;
     final ItemService itemService;
+
+    final UserService userService;
     @GetMapping("/add")
     public String getAddItemPage(Model model){
         model.addAttribute("categories", categoryService.getData());
@@ -42,6 +45,16 @@ public class ItemController {
         itemService.addItem(itemDto);
 
         return "redirect:/seller/item/add";
+    }
+
+    @GetMapping("/update/{id}")
+    public String getUpdateItemPage(Model model,@PathVariable("id") int id){
+        model.addAttribute("user",userService.getActiveUser().orElse(null));
+
+        Item item=itemService.getByIdNoOpt(id).orElse(null);
+        model.addAttribute("item",item);
+
+        return "updateItem";
     }
 
     public String getImageBase64(String fileName) {
