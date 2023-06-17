@@ -206,13 +206,22 @@
 
         <div class="row">
             <div class="col-md-3" th:each="item:${items}">
-                <img th:src="'data:image/png;base64,'+${item.imageBase64}" height="224" width="173"/>
-                <p class="Class" th:text="${item.itemName}" >T shirt</p>
-                <p class="Size" th:text="${item.itemDescription}">3/4 Length Sleeve T-Shirt</p>
-                <p class="Price" th:text="${item.itemPrice}">RS : 3500</p>
-            </div>
+                <div class="card">
+                    <img th:src="'data:image/png;base64,'+${item.imageBase64}" class="card-img-top" alt="Item Image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${item.itemName}">T shirt</h5>
+                        <p class="card-text" th:text="${item.itemDescription}">3/4 Length Sleeve T-Shirt</p>
+                        <p class="card-text" th:text="${item.itemPrice}">RS : 3500</p>
 
+                            <button type="button" class="btn btn-primary">Edit</button>
+                            <button type="button" class="btn btn-danger">Delete</button>
+
+                    </div>
+                </div>
+            </div>
         </div>
+
+
 
 
     </div>

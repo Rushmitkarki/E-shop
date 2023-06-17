@@ -44,7 +44,7 @@
           <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i> My Inventory</a>
         </li>
         <li class="nav-item ps-5">
-          <a class="nav-link" href="#"><i class="fa-solid fa-user"></i> Profile</a>
+          <a class="nav-link" href="#" th:text="${user.fname}+' '+${user.lname}"><i class="fa-solid fa-user"></i></a>
         </li>
         <li class="nav-item ps-5">
           <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
@@ -61,21 +61,21 @@
 
 <div class="container-fluid" >
 <div class="row p-5" >
-  <div class="card text-white bg-primary mb-1 mt-5 m-lg-5" style="max-width: 30rem;">
+  <div class="card text-white bg-primary mb-1 mt-5 m-5" style="max-width: 30rem;">
     <div class="card-header fw-bold fs-3">Rs 9,99,999</div>
     <div class="card-body">
       <h5 class="card-title">Revenue</h5>
       <p class="card-text">Congratulation, You have made revenue of Rs 9,99,999 this year.</p>
     </div>
   </div>
-  <div class="card text-white bg-danger mb-1 mt-5 m-lg-5" style="max-width: 30rem;">
+  <div class="card text-white bg-danger mb-1 mt-5 m-5" style="max-width: 30rem;">
     <div class="card-header fw-bold fs-3">999</div>
     <div class="card-body">
       <h5 class="card-title">Orders</h5>
       <p class="card-text">You have 999 orders left!.</p>
     </div>
   </div>
-  <div class="card text-white bg-success mb-1 mt-5 m-lg-5" style="max-width: 30rem;">
+  <div class="card text-white bg-success mb-1 mt-5 m-5" style="max-width: 30rem;">
     <div class="card-header fw-bold fs-3">9999</div>
     <div class="card-body">
       <h5 class="card-title">Item Sold</h5>
@@ -84,16 +84,13 @@
   </div>
 </div>
 </div>
-<div class="container-fluid p-lg-5">
+<div class="container-fluid p-5">
   <div class="row" >
     <div class="col-lg-8 ">
       <img src="../static/IMG/Jordans.jpg" class="img-fluid" style="height: 30%" alt="...">
     </div>
 </div>
 
-<!--  <div class="row-lg-8" >-->
-<!--      <img src="../static/IMG/Jordans.jpg" class="img-fluid" style="height: 30%" alt="...">-->
-<!--  </div>-->
 
 
 </div>
