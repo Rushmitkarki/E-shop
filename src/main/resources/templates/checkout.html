@@ -65,188 +65,50 @@
   <div class="row">
     <div class="col-md-6">
       <h2>Your Order</h2>
-      <table class="table" id="bill-table">
+            <table class="table">
         <thead>
         <tr>
-          <th scope="col">Item Name</th>
-          <th scope="col">Item Price</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Total</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="cart:${carts}">
-          <td th:text="${cart.getItem().getItemName()}">Nike</td>
-          <td th:text="${cart.getItem().getItemPrice()}">100.00</td>
-          <td th:text="${cart.getQuantity()}">2</td>
-          <td></td>
+                <tr>
+                    <td>Nike shoes</td>
+                    <td>1</td>
+                    <td>$10</td>
+                </tr>
+                <tr>
+                    <td>Nike AF1</td>
+                    <td>2</td>
+                    <td>$20</td>
         </tr>
         </tbody>
       </table>
-      <div class="col-12">
-        <h5 class="text-end">Sub Total: Rs<span id="sub-total">0.00</span></h5>
-      </div>
-      <div class="col-12">
-        <h5 class="text-end">Shipping: Rs<span id="Shipping">0.00</span></h5>
-      </div>
-      <div class="col-12">
-        <h5 class="text-end">Tax: Rs<span id="Tax">0.00</span></h5>
-      </div>
-      <div class="col-12">
-        <h5 class="text-end">Discount: Rs<span id="discount">0.00</span></h5>
-      </div>
-      <div class="col-12">
-        <h5 class="text-end">Total: Rs<span id="total">0.00</span></h5>
-      </div>
+            <h3>Subtotal: $30</h3>
+            <h3>Shipping: $5</h3>
+            <h3>Tax: $2</h3>
+            <h3>Total: $37</h3>
     </div>
     <div class="col-md-6">
       <h2>Billing Information</h2>
+            <form action="/checkout" method="post">
+                <input type="text" name="name" placeholder="Name">
+                <input type="text" name="email" placeholder="Email">
+                <input type="text" name="address" placeholder="Address">
+                <input type="text" name="city" placeholder="City">
+                <input type="text" name="state" placeholder="State">
+                <input type="text" name="zip" placeholder="Zip Code">
+                <input type="submit" value="Checkout">
 
-        <form th:action="@{/buyer/bill/save}" method="post">
-          <div class="container pt-3 mt-3">
-
-          <div class="row">
-            <div class="col-12 col-sm-6 mb-3">
-              <input type="text" name="name" class="form-control" placeholder="Name">
-            </div>
-            <div class="col-12 col-sm-6 mb-3">
-              <input type="text" name="email" class="form-control" placeholder="Email">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12 col-sm-6 mb-3">
-              <input type="text" name="address" class="form-control" placeholder="Address">
-            </div>
-            <div class="col-6 col-sm-3 mb-3">
-              <input type="text" name="city" class="form-control" placeholder="City">
-            </div>
-            <div class="col-6 col-sm-3 mb-3">
-              <input type="text" name="state" class="form-control" placeholder="State">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12 mb-3">
-              <input type="text" name="zip" class="form-control" placeholder="Zip Code">
-            </div>
-          </div>
-              </div>
-              <div class="container pt-3 mt-3">
-                <div class="row">
-                <div class="col-12">
-                    <h2>Payment Methods</h2>
-                  </div>
-
-                </div>
-                    <div class="row mt-2">
-                      <div class="col-6 col-md-3 mb-3">
-                        <div class="card">
-                          <img src="../static/IMG/credit.jpg" class="card-img-top" alt="Credit Card">
-                          <div class="card-body">
-                            <input class="form-check-input" type="radio" name="payment-method" id="credit-card" value="credit-card">
-                            <label class="form-check-label" for="credit-card">
-                              Credit Card
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-6 col-md-3 mb-3">
-                        <div class="card">
-                          <img src="cash-on-delivery-image.png" class="card-img-top" alt="Cash on Delivery">
-                          <div class="card-body">
-                            <input class="form-check-input" type="radio" name="payment-method" id="cash-on-delivery" value="cash-on-delivery">
-                            <label class="form-check-label" for="cash-on-delivery">
-                              Cash on Delivery
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-6 col-md-3 mb-3">
-                        <div class="card">
-                          <img src="../static/IMG/fonepay.png" class="card-img-top" alt="Fonepay">
-                          <div class="card-body">
-                            <input class="form-check-input" type="radio" name="payment-method" id="fonepay" value="fonepay">
-                            <label class="form-check-label" for="fonepay">
-                              Fonepay
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-6 col-md-3 mb-3">
-                        <div class="card">
-                          <img src="../static/IMG/esewa.png" class="card-img-top" alt="eSewa">
-                          <div class="card-body">
-                            <input class="form-check-input" type="radio" name="payment-method" id="esewa" value="esewa">
-                            <label class="form-check-label" for="esewa">
-                              eSewa
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-          <div class="row">
-            <div class="col-12">
-              <input type="submit" value="Checkout" class="btn btn-primary">
-          </div>
-            </div>
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" class="btn btn-danger">Cash on delivery</button>
+                    <button type="button" class="btn btn-success">Online Payment</button>
           </div>
         </form>
       </div>
-
-
     </div>
   </div>
-
-<script>
-
-  document.addEventListener("DOMContentLoaded", function () {
-    calculateSubtotal();
-    calculateTotal();
-  });
-  // Function to calculate the subtotal
-  function calculateSubtotal() {
-    var table = document.getElementById("bill-table");
-    var rows = table.getElementsByTagName("tr");
-    var subtotal = 0;
-
-    // Loop through each row of the table (excluding the header row)
-    for (var i = 1; i < rows.length; i++) {
-      var priceCell = rows[i].cells[1];
-      var quantityCell = rows[i].cells[2];
-      var totalCell = rows[i].cells[3];
-
-      var price = parseFloat(priceCell.innerText);
-      var quantity = parseInt(quantityCell.innerText);
-
-      var total= price * quantity;
-      totalCell.innerText = total.toFixed(2);
-      subtotal += total;
-    }
-
-    // Update the displayed subtotal value
-    document.getElementById("sub-total").innerText = subtotal.toFixed(2);
-  }
-
-  // Call the calculateSubtotal function when the page loads
-
-
-
-    // Function to calculate the total amount
-    function calculateTotal() {
-    var subtotal = parseFloat(document.getElementById("sub-total").innerText);
-    var shipping = parseFloat(document.getElementById("Shipping").innerText);
-    var tax = parseFloat(document.getElementById("Tax").innerText);
-    var discount = parseFloat(document.getElementById("discount").innerText);
-
-    var total = subtotal + shipping + tax - discount;
-
-    // Update the displayed total value
-    document.getElementById("total").innerText = total.toFixed(2);
-  }
-
-    // Call the calculateTotal function when the page loads
-</script>
-
-
 </body>
 </html>
