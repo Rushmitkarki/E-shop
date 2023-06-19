@@ -53,8 +53,14 @@ public class ItemController {
 
         Item item=itemService.getByIdNoOpt(id).orElse(null);
         model.addAttribute("item",item);
-
+        model.addAttribute("imageBase64" ,getImageBase64(item.getItemImage()));
         return "updateItem";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteItem(@PathVariable("id") int id){
+        itemService.deleteItem(id);
+        return "redirect:/seller/item/add";
     }
 
     public String getImageBase64(String fileName) {

@@ -115,7 +115,7 @@
         </div>
             <!--Display Image -->
         <div class="col-2">
-            <img src="../static/IMG/Jordans.jpg" style="width: 500px;height: 500px;padding-left: 40px;border: black" class="img-fluid" alt="...">
+            <img  id="preview-image"style="width: 500px;height: 500px;padding-left: 40px;border: black" class="img-fluid" alt="Product IMG">
         </div>
         </div>
     </div>
@@ -151,6 +151,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    // JavaScript code for updating the selected image
+    document.getElementById('image').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('preview-image').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+</script>
 </body>
 
 </html>

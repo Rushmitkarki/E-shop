@@ -29,7 +29,7 @@
                     <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i>    My Cart</a>
                 </li>
                 <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-user"></i>   <span th:text="${}"></span></a>
+                    <a class="nav-link" href="#"><i class="fa-solid fa-user"></i>   <span th:text="${user.fname}+' '+${user.lname}"></span></a>
                 </li>
                 <li class="nav-item ps-5">
                     <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i>   About Us</a>
@@ -65,31 +65,30 @@
             Update Item
         </div>
         <div class="row">
-
             <div class="col-8">
                 <div class="ms-4">
 
                     <form th:action="@{/seller/item/save}" th:method="post" enctype="multipart/form-data">
                         <div class="form-group mb-4">
                             <label for="name">Item Id</label>
-                            <input type="text" class="form-control" id="id" th:field="${item.itemName}" name="itemId" placeholder="Enter Item Id">
+                            <input type="text" class="form-control" id="id" th:field="${item.itemId}" name="itemId" placeholder="Enter Item Id">
                         </div>
                         <div class="form-group mb-4">
                             <label for="name">Item Name</label>
-                            <input type="text" class="form-control" id="name" name="itemName" placeholder="Enter Item Name">
+                            <input type="text" class="form-control" id="name" name="itemName" th:field="${item.itemName}" placeholder="Enter Item Name">
                         </div>
                         <div class="form-group mb-4">
                             <label for="description">Item Description</label>
-                            <textarea type="text" class="form-control" id="description" name="itemDescription" placeholder="Enter Item Description">
+                            <textarea type="text" class="form-control" id="description" name="itemDescription" th:field="${item.itemDescription}" placeholder="Enter Item Description">
                 </textarea>
                         </div>
                         <div class="form-group mb-4">
                             <label for="price">Item Price</label>
-                            <input type="number" class="form-control" id="price" name="itemPrice" placeholder="Enter Item Price">
+                            <input type="number" class="form-control" id="price" name="itemPrice" th:field="${item.itemPrice}" placeholder="Enter Item Price">
                         </div>
                         <div class="form-group mb-4">
                             <label for="quantity">Item Quantity</label>
-                            <input type="number" class="form-control" id="quantity" name="itemQuantity" placeholder="Enter Item Quantity">
+                            <input type="number" class="form-control" id="quantity" th:field="${item.itemQuantity}" name="itemQuantity" placeholder="Enter Item Quantity">
                         </div>
                         <div class="form-group mb-4">
                             <label for="image">Item Image</label>
@@ -100,16 +99,11 @@
                                 <div class="col-2  me-3`">
                                     <label for="sel1" class="form-label">Select Category</label>
                                     <select class="form-select" id="sel1" name="category">
+                                        <option th:text="${item.category.catName}" th:value="${item.category.catId}"></option>
                                         <option th:each="category:${categories}" th:text="${category.catName}" th:value="${category.catId}"></option>
-
                                     </select>
                                 </div>
-                                <div class="col-3">
-                                    <!-- Button to Open the Modal -->
-                                    <button type="button" style="margin-top: 30px" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                                        Add category
-                                    </button>
-                                </div>
+
                             </div>
                         </div>
                         <div class="form-group mt-4">
@@ -117,6 +111,9 @@
                         </div>
                     </form>
                 </div>
+            </div>
+            <div class="col-4">
+                <img th:src="'data:image/png;base64,'+${imageBase64}" id="preview-image" class="img-fluid" alt="Img">
             </div>
         </div>
     </div>
@@ -153,6 +150,17 @@
     </div>
 </div>
 
+<script>
+    // JavaScript code for updating the selected image
+    document.getElementById('image').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('preview-image').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+</script>
 
 </body>
 </html>

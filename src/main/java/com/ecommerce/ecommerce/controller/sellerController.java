@@ -35,7 +35,10 @@ public class sellerController {
     }
 
     @GetMapping("/dashboard")
-    public String sellerDashboard(){
+    public String sellerDashboard(Model model){
+        model.addAttribute("user",userService.getActiveUser().orElse(null));
+
+
         return "sellerDashboard";
     }
 
