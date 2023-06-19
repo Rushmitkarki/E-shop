@@ -1,8 +1,10 @@
 package com.ecommerce.ecommerce.controller;
 
+
 import com.ecommerce.ecommerce.dto.BillDto;
-import com.ecommerce.ecommerce.dto.CartDto;
+import com.ecommerce.ecommerce.entity.Bill;
 import com.ecommerce.ecommerce.entity.User;
+import com.ecommerce.ecommerce.service.BillService;
 import com.ecommerce.ecommerce.service.CartService;
 import com.ecommerce.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,31 +13,38 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequestMapping("/buyer/bill")
 @RequiredArgsConstructor
-@RequestMapping("/buyer/cart")
 @Controller
-public class CartController {
+public class BillController {
+    private final BillService billService;
 
     private final CartService cartService;
+
     private final UserService userService;
+    @GetMapping("/checkout")
+    public String getBill(Model model){
 
-    @PostMapping("/add")
-    public String addToCart(CartDto cartDto) {
-        System.out.println(cartDto.getItemId());
-        cartService.addCart(cartDto);
-        return "redirect:/buyer/dashboard";
-    }
-
-    @GetMapping("/view")
-    public String viewCart(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.getByEmail(email).orElse(new User());
         int userId = user.getUserId();
         model.addAttribute("carts", cartService.getDataByUserId(userId));
-        return "viewCart";
+        return "checkout";
+    }
+
+    @PostMapping("/save")
+    public String saveBill(BillDto billDto){
+
+        System.out.println(billDto.getBillId());
+        System.out.println(billDto.getBillSubAmount());
+
+        billService.saveBill(billDto);
+
+        return "redirect:/buyer/bill/checkout/"+billDto.getBillId();
     }
 }

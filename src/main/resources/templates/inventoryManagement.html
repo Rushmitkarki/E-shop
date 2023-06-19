@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <!-- Latest compiled and minified CSS -->
@@ -8,225 +9,257 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="../static/CSS/project.css">
     <title>Inventory Management</title>
-<style>
-     .imageBox{
-        position: absolute;
-        width: 173px;
-        height: 224px;
-        left: 510px;
-        top: 307px;
-    }
-     .Class{
-         font-family: 'Inter';
-         font-style: normal;
-         font-weight: 600;
-         font-size: 12px;
-         line-height: 25px;
-         color: #C8C8C8;
-     }
-     .Size{
-         font-family: 'Inter';
-         font-style: normal;
-         font-weight: 600;
-         font-size: 13px;
-         line-height: 14px;
-         color: #000000;
-     }
-     .Price{
-         font-family: 'Inter';
-         font-style: normal;
-         font-weight: 600;
-         font-size: 14px;
-         line-height: 0px;
-         color: #3E8969;
-     }
-     .search-form {
-         display: flex;
-     }
+    <style>
+        .imageBox {
+            position: absolute;
+            width: 173px;
+            height: 224px;
+            left: 510px;
+            top: 307px;
+        }
 
-     .search-input {
-         padding-right: 10px;
-     }
+        .Class {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 25px;
+            color: #C8C8C8;
+        }
 
+        .Size {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 13px;
+            line-height: 14px;
+            color: #000000;
+        }
 
-</style>
+        .Price {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 0px;
+            color: #3E8969;
+        }
+
+        .search-form {
+            display: flex;
+        }
+
+        .search-input {
+            padding-right: 10px;
+        }
+    </style>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg navbar-light fs-3 pt-3 pb-3" style="background-color: #FFC128">
-    <div class="container-fluid " >
-        <img src="img/logo.png" alt="" width="100" height="100">
+    <nav class="navbar navbar-expand-lg navbar-light fs-3 pt-3 pb-3" style="background-color: #FFC128">
+        <div class="container-fluid ">
+            <img src="img/logo.png" alt="" width="100" height="100">
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse ps-5" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item ps-5">
-                    <a class="nav-link active" aria-current="page" href="#"> <i class="fa-solid fa-house"></i>    Home</a>
-                </li>
-                <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-bars"></i>    Products</a>
-                </li>
-                <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i>    My Cart</a>
-                </li>
-                <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-user"></i>   Profile</a>
-                </li>
-                <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i>   About Us</a>
-                </li>
-                <!--        <li class="nav-item dropdown">-->
-                <!--          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-                <!--            Dropdown-->
-                <!--          </a>-->
-                <!--          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-                <!--            <li><a class="dropdown-item" href="#">Action</a></li>-->
-                <!--            <li><a class="dropdown-item" href="#">Another action</a></li>-->
-                <!--            <li><hr class="dropdown-divider"></li>-->
-                <!--            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-                <!--          </ul>-->
-                <!--        </li>-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse ps-5" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item ps-5">
+                        <a class="nav-link active" aria-current="page" href="#"> <i class="fa-solid fa-house"></i>
+                            Home</a>
+                    </li>
+                    <li class="nav-item ps-5">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-bars"></i> Products</a>
+                    </li>
+                    <li class="nav-item ps-5">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i> My Cart</a>
+                    </li>
+                    <li class="nav-item ps-5">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-user"></i> Profile</a>
+                    </li>
+                    <li class="nav-item ps-5">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
+                    </li>
+                    <!--        <li class="nav-item dropdown">-->
+                    <!--          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+                    <!--            Dropdown-->
+                    <!--          </a>-->
+                    <!--          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+                    <!--            <li><a class="dropdown-item" href="#">Action</a></li>-->
+                    <!--            <li><a class="dropdown-item" href="#">Another action</a></li>-->
+                    <!--            <li><hr class="dropdown-divider"></li>-->
+                    <!--            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                    <!--          </ul>-->
+                    <!--        </li>-->
 
-            </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </form>
-            <!--      <li class="nav-item">-->
-            <!--        <a class="nav-link" href="#">Account</a>-->
-            <!--      </li>-->
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+                <!--      <li class="nav-item">-->
+                <!--        <a class="nav-link" href="#">Account</a>-->
+                <!--      </li>-->
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
-<div class="row p h-100 mt-5" style="padding: 20px;">
-    <div class="col-md-2 pt-3" style="padding: 50px;">
-<!--        <p style="text-align: center">-->
-<!--            <input type="text" id="searchInput" placeholder="Search Products">-->
-<!--            <button type="button" class="btn btn-secondary">Search</button>-->
-<!--        </p>-->
+    <div class="row p h-100 mt-5" style="padding: 20px;">
+        <div class="col-md-2 pt-3" style="padding: 50px;">
+            <!--        <p style="text-align: center">-->
+            <!--            <input type="text" id="searchInput" placeholder="Search Products">-->
+            <!--            <button type="button" class="btn btn-secondary">Search</button>-->
+            <!--        </p>-->
 
-        <script>
-            function goToNextPage() {
-                window.location.href = "next-page.html"; // Replace "next-page.html" with the actual URL of the next page
-            }
-        </script>
+            <script>
+                function goToNextPage() {
+                    window.location.href = "next-page.html"; // Replace "next-page.html" with the actual URL of the next page
+                }
+            </script>
 
 
-        <script>
-            function handleCheckboxClick(checkboxId) {
-                var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            <script>
+                function handleCheckboxClick(checkboxId) {
+                    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
-                checkboxes.forEach(function(checkbox) {
-                    if (checkbox.id !== checkboxId) {
-                        checkbox.checked = false;
-                    }
-                });
-            }
-        </script>
+                    checkboxes.forEach(function (checkbox) {
+                        if (checkbox.id !== checkboxId) {
+                            checkbox.checked = false;
+                        }
+                    });
+                }
+            </script>
 
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck1" onclick="handleCheckboxClick('customCheck1')">
-            <label class="custom-control-label" for="customCheck1">Men</label>
-        </div>
-        <ul>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck1"
+                    onclick="handleCheckboxClick('customCheck1')">
+                <label class="custom-control-label" for="customCheck1">Men</label>
+            </div>
+            <ul>
                 <input type="checkbox" id="tshirtCheckbox" onchange="goToNextPage()">
                 <label for="tshirtCheckbox">Tshirt </label>
-        </ul>
-        <ul>
-            <input type="checkbox" id="bagCheckbox" onchange="goToNextPage()">
-            <label for="tshirtCheckbox">Bag </label>
-        </ul>
-        <ul>
-            <input type="checkbox" id="shoesCheckbox" onchange="goToNextPage()">
-            <label for="tshirtCheckbox">Shoes </label>
-        </ul>
-        <ul>
-            <input type="checkbox" id="jacketCheckbox" onchange="goToNextPage()">
-            <label for="tshirtCheckbox">Jacket </label>
-        </ul>
-        <ul>
-            <input type="checkbox" id="jeansCheckbox" onchange="goToNextPage()">
-            <label for="tshirtCheckbox">Jeans </label>
-        </ul>
+            </ul>
+            <ul>
+                <input type="checkbox" id="bagCheckbox" onchange="goToNextPage()">
+                <label for="tshirtCheckbox">Bag </label>
+            </ul>
+            <ul>
+                <input type="checkbox" id="shoesCheckbox" onchange="goToNextPage()">
+                <label for="tshirtCheckbox">Shoes </label>
+            </ul>
+            <ul>
+                <input type="checkbox" id="jacketCheckbox" onchange="goToNextPage()">
+                <label for="tshirtCheckbox">Jacket </label>
+            </ul>
+            <ul>
+                <input type="checkbox" id="jeansCheckbox" onchange="goToNextPage()">
+                <label for="tshirtCheckbox">Jeans </label>
+            </ul>
 
 
 
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck2"   onclick="handleCheckboxClick('customCheck2')" onchange="goToNextPage()">
-            <label class="custom-control-label" for="customCheck1">Women</label>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck2"
+                    onclick="handleCheckboxClick('customCheck2')" onchange="goToNextPage()">
+                <label class="custom-control-label" for="customCheck1">Women</label>
+            </div>
+            <ul>
+                <input type="checkbox" id="tshirtCheckbox1" onchange="goToNextPage()">
+                <label for="tshirtCheckbox">Tshirt </label>
+            </ul>
+            <ul>
+                <input type="checkbox" id="bagCheckbox1" onchange="goToNextPage()">
+                <label for="tshirtCheckbox">Bag </label>
+            </ul>
+            <ul>
+                <input type="checkbox" id="shoesCheckbox1" onchange="goToNextPage()">
+                <label for="tshirtCheckbox">Shoes </label>
+            </ul>
+            <ul>
+                <input type="checkbox" id="jacketCheckbox1" onchange="goToNextPage()">
+                <label for="tshirtCheckbox">Jacket </label>
+            </ul>
+            <ul>
+                <input type="checkbox" id="jeansCheckbox1" onchange="goToNextPage()">
+                <label for="tshirtCheckbox">Jeans </label>
+            </ul>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck3"
+                    onclick="handleCheckboxClick('customCheck3')" onchange="goToNextPage()">
+                <label class="custom-control-label" for="customCheck1">Baby and Kids</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck4"
+                    onclick="handleCheckboxClick('customCheck4')" onchange="goToNextPage()">
+                <label class="custom-control-label" for="customCheck1">Books</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck5"
+                    onclick="handleCheckboxClick('customCheck5')" onchange="goToNextPage()">
+                <label class="custom-control-label" for="customCheck1">Shoes</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck6"
+                    onclick="handleCheckboxClick('customCheck6')" onchange="goToNextPage()">
+                <label class="custom-control-label" for="customCheck1">Household</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck7"
+                    onclick="handleCheckboxClick('customCheck7')" onchange="goToNextPage()">
+                <label class="custom-control-label" for="customCheck1">All Departments</label>
+            </div>
+
         </div>
-        <ul>
-            <input type="checkbox" id="tshirtCheckbox1" onchange="goToNextPage()">
-            <label for="tshirtCheckbox">Tshirt </label>
-        </ul>
-        <ul>
-            <input type="checkbox" id="bagCheckbox1" onchange="goToNextPage()">
-            <label for="tshirtCheckbox">Bag </label>
-        </ul>
-        <ul>
-            <input type="checkbox" id="shoesCheckbox1" onchange="goToNextPage()">
-            <label for="tshirtCheckbox">Shoes </label>
-        </ul>
-        <ul>
-            <input type="checkbox" id="jacketCheckbox1" onchange="goToNextPage()">
-            <label for="tshirtCheckbox">Jacket </label>
-        </ul>
-        <ul>
-            <input type="checkbox" id="jeansCheckbox1" onchange="goToNextPage()">
-            <label for="tshirtCheckbox">Jeans </label>
-        </ul>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck3" onclick="handleCheckboxClick('customCheck3')" onchange="goToNextPage()">
-            <label class="custom-control-label" for="customCheck1">Baby and Kids</label>
-        </div>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck4" onclick="handleCheckboxClick('customCheck4')" onchange="goToNextPage()">
-            <label class="custom-control-label" for="customCheck1">Books</label>
-        </div>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck5" onclick="handleCheckboxClick('customCheck5')" onchange="goToNextPage()">
-            <label class="custom-control-label" for="customCheck1">Shoes</label>
-        </div>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck6" onclick="handleCheckboxClick('customCheck6')" onchange="goToNextPage()">
-            <label class="custom-control-label" for="customCheck1">Household</label>
-        </div>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck7" onclick="handleCheckboxClick('customCheck7')" onchange="goToNextPage()">
-            <label class="custom-control-label" for="customCheck1">All Departments</label>
-        </div>
+        <div class="col-10 pt-3">
 
-    </div>
-    <div class="col-md-10 pt-3">
+            <div class="row">
+                <div class="col-3" th:each="item:${items}">
+                    <div class="card" >
+                        <img th:src="'data:image/png;base64,'+${item.imageBase64}" class="card-img-top"
+                            alt="Item Image">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${item.itemName}">T shirt</h5>
+                            <p class="card-text" th:text="${item.itemDescription}">3/4 Length Sleeve T-Shirt</p>
+                            <p class="card-text" th:text="${item.itemPrice}">RS : 3500</p>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="row">
+                                        <a type="button" class="btn btn-primary " th:href="@{/seller/item/update/{id}(id=${item.itemId})}" >Edit</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-2"></div>
+                                    <div class="col-5">
+                                        <div class="row" >
+                                        <a type="button" class="btn btn-danger" th:href="@{/seller/item/delete/{id}(id=${item.itemId})}">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-        <div class="row">
-            <div class="col-md-3" th:each="item:${items}">
-                <div class="card">
-                    <img th:src="'data:image/png;base64,'+${item.imageBase64}" class="card-img-top" alt="Item Image">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${item.itemName}">T shirt</h5>
-                        <p class="card-text" th:text="${item.itemDescription}">3/4 Length Sleeve T-Shirt</p>
-                        <p class="card-text" th:text="${item.itemPrice}">RS : 3500</p>
-
-                            <button type="button" class="btn btn-primary">Edit</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
-
+                        </div>
                     </div>
                 </div>
             </div>
+
+
+
+
         </div>
-
-
-
-
     </div>
-</div>
 
 
 </body>
+
 </html>

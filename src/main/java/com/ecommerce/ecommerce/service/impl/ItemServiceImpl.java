@@ -38,11 +38,14 @@ public class ItemServiceImpl implements ItemService {
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/item_img";
     @Override
     public void addItem(ItemDto itemDto) throws IOException {
+
+
+
         Category category = categoryService.getByIdNoOpt(itemDto.getCategory());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.getByEmail(email).orElse(new User());
-        Item item = new Item();
+        Item item = getByIdNoOpt(itemDto.getItemId()).orElse(new Item());
         item.setItemName(itemDto.getItemName());
         item.setItemDescription(itemDto.getItemDescription());
         item.setItemPrice(itemDto.getItemPrice());
@@ -66,12 +69,19 @@ public class ItemServiceImpl implements ItemService {
 
         item.setCategory(category);
         item.setUser(user);
+
+
         itemRepo.save(item);
     }
 
     @Override
     public Optional<Item> getByIdNoOpt(int i) {
         return itemRepo.findById(i);
+    }
+
+    @Override
+    public void deleteItem(int id) {
+        itemRepo.deleteById(id);
     }
 
     @Override
