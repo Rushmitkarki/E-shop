@@ -205,53 +205,25 @@
     <div class="col-md-10 pt-3">
 
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3" th:each="item:${items}">
+                <div class="card">
+                    <img th:src="'data:image/png;base64,'+${item.imageBase64}" class="card-img-top" alt="Item Image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${item.itemName}">T shirt</h5>
+                        <p class="card-text" th:text="${item.itemDescription}">3/4 Length Sleeve T-Shirt</p>
+                        <p class="card-text" th:text="${item.itemPrice}">RS : 3500</p>
 
-                <img src="img/Image1.jpeg" height="224" width="173"/>
-                <p class="Class">T shirt</p>
-                <p class="Size">3/4 Length Sleeve T-Shirt</p>
-                <p class="Price">RS : 3500</p>
-            </div>
-            <div class="col-md-3">
+                            <button type="button" class="btn btn-primary">Edit</button>
+                            <button type="button" class="btn btn-danger">Delete</button>
 
-                <img src="img/Image3.jpeg" height="224" width="173"/>
-                <p class="Class">T shirt</p>
-                <p class="Size">NP Men's Short-sleeved T-Shirt</p>
-                <p class="Price">RS : 3750</p>
-            </div>
-            <div class="col-md-3">
-
-                <img src="img/Image4.jpg" height="224" width="173"/>
-                <p class="Class">T shirt</p>
-                <p class="Size">Italy Brand T-shirt </p>
-                <p class="Price">RS : 2750</p>
-            </div>
-            <div class="col-md-3">
-
-                <img src="img/Image5.jpg" height="224" width="173"/>
-                <p class="Class">T shirt</p>
-                <p class="Size">Dude Boy Printed Half Sleeves T-Shirt </p>
-                <p class="Price">RS : 2500</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-3">
 
-                <img src="img/nike.png" height="224px" width="173px" />
-                <p class="Class">Shoes</p>
-                <p class="Size">Nike Air Force 1</p>
-                <p class="Price">RS : 55000</p>
-            </div>
-            <div class="col-md-3">
 
-                <img src="img/Image2.jpeg" height="224px" width="173px"/>
-                <p class="Class">Shoes</p>
-                <p class="Size">New Balance 574 Leather Trainers</p>
-                <p class="Price">RS : 9000</p>
-            </div>
 
-        </div>
     </div>
 </div>
 
