@@ -22,4 +22,7 @@ public interface UserService {
     void verifySeller(String email,String panNumber);
 
     Optional<User> getActiveUser();
+
+    void updateProfile(UserDto userDto);
+
 }
