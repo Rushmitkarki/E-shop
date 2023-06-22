@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Objects;
+
 @RequestMapping("/buyer/bill")
 @RequiredArgsConstructor
 @Controller
@@ -42,9 +44,23 @@ public class BillController {
 
         System.out.println(billDto.getBillId());
         System.out.println(billDto.getBillSubAmount());
-
         billService.saveBill(billDto);
+        if(Objects.equals(billDto.getBillPayment(), "Cash")){
+            return "redirect:/buyer/bill/checkout";
+        }
 
-        return "redirect:/buyer/bill/checkout/"+billDto.getBillId();
+        return "redirect:/buyer/bill/QR";
+
+    }
+
+    @GetMapping("/QR")
+    public String getQR(){
+        return "multiplePaymentMethod";
+    }
+
+    @PostMapping("/upload")
+    public String uploadBill(BillDto billDto){
+        billService.saveBill(billDto);
+        return "redirect:/buyer/bill/checkout";
     }
 }

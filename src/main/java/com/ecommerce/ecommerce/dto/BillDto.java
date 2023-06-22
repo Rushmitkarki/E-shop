@@ -18,11 +18,11 @@ public class BillDto {
     private Double billSubAmount;
     private String billAddress;
 
-    private String subAmount;
     private double discount;
     private double tax;
     private double shipping;
     private double billAmount;
     private String billDate;
+    private String billPayment;
 
 }

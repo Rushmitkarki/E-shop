@@ -47,4 +47,7 @@ public class Bill {
 
     @Column(name="bill_date", length=50, nullable=false)
     private String billDate;
+
+    @Column(name="bill_payment", length=50)
+    private String billPayment;
 }
