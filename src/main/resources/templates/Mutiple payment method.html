@@ -1,0 +1,31 @@
+<div class="container">
+    <h1>Payment Methods</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Credit Cards</h2>
+            <input type="radio" name="payment_method" value="credit_card" checked>
+            <label for=>Credit Card</label>
+            <input type="text" class="form-control" placeholder="Card Number">
+            <input type="text" class="form-control" placeholder="Expiration Date">
+            <input type="text" class="form-control" placeholder="CVV">
+        </div>
+        <div class="col-md-4">
+            <h2>Debit Cards</h2>
+            <input type="radio" name="payment_method" value="debit_card">
+            <label for=>Debit Card</label>
+            <input type="text" class="form-control" placeholder="Card Number">
+            <input type="text" class="form-control" placeholder="Expiration Date">
+            <input type="text" class="form-control" placeholder="CVV">
+        </div>
+        <div class="col-md-4">
+            <h2>E-Wallets</h2>
+            <input type="radio" name="payment_method" value="e-wallet">
+            <label for=>E-Wallet</label>
+            <select class="form-control">
+                <option value="paypal">PayPal</option>
+                <option value="apple_pay">Apple Pay</option>
+                <option value="google_pay">Google Pay</option>
+            </select>
+        </div>
+    </div>
+</div>
