@@ -44,6 +44,21 @@ public class User implements UserDetails {
         @Column(name="pan_number",length=50)
         private String panNumber;
 
+        @Column(name="phone_number",length=50)
+        private String phoneNumber;
+
+        @Column(name="address",length=500)
+        private String address;
+
+        @Column(name="sq",length=500)
+        private String sq;
+
+        @Column(name="image",length=500)
+        private String image;
+
+    @Transient
+    private String imageBase64;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
