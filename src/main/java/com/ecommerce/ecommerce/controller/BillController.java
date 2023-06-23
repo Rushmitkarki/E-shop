@@ -3,6 +3,7 @@ package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.dto.BillDto;
 import com.ecommerce.ecommerce.entity.Bill;
+import com.ecommerce.ecommerce.entity.Cart;
 import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.service.BillService;
 import com.ecommerce.ecommerce.service.CartService;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @RequestMapping("/buyer/bill")
 @RequiredArgsConstructor
@@ -42,9 +45,13 @@ public class BillController {
 
         System.out.println(billDto.getBillId());
         System.out.println(billDto.getBillSubAmount());
-
+        User user = userService.getActiveUser().orElse(new User());
+        int userId = user.getUserId();
+        List<Cart>  carts= cartService.getDataByUserId(userId);
+        for(Cart cart:carts){
+           cartService.setStatus(cart.getId());
+        }
         billService.saveBill(billDto);
-
         return "redirect:/buyer/bill/checkout/"+billDto.getBillId();
     }
 }
