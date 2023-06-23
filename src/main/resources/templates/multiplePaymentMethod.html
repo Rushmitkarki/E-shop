@@ -72,18 +72,23 @@
         <div class="col-6">
 
             <div class="container">
-                <h1>Pay here</h1>
-                <img src="../static/IMG/Scan.png" th:src="@{/IMG/Scan.png}" class="bg-image" alt="" width="250px" height="250px">
+                <h1 class="text-center">Pay here</h1>
+                <img src="../static/IMG/Scan.png" th:src="@{/IMG/Scan.png}" class="mx-auto d-block" alt="" width="250px" height="250px">
             </div>
             <div class="container">
-                <p>Please Upload your payment proof here</p>
+                <h4 class="text-center"> Please upload your payment proof here</h4>
                 <form th:action="@{/buyer/bill/upload}" method="post" enctype="multipart/form-data">
                     <input type="file" name="file" id="Image" accept="image/*">
                     <input type="submit" value="Upload">
+
                 </form>
+
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-4"><div class="alert alert-primary" role="alert">
+            Your payment proof will display here!
+        </div>
+
             <img src="" id="preview-image" class="img-fluid" style="width: 500px;" alt="Image">
         </div>
 
