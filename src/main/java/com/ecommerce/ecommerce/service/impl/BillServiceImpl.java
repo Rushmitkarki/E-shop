@@ -46,6 +46,10 @@ public class BillServiceImpl implements BillService {
         String email = authentication.getName();
         User user = userService.getByEmail(email).orElse(new User());
         bill.setUser(user);
+
+        bill.setBillStatus("Pending");
+        bill.setBillAddress(billDto.getBillAddress());
+        bill.setBillPayment(billDto.getBillPayment());
         billRepo.save(bill);
     }
 
