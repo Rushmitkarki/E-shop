@@ -19,6 +19,6 @@ public class categoryController {
     @PostMapping("/add")
     public String addCategory(@Valid CategoryDto categoryDto){
         categoryService.addCategory(categoryDto);
-       return "redirect:/item/add";
+       return "redirect:/seller/item/add";
     }
 }

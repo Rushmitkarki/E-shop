@@ -20,4 +20,9 @@ public interface UserService {
     void verifyUser(String email,String citizenshipNumber);
 
     void verifySeller(String email,String panNumber);
+
+    Optional<User> getActiveUser();
+
+    void updateProfile(UserDto userDto);
+
 }
