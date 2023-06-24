@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -23,5 +25,11 @@ public class UserController {
     public String viewUser(Model model){
         model.addAttribute("user",userService.getActiveUser());
         return "Profile";
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@Valid UserDto userDto) throws IOException {
+        userService.updateProfile(userDto);
+        return "redirect:/user/view";
     }
 }
