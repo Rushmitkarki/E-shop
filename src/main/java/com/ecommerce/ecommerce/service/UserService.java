@@ -2,6 +2,7 @@ package com.ecommerce.ecommerce.service;
 
 import com.ecommerce.ecommerce.dto.UserDto;
 import com.ecommerce.ecommerce.entity.User;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;

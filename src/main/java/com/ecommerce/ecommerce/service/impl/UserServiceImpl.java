@@ -7,19 +7,23 @@ import com.ecommerce.ecommerce.entity.User;
 
 import com.ecommerce.ecommerce.repo.UserRepo;
 import com.ecommerce.ecommerce.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
+
+
+
     @Override
     public void registerUser(UserDto userDto) {
         User user=new User();
