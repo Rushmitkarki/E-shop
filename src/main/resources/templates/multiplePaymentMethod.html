@@ -77,11 +77,17 @@
             </div>
             <div class="container">
                 <h4 class="text-center"> Please upload your payment proof here</h4>
+
                 <form th:action="@{/buyer/bill/upload}" method="post" enctype="multipart/form-data">
                     <input type="file" name="file" id="Image" accept="image/*">
-                    <input type="submit" value="Upload">
-
+                    <input  type="submit" value="Upload">
                 </form>
+
+                <style>
+                    form {
+                        text-align: center;
+                    }
+                </style>
 
             </div>
         </div>
