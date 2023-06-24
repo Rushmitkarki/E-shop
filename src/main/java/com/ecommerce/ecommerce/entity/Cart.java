@@ -32,5 +32,6 @@ public class Cart {
     @Column(name = "cart_total")
     private double total;
 
-
+    @Column(name = "cart_status")
+    private String status;
 }
