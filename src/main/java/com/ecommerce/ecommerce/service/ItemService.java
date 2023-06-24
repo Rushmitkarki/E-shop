@@ -13,6 +13,8 @@ public interface ItemService {
 
     Optional<Item> getByIdNoOpt(int i) ;
 
+    void deleteItem(int id);
+
     List<Item> getData();
 
     List<Item> getByCategory(int id);

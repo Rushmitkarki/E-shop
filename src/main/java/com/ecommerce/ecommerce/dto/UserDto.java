@@ -3,6 +3,8 @@ package com.ecommerce.ecommerce.dto;
 import lombok.*;
 import jakarta.persistence.*;
 import  jakarta.validation.constraints.*;
+import org.springframework.web.multipart.MultipartFile;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,10 +19,18 @@ public class UserDto {
     private String email;
     private String password;
 
+
     private String role;
     private String status;
     private String citizenshipNumber;
 
     private String panNumber;
 
+    private String phoneNumber;
+
+    private String address;
+
+    private  String Sq;
+
+    private MultipartFile image;
 }

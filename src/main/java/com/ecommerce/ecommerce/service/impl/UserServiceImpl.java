@@ -7,45 +7,55 @@ import com.ecommerce.ecommerce.entity.User;
 
 import com.ecommerce.ecommerce.repo.UserRepo;
 import com.ecommerce.ecommerce.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
+
+
+
     @Override
     public void registerUser(UserDto userDto) {
-        if(Objects.equals(userDto.getRole(), "Buyer")){
-
         User user=new User();
         user.setStatus("ACTIVE");
         user.setFname(userDto.getFname());
         user.setLname(userDto.getLname());
         user.setEmail(userDto.getEmail());
         user.setPassword(PasswordEncoderUtil.getInstance().encode(userDto.getPassword()));
+        user.setSq(userDto.getSq());
         user.setRole(userDto.getRole());
-        user.setCitizenshipNumber(userDto.getCitizenshipNumber());
         userRepo.save(user);
-        }else{
-            User user=new User();
-            user.setStatus("ACTIVE");
+        }
+
+
+
+        @Override
+    public void updateProfile(UserDto userDto) {
+        User user=getActiveUser().orElse(null);
+
+        if(user!=null){
             user.setFname(userDto.getFname());
             user.setLname(userDto.getLname());
             user.setEmail(userDto.getEmail());
-            user.setPassword(PasswordEncoderUtil.getInstance().encode(userDto.getPassword()));
-            user.setRole(userDto.getRole());
-            user.setCitizenshipNumber(userDto.getCitizenshipNumber());
+            user.setAddress(userDto.getAddress());
+            user.setPhoneNumber(userDto.getPhoneNumber());
             userRepo.save(user);
         }
-    }
+        else{
+            System.out.println("User not found");
+        }
 
+    }
 
 
     @Override
@@ -116,6 +126,8 @@ public class UserServiceImpl implements UserService {
         String email = authentication.getName();
         return Optional.of(getByEmail(email).orElse(new User()));
     }
+
+
 
 
 
