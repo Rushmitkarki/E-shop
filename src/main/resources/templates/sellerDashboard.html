@@ -28,7 +28,7 @@
       ]);
 
       var options = {
-        title: 'Company Performance',
+        title: 'Your Performance',
         curveType: 'function',
         legend: { position: 'bottom' }
       };
@@ -47,7 +47,7 @@
     function drawChart() {
 
       var data = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
+        ['Category', 'Item Sold'],
         ['Work',     11],
         ['Eat',      2],
         ['Commute',  2],
@@ -56,7 +56,7 @@
       ]);
 
       var options = {
-        title: 'My Daily Activities'
+        title: 'No of Item sold'
       };
 
       var chart = new google.visualization.PieChart(document.getElementById('piechart'));
