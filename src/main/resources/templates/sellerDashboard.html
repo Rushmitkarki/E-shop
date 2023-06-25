@@ -12,6 +12,59 @@
   <!-- Icon-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Year', 'Sales', 'Expenses'],
+        ['2004',  1000,      400],
+        ['2005',  1170,      460],
+        ['2006',  660,       1120],
+        ['2007',  1030,      540]
+      ]);
+
+      var options = {
+        title: 'Your Performance',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+      chart.draw(data, options);
+    }
+  </script>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Category', 'Item Sold'],
+        ['Work',     11],
+        ['Eat',      2],
+        ['Commute',  2],
+        ['Watch TV', 2],
+        ['Sleep',    7]
+      ]);
+
+      var options = {
+        title: 'No of Item sold'
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+      chart.draw(data, options);
+    }
+  </script>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light fs-3 pt-3 pb-3" style="background-color: #FFC128">
@@ -93,18 +146,15 @@
 </div>
 <div class="container-fluid p-5">
  <div class="row" >
-    <div class="col-lg-8 ">
-      <img src="../static/IMG/Jordans.jpg" class="img-fluid" style="height: 30%" alt="...">
+
+      <div 
+        id="curve_chart" style="width: 1100px; height: 500px">
+      </div>
+      <div
+        id="piechart" style="width: 600px; height: 600px;">
+      </div>
     </div> 
-</div>
-
-
 
 </div>
-
-
-
-
-
 </body>
 </html>
