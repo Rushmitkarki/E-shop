@@ -2,7 +2,9 @@ package com.ecommerce.ecommerce.service;
 
 import com.ecommerce.ecommerce.dto.UserDto;
 import com.ecommerce.ecommerce.entity.User;
+import lombok.AllArgsConstructor;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,6 @@ public interface UserService {
 
     Optional<User> getActiveUser();
 
-    void updateProfile(UserDto userDto);
+    void updateProfile(UserDto userDto) throws IOException;
 
 }

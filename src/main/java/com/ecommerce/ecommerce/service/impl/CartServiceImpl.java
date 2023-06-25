@@ -48,4 +48,18 @@ public class CartServiceImpl implements CartService {
     public List<Cart> getDataByUserId(int UserId) {
         return cartRepo.findByUserId(UserId);
     }
+
+    @Override
+    public void deleteCart(int id) {
+        cartRepo.deleteById(id);
+    }
+
+    @Override
+    public void setStatus(int id) {
+        Cart cart = cartRepo.findById(id).orElse(null);
+        cart.setStatus("Paid");
+        cartRepo.save(cart);
+    }
+
+
 }
