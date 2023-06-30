@@ -1,17 +1,14 @@
 package com.ecommerce.ecommerce.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Table
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Category {
     @Id
     @SequenceGenerator(name = "cat_seq_generator",sequenceName ="cat_id_seq",allocationSize  =1)
