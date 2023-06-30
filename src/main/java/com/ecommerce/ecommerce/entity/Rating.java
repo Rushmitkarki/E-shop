@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Review {
+public class Rating {
 
     @Id
     @ManyToOne
@@ -24,5 +24,8 @@ public class Review {
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
     private User user;
+
+    @Column(name="rating", length=2000, nullable=false)
+    private double rating;
 
 }
