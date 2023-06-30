@@ -27,7 +27,13 @@ public class RatingServiceImpl implements RatingService {
         Item item=itemService.getByIdNoOpt(ratingDto.getItemId()).get();
         rating.setItem(item);
         rating.setUser(user);
+        ratingRepo.save(rating);
 
 
+    }
+
+    @Override
+    public double getAverageRating(int itemId) {
+        return ratingRepo.getAverageRating(itemId);
     }
 }

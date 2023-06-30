@@ -189,14 +189,11 @@
             <h4>Ratings</h4>
             <div class="ratings-section">
               <div class="rating-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-                <i class="far fa-star"></i>
+            <span th:each="star: ${#numbers.sequence(1, 5)}">
+                <i th:class="${rating >= star ? 'fas fa-star' : rating >= star - 0.5 ? 'fas fa-star-half-alt' : 'far fa-star'}"></i>
+            </span>
               </div>
-              <p>4.5 out of 5 stars</p>
-            </div>
+              <p th:text="${rating + ' out of 5 stars'}"></p>
           </div>
         </div>
         <div class="row mt-3">
@@ -228,7 +225,7 @@
                 <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
               </div>
             <form th:action="@{/rating/add}" method="post">
-              <input type="text" name="item_id" hidden th:text="${item.itemId}">
+              <input type="text" name="itemId" th:value="${item.itemId}" th:text="${item.itemId}" hidden>
               <input type="text" name="rating" id="userRating"  hidden>
               <button type="submit" class="btn btn-primary mt-3 mb-3">Submit Rating</button>
             </form>
