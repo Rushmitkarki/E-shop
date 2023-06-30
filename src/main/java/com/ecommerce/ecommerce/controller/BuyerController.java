@@ -81,6 +81,7 @@ public class BuyerController {
     @GetMapping("dashboard")
     public String getDashboard(Model model){
 
+        model.addAttribute("count",itemService.getItemCount());
         model.addAttribute("user",userService.getActiveUser().orElse(null));
         model.addAttribute("Categories",categoryService.getData());
         model.addAttribute("items",itemService.getFourItems());
