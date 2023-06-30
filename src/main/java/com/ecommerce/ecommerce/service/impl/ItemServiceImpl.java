@@ -104,6 +104,10 @@ public class ItemServiceImpl implements ItemService {
         List<Item> allItems = getData(); // Assuming this returns a List<Item>
         return allItems.subList(0, Math.min(allItems.size(), 4));
     }
+    @Override
+    public long getItemCount(){
+        return itemRepo.count();
+    }
 
     @Override
     public List<Item> getBySellerId(int id) {
