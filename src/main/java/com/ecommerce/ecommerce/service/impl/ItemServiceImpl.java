@@ -45,7 +45,14 @@ public class ItemServiceImpl implements ItemService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.getByEmail(email).orElse(new User());
-        Item item = getByIdNoOpt(itemDto.getItemId()).orElse(new Item());
+        int id;
+        if(itemDto.getItemId()==null){
+            id=0;
+        }
+        else{
+            id=itemDto.getItemId();
+        }
+        Item item = getByIdNoOpt(id).orElse(new Item());
         item.setItemName(itemDto.getItemName());
         item.setItemDescription(itemDto.getItemDescription());
         item.setItemPrice(itemDto.getItemPrice());
