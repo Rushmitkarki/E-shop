@@ -41,12 +41,31 @@
                     <a class="nav-link" href="#"><i class="fa-solid fa-user"></i> <span th:text="${user.fname}+${user.lname}"></span></a>
                 </li>
                 <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
+                    <a class="nav-link" href="AboutUs.html"><i class="fa-solid fa-circle-info"></i> About Us</a>
                 </li>
-                <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-bell"></i> Notification</a>
+                <li class="nav-item ps-5" style="position: relative;">
+
+                    <button class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                        <i class="fa-solid fa-bell"></i>
+                        Notification
+                        <span style="position: absolute" th:text="${count}"></span>
+                    </button>
                 </li>
+
+
+
+                <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasTopLabel">Offcanvas top</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+
+                    </div>
+                </div>
+
                 <!-- buyer search -->
+
                 <li class="nav-item ps-5">
                     <a href="#" class="nav-link">Logout</a>
                 </li>
@@ -58,6 +77,7 @@
         </div>
     </div>
 </nav>
+
 <!-- search button -->
 
 <div class="search-bar" style="margin-left: 180px;">
@@ -127,7 +147,6 @@
             </div>
         </div>
     </div>
-    <!-- Rest of the code -->
 
 </div>
 </body>
