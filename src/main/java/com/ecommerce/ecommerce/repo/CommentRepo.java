@@ -1,4 +1,7 @@
 package com.ecommerce.ecommerce.repo;
 
-public interface CommentRepo {
+import com.ecommerce.ecommerce.entity.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CommentRepo  extends JpaRepository<Comment, Integer> {
 }

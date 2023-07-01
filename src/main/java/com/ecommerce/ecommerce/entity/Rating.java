@@ -29,7 +29,7 @@ public class Rating {
     @JoinColumn(name="user_id", nullable=false)
     private User user;
 
-    @Column(name="rating", length=2000, nullable=false)
+    @Column(name="rating", length=2000, nullable=false,columnDefinition = "double default 0")
     private double rating;
 
 }

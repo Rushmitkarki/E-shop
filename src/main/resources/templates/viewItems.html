@@ -200,9 +200,10 @@
           <div class="col-12">
             <h4>Add a Comment</h4>
             <div class="comments-section">
-              <form>
+              <form th:action="@{/comment/add}" method="post">
                 <div class="form-group">
-                  <textarea class="form-control" rows="3" placeholder="Write your comment"></textarea>
+                  <input type="text" name="itemId" th:value="${item.itemId}"  hidden>
+                  <textarea class="form-control" rows="3" placeholder="Write your comment" name="comment"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3 mb-3">Submit</button>
               </form>
@@ -225,7 +226,7 @@
                 <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
               </div>
             <form th:action="@{/rating/add}" method="post">
-              <input type="text" name="itemId" th:value="${item.itemId}" th:text="${item.itemId}" hidden>
+              <input type="text" name="itemId"  th:value="${item.itemId}" hidden>
               <input type="text" name="rating" id="userRating"  hidden>
               <button type="submit" class="btn btn-primary mt-3 mb-3">Submit Rating</button>
             </form>
