@@ -11,6 +11,8 @@ import com.ecommerce.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +35,8 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public double getAverageRating(int itemId) {
-        return ratingRepo.getAverageRating(itemId);
+    public Optional<Double> getAverageRating(int itemId) {
+
+        return Optional.ofNullable(ratingRepo.getAverageRating(itemId));
     }
 }
