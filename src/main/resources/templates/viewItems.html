@@ -12,6 +12,7 @@
   <title> Add to cart</title>
 
   <style>
+    
     .content-section {
       border: 1px solid #ddd;
       border-radius: 5px;
@@ -36,6 +37,27 @@
       border: 1px solid #ddd;
       border-radius: 5px;
       padding: 10px;
+    }
+
+    .rating {
+      display: inline-block;
+    }
+
+    .rating input {
+      display: none;
+    }
+
+    .rating label {
+      color: #ddd;
+      font-size: 30px;
+      padding: 5px;
+      float: right;
+      cursor: pointer;
+    }
+
+    .rating input:checked ~ label,
+    .rating input:checked ~ label ~ label {
+      color: #ffc107; /* Change this to your desired color */
     }
   </style>
 </head>
@@ -96,7 +118,11 @@
               <img src="img/nike.png" th:src="'data:image/png;base64,'+${imageBase64}" class="img-fluid" alt="Item Image">
             </div>
             <div class="col-md-6">
+              <div class="row"></div>
               <h1 class="fw-bold mb-3" th:text="${item.itemName}">Item Name</h1>
+              <div class="btns">
+                <Button type="button" onclick="Toogle1();" id="btnh1" class="btn"><i class="fa-solid fa-heart"></i></Button>
+            </div>
               <h3 class="mb-3" th:text="${item.category.catName}">Category</h3>
               <p class="mb-3" id="itemDescription">Item Description</p>
               <p class="text-muted mb-0" id="itemDescriptionFull" th:text="${item.itemDescription}" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget fermentum nunc. Phasellus pharetra hendrerit ex, vel porta urna aliquet non. Integer laoreet velit sit amet congue efficitur. Suspendisse cursus risus sed elit laoreet, id vestibulum est venenatis. In id lectus malesuada, faucibus risus nec, dictum velit. Sed ac lectus sit amet quam scelerisque consequat nec vel tellus. Fusce facilisis, enim a accumsan dictum, ipsum justo dapibus elit, sed suscipit enim nunc non nibh. Sed id ex a nisl vestibulum bibendum a quis turpis. Quisque pretium turpis vel nisi aliquet sagittis. Sed vulputate ante et leo tempus, a varius sapien fermentum. Sed vestibulum neque justo, sed hendrerit metus rhoncus ut.</p>
@@ -163,14 +189,11 @@
             <h4>Ratings</h4>
             <div class="ratings-section">
               <div class="rating-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-                <i class="far fa-star"></i>
+            <span th:each="star: ${#numbers.sequence(1, 5)}">
+                <i th:class="${rating >= star ? 'fas fa-star' : rating >= star - 0.5 ? 'fas fa-star-half-alt' : 'far fa-star'}"></i>
+            </span>
               </div>
-              <p>4.5 out of 5 stars</p>
-            </div>
+              <p th:text="${rating + ' out of 5 stars'}"></p>
           </div>
         </div>
         <div class="row mt-3">
@@ -189,17 +212,23 @@
         <div class="row mt-3">
           <div class="col-12">
             <h4>Rate the Seller</h4>
-            <div class="ratings-section">
-              <!-- Add rating form or components here -->
-              <div class="rating-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+              <div class="rating">
+                <input type="radio" id="star5" name="rating" value="5" checked>
+                <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
               </div>
+            <form th:action="@{/rating/add}" method="post">
+              <input type="text" name="itemId" th:value="${item.itemId}" th:text="${item.itemId}" hidden>
+              <input type="text" name="rating" id="userRating"  hidden>
               <button type="submit" class="btn btn-primary mt-3 mb-3">Submit Rating</button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -207,6 +236,16 @@
   </div>
 </main>
 <script>
+  var btnvar1 = document.getElementById('btnh1');
+  function Toogle1(){
+      if (btnvar1.style.color == "red") {
+          btnvar1.style.color = "grey"
+      }
+      else{
+          btnvar1.style.color = "red"
+      }
+  }
+
   document.getElementById("showMoreBtn").addEventListener("click", function(e) {
     e.preventDefault();
     var description = document.getElementById("itemDescription");
@@ -222,6 +261,18 @@
       this.textContent = "Show Less";
     }
   });
+  const stars = document.querySelectorAll('.rating input');
+
+  stars.forEach(star => {
+    star.addEventListener('change', () => {
+      // Handle rating change here
+      const rating = star.value;
+        var userRating = document.getElementById("userRating");
+        userRating.setAttribute("value", rating);
+
+    });
+  });
+
 </script>
 </body>
 </html>

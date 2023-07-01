@@ -7,19 +7,27 @@ import com.ecommerce.ecommerce.entity.User;
 
 import com.ecommerce.ecommerce.repo.UserRepo;
 import com.ecommerce.ecommerce.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/profile_img";
+
+
     @Override
     public void registerUser(UserDto userDto) {
         User user=new User();
@@ -36,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
 
         @Override
-    public void updateProfile(UserDto userDto) {
+    public void updateProfile(UserDto userDto) throws IOException {
         User user=getActiveUser().orElse(null);
 
         if(user!=null){
@@ -45,6 +53,21 @@ public class UserServiceImpl implements UserService {
             user.setEmail(userDto.getEmail());
             user.setAddress(userDto.getAddress());
             user.setPhoneNumber(userDto.getPhoneNumber());
+
+            if(userDto.getImage()!=null){
+                String imageName = user.getFname()+"_" + "profile";
+
+                String originalFilename = userDto.getImage().getOriginalFilename();
+                String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+                StringBuilder fileNames = new StringBuilder();
+                System.out.println(UPLOAD_DIRECTORY);
+                Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, imageName + fileExtension);
+                fileNames.append(imageName + fileExtension);
+                Files.write(fileNameAndPath, userDto.getImage().getBytes());
+
+                user.setImage(imageName + fileExtension);
+            }
             userRepo.save(user);
         }
         else{
@@ -88,6 +111,8 @@ public class UserServiceImpl implements UserService {
         user.setLname(userDto.getLname());
         user.setEmail(userDto.getEmail());
         user.setPassword(PasswordEncoderUtil.getInstance().encode(userDto.getPassword()));
+
+
         userRepo.save(user);
 
     }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./Card.css">
+</head>
+<body>
+    <div class="parent">
+        <img class="positioned-image" src="./Cart.svg">
+    <div class="card">
+        <h1>Hello User,</h1>
+        <p>You have received a 10% discount on your next purchase.</p>
+        <button id="receiveButton">Receive</button>
+      </div>
+    </div>
+      
+      <script>
+          document.getElementById("receiveButton").addEventListener("click", function() {
+  // Add your logic here when the button is clicked
+  alert("Discount received!");
+});
+
+          </script>
+</body>
+</html>

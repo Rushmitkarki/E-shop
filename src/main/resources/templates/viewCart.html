@@ -119,14 +119,17 @@
               </tr>
               </thead>
               <tbody>
+
               <tr th:each="cart : ${carts}">
-                <th scope="row" class="h-25" th:text="${cart.getId()}">1</th>
+                <th scope="row" class="h-25" n th:text="${cart.getId()}">1</th>
                 <td th:text="${cart.getItem().getItemName()}">Nike</td>
                 <td th:text="${cart.getItem().getItemPrice()}">100.00</td>
                 <td th:text="${cart.getQuantity()}">2</td>
                 <td></td>
                 <td>
-                  <button class="btn btn-danger remove-item-btn"><i class="fas fa-times"></i></button>
+            <form th:action="@{/buyer/cart/delete/{id}(id=${cart.id}) }" th:method="post" id="delete-form">
+                  <button type="submit" class="btn btn-danger remove-item-btn"><i class="fas fa-times"></i></button>
+            </form>
                 </td>
               </tr>
               </tbody>
@@ -184,7 +187,7 @@
 
   </div>
 </div>
-
+<!-- discount item -->
 
 <script>
   document.getElementById("discountAdd").addEventListener("click", addDiscount);
@@ -196,6 +199,18 @@
     discountPercent.textContent = discount;
   }
 
+// buyer cat
+  var removeButtons = document.getElementsByClassName("remove-item-btn");
+  for (var i = 0; i < removeButtons.length; i++) {
+    removeButtons[i].addEventListener("click", function () {
+      var row = this.closest("tr");
+      var cartId=parseInt(row.cells[0].innerText);
+      var form = row.querySelector("#delete-form");
+      form.action = "/buyer/cart/delete/" + cartId;
+    });
+  }
+
+// total
   function calculateTotal() {
     var subTotal = parseFloat(document.getElementById("sub-total").innerText);
     var discount = parseFloat(document.getElementById("discount").innerText);
@@ -203,41 +218,32 @@
     document.getElementById("total").innerText = total.toFixed(2);
   }
 
+  function calculateSubTotal() {
+    var table = document.getElementById("cart-table");
+    var rows = table.getElementsByTagName("tr");
+    var subTotal = 0;
+
+    for (var i = 1; i < rows.length; i++) {
+      var priceCell = rows[i].cells[2];
+      var quantityCell = rows[i].cells[3];
+      var totalCell = rows[i].cells[4];
+
+      var price = parseFloat(priceCell.innerText);
+      var quantity = parseInt(quantityCell.innerText);
+      var total = price * quantity;
+
+      totalCell.innerText = total.toFixed(2);
+      subTotal += total;
+    }
+
+
+    document.getElementById("sub-total").innerText = subTotal.toFixed(2);
+  }
   document.addEventListener("DOMContentLoaded", function () {
     calculateSubTotal();
     calculateTotal();
 
-    function calculateSubTotal() {
-      var table = document.getElementById("cart-table");
-      var rows = table.getElementsByTagName("tr");
-      var subTotal = 0;
 
-      for (var i = 1; i < rows.length; i++) {
-        var priceCell = rows[i].cells[2];
-        var quantityCell = rows[i].cells[3];
-        var totalCell = rows[i].cells[4];
-
-        var price = parseFloat(priceCell.innerText);
-        var quantity = parseInt(quantityCell.innerText);
-        var total = price * quantity;
-
-        totalCell.innerText = total.toFixed(2);
-        subTotal += total;
-      }
-
-      document.getElementById("sub-total").innerText = subTotal.toFixed(2);
-
-
-      var removeButtons = document.getElementsByClassName("remove-item-btn");
-      for (var i = 0; i < removeButtons.length; i++) {
-        removeButtons[i].addEventListener("click", function () {
-          var row = this.closest("tr");
-          row.remove();
-          calculateSubTotal();
-          calculateTotal();
-        });
-      }
-    }
   });
 </script>
 </body>
