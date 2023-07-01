@@ -64,7 +64,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light fs-3 pt-3 pb-3" style="background-color: #FFC128">
         <div class="container-fluid ">
-            <img src="img/logo.png" alt="" width="100" height="100">
+            <img th:src="@{/IMG/logo.png}" alt="" width="100" height="100">
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -80,32 +80,13 @@
                     <li class="nav-item ps-5">
                         <a class="nav-link" href="#"><i class="fa-solid fa-bars"></i> Products</a>
                     </li>
-                    <li class="nav-item ps-5">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i> My Cart</a>
-                    </li>
+
                     <li class="nav-item ps-5">
                         <a class="nav-link" href="#"><i class="fa-solid fa-user"></i> Profile</a>
                     </li>
                     <li class="nav-item ps-5">
                         <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
                     </li>
-                    <li class="nav-item ps-5">
-                        <a href="#" class="nav-link">Logout</a>
-                    </li>
-                    <li class="nav-item ps-5">
-                        <a href="#" class="nav-link">Delete Account</a>
-                    </li>
-                    <!--        <li class="nav-item dropdown">-->
-                    <!--          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-                    <!--            Dropdown-->
-                    <!--          </a>-->
-                    <!--          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-                    <!--            <li><a class="dropdown-item" href="#">Action</a></li>-->
-                    <!--            <li><a class="dropdown-item" href="#">Another action</a></li>-->
-                    <!--            <li><hr class="dropdown-divider"></li>-->
-                    <!--            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-                    <!--          </ul>-->
-                    <!--        </li>-->
 
                 </ul>
                 <form class="d-flex">

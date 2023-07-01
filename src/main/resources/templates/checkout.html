@@ -150,7 +150,7 @@
                     <div class="row mt-2">
                         <div class="col-6 col-md-3 mb-3">
                             <div class="card">
-                                <img src="../static/IMG/credit.jpg" class="card-img-top" alt="Credit Card">
+                                <img src="../static/IMG/credit.jpg" th:src="@{/IMG/credit.png}" class="card-img-top" alt="Credit Card">
                                 <div class="card-body">
                                     <input class="form-check-input" type="radio" name="payment-method" id="credit-card" value="credit-card">
                                     <label class="form-check-label" for="credit-card">
@@ -172,7 +172,7 @@
                         </div>
                         <div class="col-6 col-md-3 mb-3">
                             <div class="card">
-                                <img src="../static/IMG/fonepay.png" class="card-img-top" alt="Fonepay">
+                                <img src="../static/IMG/fonepay.png" th:src="@{/IMG/fonepay.png}" class="card-img-top" alt="Fonepay">
                                 <div class="card-body">
                                     <input class="form-check-input" type="radio" name="payment-method" id="fonepay" value="fonepay">
                                     <label class="form-check-label" for="fonepay">
@@ -183,7 +183,7 @@
                         </div>
                         <div class="col-6 col-md-3 mb-3">
                             <div class="card">
-                                <img src="../static/IMG/esewa.png" class="card-img-top" alt="eSewa">
+                                <img th:src="@{/IMG/esewa.png}" class="card-img-top" alt="eSewa">
                                 <div class="card-body">
                                     <input class="form-check-input" type="radio" name="payment-method" id="esewa" value="esewa">
                                     <label class="form-check-label" for="esewa">

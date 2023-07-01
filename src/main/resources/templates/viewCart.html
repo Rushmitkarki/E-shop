@@ -193,7 +193,7 @@
 
   </div>
 </div>
-
+<!-- discount item -->
 
 <script>
   document.getElementById("discountAdd").addEventListener("click", addDiscount);
@@ -205,7 +205,7 @@
     discountPercent.textContent = discount;
   }
 
-
+// buyer cat
   var removeButtons = document.getElementsByClassName("remove-item-btn");
   for (var i = 0; i < removeButtons.length; i++) {
     removeButtons[i].addEventListener("click", function () {
@@ -216,7 +216,7 @@
     });
   }
 
-
+// total
   function calculateTotal() {
     var subTotal = parseFloat(document.getElementById("sub-total").innerText);
     var discount = parseFloat(document.getElementById("discount").innerText);
