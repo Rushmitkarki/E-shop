@@ -148,6 +148,12 @@ public class UserServiceImpl implements UserService {
         return Optional.of(getByEmail(email).orElse(new User()));
     }
 
+    @Override
+    public void deleteAccount() {
+        User user=getActiveUser().get();
+        userRepo.delete(user);
+    }
+
 
 
 

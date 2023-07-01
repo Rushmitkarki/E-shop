@@ -10,6 +10,8 @@ import com.ecommerce.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
@@ -24,5 +26,10 @@ public class CommentServiceImpl implements CommentService {
         comment.setItem(itemService.getByIdNoOpt(commentDto.getItemId()).get());
         comment.setUser(userService.getActiveUser().get());
         commentRepo.save(comment);
+    }
+
+    @Override
+    public List<Comment> getCommentsByItemId(int itemId) {
+        return commentRepo.getCommentsByItemId(itemId);
     }
 }
