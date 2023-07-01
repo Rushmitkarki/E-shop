@@ -4,6 +4,8 @@ import com.ecommerce.ecommerce.dto.UserDto;
 import com.ecommerce.ecommerce.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,5 +33,11 @@ public class UserController {
     public String updateUser(@Valid UserDto userDto) throws IOException {
         userService.updateProfile(userDto);
         return "redirect:/user/view";
+    }
+
+    @PostMapping("/delete")
+    public String deleteUser(){
+        userService.deleteAccount();
+        return "redirect:/login";
     }
 }

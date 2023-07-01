@@ -38,6 +38,27 @@
       border-radius: 5px;
       padding: 10px;
     }
+
+    .rating {
+      display: inline-block;
+    }
+
+    .rating input {
+      display: none;
+    }
+
+    .rating label {
+      color: #ddd;
+      font-size: 30px;
+      padding: 5px;
+      float: right;
+      cursor: pointer;
+    }
+
+    .rating input:checked ~ label,
+    .rating input:checked ~ label ~ label {
+      color: #ffc107; /* Change this to your desired color */
+    }
   </style>
 </head>
 <body>
@@ -77,6 +98,12 @@
         <li class="nav-item ps-5">
           <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
         </li>
+        <li class="nav-item ps-5">
+          <a href="#" class="nav-link">Logout</a>
+        </li>
+        <li class="nav-item ps-5">
+          <a href="#" class="nav-link">Delete Account</a>
+        </li>
       </ul>
       <form class="d-flex" th:action="@{/buyer/search}" th:method="post">
         <input class="form-control me-2" type="search" name="searchName" placeholder="Search" aria-label="Search">
@@ -97,6 +124,7 @@
               <img src="img/nike.png" th:src="'data:image/png;base64,'+${imageBase64}" class="img-fluid" alt="Item Image">
             </div>
             <div class="col-md-6">
+              <div class="row"></div>
               <h1 class="fw-bold mb-3" th:text="${item.itemName}">Item Name</h1>
               <div class="btns">
                 <Button type="button" onclick="Toogle1();" id="btnh1" class="btn"><i class="fa-solid fa-heart"></i></Button>
@@ -150,10 +178,8 @@
           <div class="col-12">
             <h4>Comments</h4>
             <div class="comments-section">
-              <ul class="list-group">
-                <li class="list-group-item">Great seller, highly recommended!</li>
-                <li class="list-group-item">Fast shipping and excellent customer service.</li>
-                <li class="list-group-item">The product was exactly as described.</li>
+              <ul class="list-group" th:each="comment:${comments}">
+                <li class="list-group-item" th:text="${comment.commentText}">Great seller, highly recommended!</li>
               </ul>
             </div>
           </div>
@@ -167,23 +193,21 @@
             <h4>Ratings</h4>
             <div class="ratings-section">
               <div class="rating-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-                <i class="far fa-star"></i>
+            <span th:each="star: ${#numbers.sequence(1, 5)}">
+                <i th:class="${rating >= star ? 'fas fa-star' : rating >= star - 0.5 ? 'fas fa-star-half-alt' : 'far fa-star'}"></i>
+            </span>
               </div>
-              <p>4.5 out of 5 stars</p>
-            </div>
+              <p th:text="${rating + ' out of 5 stars'}"></p>
           </div>
         </div>
         <div class="row mt-3">
           <div class="col-12">
             <h4>Add a Comment</h4>
             <div class="comments-section">
-              <form>
+              <form th:action="@{/comment/add}" method="post">
                 <div class="form-group">
-                  <textarea class="form-control" rows="3" placeholder="Write your comment"></textarea>
+                  <input type="text" name="itemId" th:value="${item.itemId}"  hidden>
+                  <textarea class="form-control" rows="3" placeholder="Write your comment" name="comment"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3 mb-3">Submit</button>
               </form>
@@ -193,17 +217,23 @@
         <div class="row mt-3">
           <div class="col-12">
             <h4>Rate the Seller</h4>
-            <div class="ratings-section">
-              <!-- Add rating form or components here -->
-              <div class="rating-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+              <div class="rating">
+                <input type="radio" id="star5" name="rating" value="5" checked>
+                <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
               </div>
+            <form th:action="@{/rating/add}" method="post">
+              <input type="text" name="itemId"  th:value="${item.itemId}" hidden>
+              <input type="text" name="rating" id="userRating"  hidden>
               <button type="submit" class="btn btn-primary mt-3 mb-3">Submit Rating</button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -236,6 +266,18 @@
       this.textContent = "Show Less";
     }
   });
+  const stars = document.querySelectorAll('.rating input');
+
+  stars.forEach(star => {
+    star.addEventListener('change', () => {
+      // Handle rating change here
+      const rating = star.value;
+        var userRating = document.getElementById("userRating");
+        userRating.setAttribute("value", rating);
+
+    });
+  });
+
 </script>
 </body>
 </html>
