@@ -4,6 +4,7 @@ import com.ecommerce.ecommerce.entity.Item;
 import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.service.CategoryService;
 import com.ecommerce.ecommerce.service.ItemService;
+import com.ecommerce.ecommerce.service.RatingService;
 import com.ecommerce.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -26,6 +27,7 @@ public class BuyerController {
     private final CategoryService categoryService;
     private final ItemService itemService;
     private final UserService userService;
+    private final RatingService ratingService;
     @GetMapping("/catalog/{Id}")
     public String getCatalog(Model model, @PathVariable int Id){
         model.addAttribute("user",userService.getActiveUser().orElse(null));
@@ -95,6 +97,7 @@ public class BuyerController {
         Item item=itemService.getByIdNoOpt(Id).orElse(null);
         model.addAttribute("item",item);
         model.addAttribute("imageBase64" ,getImageBase64(item.getItemImage()));
+        model.addAttribute("rating",ratingService.getAverageRating(Id));
         return "viewItems";
     }
 
