@@ -1,0 +1,57 @@
+body {
+    background-color: #ffc128;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.rectangle {
+    background-color: white;
+    width: 1200px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.positioned-image {
+    position: absolute;
+    top: 20px; /* Adjust the top position */
+    left: 650px; /* Adjust the left position */
+}
+
+.rectangle h1 {
+    position: absolute;
+    font-size: 300%;
+    font-weight: bold;
+    text-align: center;
+    top:120px;
+
+}
+
+.button {
+    margin-top: 30px;
+    height: 50px;
+    width: 200px;
+    background-color: #eceae5;
+    color: black;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 30px;
+}
+.button1 {
+    margin-top: 30px;
+    height: 50px;
+    width: 200px;
+    background-color: #eceae5;
+    color: black;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 30px;
+}
