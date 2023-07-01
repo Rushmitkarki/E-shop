@@ -24,4 +24,6 @@ public interface ItemService {
     List<Item> getFourItems();
 
     List<Item> getBySellerId(int id);
+
+    long getItemCount();
 }
