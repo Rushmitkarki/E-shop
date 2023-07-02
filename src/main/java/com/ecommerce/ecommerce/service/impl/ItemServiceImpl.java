@@ -45,7 +45,14 @@ public class ItemServiceImpl implements ItemService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.getByEmail(email).orElse(new User());
-        Item item = getByIdNoOpt(itemDto.getItemId()).orElse(new Item());
+        int id;
+        if(itemDto.getItemId()==null){
+            id=0;
+        }
+        else{
+            id=itemDto.getItemId();
+        }
+        Item item = getByIdNoOpt(id).orElse(new Item());
         item.setItemName(itemDto.getItemName());
         item.setItemDescription(itemDto.getItemDescription());
         item.setItemPrice(itemDto.getItemPrice());
@@ -103,6 +110,10 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getFourItems() {
         List<Item> allItems = getData(); // Assuming this returns a List<Item>
         return allItems.subList(0, Math.min(allItems.size(), 4));
+    }
+    @Override
+    public long getItemCount(){
+        return itemRepo.count();
     }
 
     @Override

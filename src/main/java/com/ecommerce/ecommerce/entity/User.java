@@ -35,7 +35,7 @@ public class User implements UserDetails {
         @Column(name="role",length=50,nullable=false)
         private String role;
 
-        @Column(name="status",length=50,nullable=false)
+        @Column(name="status",length=50)
         private String status;
 
         @Column(name="citizenship_number",length=50)

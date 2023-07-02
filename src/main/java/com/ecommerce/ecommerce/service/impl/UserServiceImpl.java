@@ -2,16 +2,18 @@ package com.ecommerce.ecommerce.service.impl;
 
 import com.ecommerce.ecommerce.config.PasswordEncoderUtil;
 import com.ecommerce.ecommerce.dto.UserDto;
-
+import com.ecommerce.ecommerce.entity.Bill;
+import com.ecommerce.ecommerce.entity.Cart;
+import com.ecommerce.ecommerce.entity.Comment;
+import com.ecommerce.ecommerce.entity.Item;
+import com.ecommerce.ecommerce.entity.Rating;
 import com.ecommerce.ecommerce.entity.User;
-
-import com.ecommerce.ecommerce.repo.UserRepo;
+import com.ecommerce.ecommerce.repo.*;
 import com.ecommerce.ecommerce.service.UserService;
-import lombok.AllArgsConstructor;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -26,11 +28,15 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/profile_img";
-
+    private final ItemRepo itemRepo;
+    private final CartRepo cartRepo;
+    private final BillRepo billRepo;
+    private final RatingRepo ratingRepo;
+    private final CommentRepo commentRepo;
 
     @Override
     public void registerUser(UserDto userDto) {
-        User user=new User();
+        User user = new User();
         user.setStatus("ACTIVE");
         user.setFname(userDto.getFname());
         user.setLname(userDto.getLname());
@@ -39,23 +45,21 @@ public class UserServiceImpl implements UserService {
         user.setSq(userDto.getSq());
         user.setRole(userDto.getRole());
         userRepo.save(user);
-        }
+    }
 
-
-
-        @Override
+    @Override
     public void updateProfile(UserDto userDto) throws IOException {
-        User user=getActiveUser().orElse(null);
+        User user = getActiveUser().orElse(null);
 
-        if(user!=null){
+        if (user != null) {
             user.setFname(userDto.getFname());
             user.setLname(userDto.getLname());
             user.setEmail(userDto.getEmail());
             user.setAddress(userDto.getAddress());
             user.setPhoneNumber(userDto.getPhoneNumber());
 
-            if(userDto.getImage()!=null){
-                String imageName = user.getFname()+"_" + "profile";
+            if (userDto.getImage() != null) {
+                String imageName = user.getFname() + "_" + "profile";
 
                 String originalFilename = userDto.getImage().getOriginalFilename();
                 String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
@@ -69,13 +73,11 @@ public class UserServiceImpl implements UserService {
                 user.setImage(imageName + fileExtension);
             }
             userRepo.save(user);
-        }
-        else{
+        } else {
             System.out.println("User not found");
         }
 
     }
-
 
     @Override
     public List<User> getData() {
@@ -86,7 +88,6 @@ public class UserServiceImpl implements UserService {
     public Optional<User> getById(Integer id) {
         return Optional.empty();
     }
-
 
     @Override
     public User getByIdNoOpt(Integer id) {
@@ -105,38 +106,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void setSession(User user) {
-        UserDto userDto=new UserDto();
+        UserDto userDto = new UserDto();
         user.setStatus("ACTIVE");
         user.setFname(userDto.getFname());
         user.setLname(userDto.getLname());
         user.setEmail(userDto.getEmail());
         user.setPassword(PasswordEncoderUtil.getInstance().encode(userDto.getPassword()));
 
-
         userRepo.save(user);
 
     }
 
     @Override
-    public void verifyUser(String email,String citizenshipNumber) {
-        User user= userRepo.findByEmail(email).orElse(null);
-        if(user!=null){
-           user.setCitizenshipNumber(citizenshipNumber);
+    public void verifyUser(String email, String citizenshipNumber) {
+        User user = userRepo.findByEmail(email).orElse(null);
+        if (user != null) {
+            user.setCitizenshipNumber(citizenshipNumber);
             userRepo.save(user);
-        }
-        else{
+        } else {
             System.out.println("User not found");
         }
     }
 
     @Override
     public void verifySeller(String email, String panNumber) {
-        User user= userRepo.findByEmail(email).orElse(null);
-        if(user!=null){
+        User user = userRepo.findByEmail(email).orElse(null);
+        if (user != null) {
             user.setPanNumber(panNumber);
             userRepo.save(user);
-        }
-        else{
+        } else {
             System.out.println("User not found");
         }
     }
@@ -148,9 +146,66 @@ public class UserServiceImpl implements UserService {
         return Optional.of(getByEmail(email).orElse(new User()));
     }
 
+    @Override
+    public void deleteAccount() {
+        User user = getActiveUser().get();
 
+        // Check if the user is a buyer
+        if (user.getRole().equals("Buyer")) {
+            // Delete the buyer's carts
+            List<Cart> carts = cartRepo.findByUserId(user.getUserId());
 
+            for (Cart cart : carts) {
+                cartRepo.delete(cart);
+            }
 
+            // Delete the buyer's bills
+            List<Bill> bills = billRepo.getByUserId(user.getUserId());
 
+            for (Bill bill : bills) {
+                billRepo.delete(bill);
+            }
+
+            List<Rating> ratings = ratingRepo.getByUserId(user.getUserId());
+            for (Rating rating : ratings) {
+                ratingRepo.delete(rating);
+            }
+
+            List<Comment> comments = commentRepo.getByUserId(user.getUserId());
+            for (Comment comment : comments) {
+                commentRepo.delete(comment);
+            }
+
+            // Delete the buyer
+            userRepo.delete(user);
+        } else if (user.getRole().equals("Seller")) {
+            // Delete the seller's items
+            List<Item> items = itemRepo.getBySellerId(user.getUserId());
+
+            for (Item item : items) {
+                List<Cart> carts = cartRepo.getByItemId(item.getItemId());
+                for (Cart cart : carts) {
+                    cartRepo.delete(cart);
+                }
+
+                List<Rating> ratings = ratingRepo.getByItemId(item.getItemId());
+                for (Rating rating : ratings) {
+                    ratingRepo.delete(rating);
+                }
+
+                List<Comment> comments = commentRepo.getCommentsByItemId(item.getItemId());
+                for (Comment comment : comments) {
+                    commentRepo.delete(comment);
+                }
+                itemRepo.delete(item);
+            }
+
+            // Delete the seller
+            userRepo.delete(user);
+        } else {
+            // The user is not a buyer or a seller
+            System.out.println("The user is not a buyer or a seller");
+        }
+    }
 
 }
