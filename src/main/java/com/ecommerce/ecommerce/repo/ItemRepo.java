@@ -1,6 +1,8 @@
 package com.ecommerce.ecommerce.repo;
 
 import com.ecommerce.ecommerce.entity.Item;
+import com.ecommerce.ecommerce.entity.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,4 +24,6 @@ List<Item> getByPartialName(@Param("partialName") String partialName);
 //Get by seller
     @Query(value="select * from Item where email = ?1", nativeQuery = true)
     List<Item> getBySellerId(int id);
+
+
 }

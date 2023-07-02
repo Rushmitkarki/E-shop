@@ -98,6 +98,12 @@
         <li class="nav-item ps-5">
           <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
         </li>
+        <li class="nav-item ps-5">
+          <a href="#" class="nav-link">Logout</a>
+        </li>
+        <li class="nav-item ps-5">
+          <a href="#" class="nav-link">Delete Account</a>
+        </li>
       </ul>
       <form class="d-flex" th:action="@{/buyer/search}" th:method="post">
         <input class="form-control me-2" type="search" name="searchName" placeholder="Search" aria-label="Search">
@@ -172,10 +178,8 @@
           <div class="col-12">
             <h4>Comments</h4>
             <div class="comments-section">
-              <ul class="list-group">
-                <li class="list-group-item">Great seller, highly recommended!</li>
-                <li class="list-group-item">Fast shipping and excellent customer service.</li>
-                <li class="list-group-item">The product was exactly as described.</li>
+              <ul class="list-group" th:each="comment:${comments}">
+                <li class="list-group-item" th:text="${comment.commentText}">Great seller, highly recommended!</li>
               </ul>
             </div>
           </div>
@@ -200,9 +204,10 @@
           <div class="col-12">
             <h4>Add a Comment</h4>
             <div class="comments-section">
-              <form>
+              <form th:action="@{/comment/add}" method="post">
                 <div class="form-group">
-                  <textarea class="form-control" rows="3" placeholder="Write your comment"></textarea>
+                  <input type="text" name="itemId" th:value="${item.itemId}"  hidden>
+                  <textarea class="form-control" rows="3" placeholder="Write your comment" name="comment"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3 mb-3">Submit</button>
               </form>
@@ -225,7 +230,7 @@
                 <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
               </div>
             <form th:action="@{/rating/add}" method="post">
-              <input type="text" name="itemId" th:value="${item.itemId}" th:text="${item.itemId}" hidden>
+              <input type="text" name="itemId"  th:value="${item.itemId}" hidden>
               <input type="text" name="rating" id="userRating"  hidden>
               <button type="submit" class="btn btn-primary mt-3 mb-3">Submit Rating</button>
             </form>

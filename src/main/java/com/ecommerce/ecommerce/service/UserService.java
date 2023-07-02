@@ -27,4 +27,6 @@ public interface UserService {
 
     void updateProfile(UserDto userDto) throws IOException;
 
+    void deleteAccount();
+
 }
