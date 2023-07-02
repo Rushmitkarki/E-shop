@@ -65,7 +65,7 @@
                                 </form>
                             </li>
                             <li>
-                                <form th:action="@{\user\delete}" method="post">
+                                <form th:action="@{/user/delete}" method="post">
                                     <button class="dropdown-item">Delete Account</button>
                                 </form>
                             </li>
@@ -79,7 +79,7 @@
                                 class="fa-solid fa-message"></i></button>
                     </li>
                     <li class="nav-item ps-5">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
+                        <a class="nav-link" th:href="@{/user/about}"><i class="fa-solid fa-circle-info"></i> About Us</a>
                     </li>
                 </ul>
 

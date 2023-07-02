@@ -1,9 +1,17 @@
 package com.ecommerce.ecommerce.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Report {
 
     @SequenceGenerator(name = "report_seq_generator", sequenceName = "report_id_seq", allocationSize = 1)
