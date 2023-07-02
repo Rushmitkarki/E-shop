@@ -178,10 +178,8 @@
           <div class="col-12">
             <h4>Comments</h4>
             <div class="comments-section">
-              <ul class="list-group">
-                <li class="list-group-item">Great seller, highly recommended!</li>
-                <li class="list-group-item">Fast shipping and excellent customer service.</li>
-                <li class="list-group-item">The product was exactly as described.</li>
+              <ul class="list-group" th:each="comment:${comments}">
+                <li class="list-group-item" th:text="${comment.commentText}">Great seller, highly recommended!</li>
               </ul>
             </div>
           </div>
