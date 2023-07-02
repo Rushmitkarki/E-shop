@@ -6,40 +6,40 @@
 * {    
   box-sizing: border-box;    
 }    
-    
-input[type=text], select, textarea {    
-  width: 100%;    
-  padding: 12px;    
-  border: 1px solid rgb(248, 5, 5);    
-  border-radius: 4px;    
-  resize: vertical;    
-}    
-input[type=email], select, textarea {    
-  width: 100%;    
-  padding: 12px;    
-  border: 1px solid rgb(248, 5, 5);    
-  border-radius: 4px;    
-  resize: vertical;    
-}    
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgb(248, 5, 5);
+  border-radius: 4px;
+  resize: vertical;
+}
+input[type=email], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgb(248, 5, 5);
+  border-radius: 4px;
+  resize: vertical;
+}
     
 label {    
   padding: 12px 12px 12px 0;    
   display: inline-block;    
 }    
     
-input[type=submit] {    
-  background-color: rgb(246, 8, 8);    
-  color: white;    
-  padding: 12px 20px;    
-  border: none;    
-  border-radius: 4px;    
-  cursor: pointer;    
-  float: right;    
-}    
-    
-input[type=submit]:hover {    
-  background-color: #307a34;    
-}    
+input[type=submit] {
+  background-color: rgb(246, 8, 8);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #307a34;
+}
     
 .container {    
   border-radius: 5px;    
@@ -72,13 +72,13 @@ input[type=submit]:hover {
 <body>    
 <h2>REPORT FORM</h2>    
 <div class="container">    
-  <form>    
+  <form th:action="@{/report/save}" th:method="post">
     <div class="row">    
       <div class="col-25">    
         <label for="cname">Customer Name</label>    
       </div>    
       <div class="col-75">    
-        <input type="text" id="cname" name="customername" placeholder="Customer name..">    
+        <input type="text" id="cname" name="customername" th:value="${user.fname}+' '+${user.lname}" placeholder="Customer name..">
       </div>    
     </div>    
     <div class="row">    
@@ -86,7 +86,7 @@ input[type=submit]:hover {
         <label for="sname">Seller Name</label>    
       </div>    
       <div class="col-75">    
-        <input type="text" id="sname" name="sellername" placeholder="Seller name..">    
+        <input type="text" id="sname" name="sellername" th:value="${item.user.fname}+' '+${item.user.lname}" placeholder="Seller name..">
       </div>    
     </div>  
     <div class="row">    
@@ -95,7 +95,7 @@ input[type=submit]:hover {
       </div> 
           
       <div class="col-75">    
-        <input type="text" id="customerid" name="customerid" placeholder="Your customer id..">    
+        <input type="text" id="customerid" name="userid" th:value="${user.userId}" placeholder="Your customer id..">
       </div>    
     </div>   
     <div class="row">    
@@ -103,7 +103,7 @@ input[type=submit]:hover {
         <label for="itemid">Item Id</label>    
       </div>    
       <div class="col-75">    
-        <input type="text" id="itemid" name="itemid" placeholder="Your item id..">    
+        <input type="text" id="itemid" name="itemId"  th:value="${item.itemId}" placeholder="Your item id..">
       </div>    
        
     </div>     
@@ -115,14 +115,14 @@ input[type=submit]:hover {
     </div>    
     <div class="row">    
       <div class="col-25">    
-        <label for="feed_back">Reports</label>    
+        <label for="subject">Reports</label>
       </div>    
       <div class="col-75">    
-        <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>    
+        <textarea id="subject" name="reportDescription" placeholder="Write something.." style="height:200px"></textarea>
       </div>    
     </div>    
     <div class="row">    
-      <input type="submit" value="Submit">    
+      <input type="submit">
     </div>    
   </form>    
 </div>    

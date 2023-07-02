@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BillRepo extends JpaRepository<Bill,Integer> {
 
-    @Query(value = "select * from bill where user_id = ?1",nativeQuery = true)
+    @Query(value = "select * from bill where email= ?1",nativeQuery = true)
     List<Bill> getByUserId(Integer userId);
 }
