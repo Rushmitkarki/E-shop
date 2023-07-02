@@ -10,14 +10,14 @@
 input[type=text], select, textarea {    
   width: 100%;    
   padding: 12px;    
-  border: 1px solid rgb(70, 68, 68);    
+  border: 1px solid rgb(248, 5, 5);    
   border-radius: 4px;    
   resize: vertical;    
 }    
 input[type=email], select, textarea {    
   width: 100%;    
   padding: 12px;    
-  border: 1px solid rgb(70, 68, 68);    
+  border: 1px solid rgb(248, 5, 5);    
   border-radius: 4px;    
   resize: vertical;    
 }    
@@ -28,7 +28,7 @@ label {
 }    
     
 input[type=submit] {    
-  background-color: rgb(37, 116, 161);    
+  background-color: rgb(246, 8, 8);    
   color: white;    
   padding: 12px 20px;    
   border: none;    
@@ -38,7 +38,7 @@ input[type=submit] {
 }    
     
 input[type=submit]:hover {    
-  background-color: #45a049;    
+  background-color: #307a34;    
 }    
     
 .container {    
@@ -70,56 +70,52 @@ input[type=submit]:hover {
 </style>    
 </head>    
 <body>    
-<h2>FEED BACK FORM</h2>    
+<h2>REPORT FORM</h2>    
 <div class="container">    
   <form>    
     <div class="row">    
       <div class="col-25">    
-        <label for="fname">First Name</label>    
+        <label for="cname">Customer Name</label>    
       </div>    
       <div class="col-75">    
-        <input type="text" id="fname" name="firstname" placeholder="Your name..">    
+        <input type="text" id="cname" name="customername" placeholder="Customer name..">    
       </div>    
     </div>    
     <div class="row">    
       <div class="col-25">    
-        <label for="lname">Last Name</label>    
+        <label for="sname">Seller Name</label>    
       </div>    
       <div class="col-75">    
-        <input type="text" id="lname" name="lastname" placeholder="Your last name..">    
+        <input type="text" id="sname" name="sellername" placeholder="Seller name..">    
       </div>    
-    </div>    
-    <div class="row">    
-        <div class="col-25">    
-          <label for="email">Email</label>    
-        </div>    
-        <div class="col-75">    
-          <input type="email" id="email" name="email" placeholder="Your email id..">    
-        </div>    
-      </div>    
+    </div>  
     <div class="row">    
       <div class="col-25">    
-        <label for="country">Country</label>    
+        <label for="customerid">Customer Id</label>    
+      </div> 
+          
+      <div class="col-75">    
+        <input type="text" id="customerid" name="customerid" placeholder="Your customer id..">    
+      </div>    
+    </div>   
+    <div class="row">    
+      <div class="col-25">    
+        <label for="itemid">Item Id</label>    
       </div>    
       <div class="col-75">    
-        <select id="country" name="country">    
-            <option value="none">Select Country</option>    
-          <option value="australia">Australia</option>    
-          <option value="canada">Canada</option>    
-          <option value="usa">USA</option>    
-          <option value="russia">Russia</option>    
-          <option value="japan">Japan</option>    
-          <option value="india">India</option>    
-          <option value="china">China</option>
-          <option value="nepal">Nepal</option>  
-          <option value="switzerland">Nepal</option>    
-          <option value="newzealand">NewZealand</option>
-        </select>    
+        <input type="text" id="itemid" name="itemid" placeholder="Your item id..">    
       </div>    
+       
+    </div>     
+    <div class="row">    
+          
+      </div>    
+    <div class="row">    
+        
     </div>    
     <div class="row">    
       <div class="col-25">    
-        <label for="feed_back">Feed Back</label>    
+        <label for="feed_back">Reports</label>    
       </div>    
       <div class="col-75">    
         <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>    
