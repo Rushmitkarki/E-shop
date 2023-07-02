@@ -72,7 +72,7 @@ input[type=submit]:hover {
 <body>    
 <h2>FEED BACK FORM</h2>    
 <div class="container">    
-  <form>    
+  <form th:action="@{/feedback/save}" method="post">
     <div class="row">    
       <div class="col-25">    
         <label for="fname">First Name</label>    
@@ -94,7 +94,7 @@ input[type=submit]:hover {
           <label for="email">Mail Id</label>    
         </div>    
         <div class="col-75">    
-          <input type="email" id="email" name="mailid" placeholder="Your mail id..">    
+          <input type="email" id="email" name="email" placeholder="Your mail id..">
         </div>    
       </div>    
     <div class="row">    
@@ -116,10 +116,10 @@ input[type=submit]:hover {
     </div>    
     <div class="row">    
       <div class="col-25">    
-        <label for="feed_back">Feed Back</label>    
+        <label for="subject">Feed Back</label>
       </div>    
       <div class="col-75">    
-        <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>    
+        <textarea id="subject" name="feedback" placeholder="Write something.." style="height:200px"></textarea>
       </div>    
     </div>    
     <div class="row">    
