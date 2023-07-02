@@ -14,7 +14,9 @@
             font-family: Inter;
         }
         body{
-            background-color: #BBE3EC ;
+            background-color: #BCE4EB ;
+
+
         }
         .heading{
             width: 90%;
@@ -24,6 +26,12 @@
             flex-direction: column;
             text-align: center;
             margin: 20px auto;
+        }
+        .heading img{
+            border-radius: 50%;
+            /*position: absolute;*/
+            /*top: 0;*/
+            /*left: 0;*/
         }
         .heading h1{
             font-size: 50px;
@@ -136,6 +144,7 @@
 </head>
 <body>
     <div class="heading">
+        <img src="../static/IMG/logo.png" th:src="@{/IMG/logo.png}" alt="" width="70" height="70">
         <h1>About Us</h1>
         <p> A company that generates revenue from selling products or services online.This e-commerce sector deals with online sales and purchases of goods and services through the use of digital platforms, payment methods, and order fulfillment logistics.</p>
     </div>
