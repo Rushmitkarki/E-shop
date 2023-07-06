@@ -10,4 +10,9 @@ public interface CommentRepo  extends JpaRepository<Comment, Integer> {
 
     @Query(value = "select * from comment where item_id=?1",nativeQuery = true)
     List<Comment> getCommentsByItemId(int itemId);
+
+    
+
+    @Query(value = "select * from comment where user_id=?1",nativeQuery = true)
+    List<Comment> getByUserId(Integer userId);
 }
