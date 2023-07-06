@@ -1,5 +1,5 @@
 body {
-    background-color: #ffc128;
+    background-color: #fefdf9;
     margin: 0;
     padding: 0;
     display: flex;
@@ -9,9 +9,9 @@ body {
 }
 
 .rectangle {
-    background-color: white;
-    width: 1200px;
-    height: 600px;
+    background-color: #D9D9D9;
+    width: 500px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,10 +21,14 @@ body {
 .positioned-image {
     position: absolute;
     top: 20px; /* Adjust the top position */
-    left: 650px; /* Adjust the left position */
+    left: 50px; /* Adjust the left position */
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
 }
 
 .rectangle h1 {
+    margin-top: 100px;
     position: absolute;
     font-size: 300%;
     font-weight: bold;
@@ -37,7 +41,7 @@ body {
     margin-top: 30px;
     height: 50px;
     width: 200px;
-    background-color: #eceae5;
+    background-color: #98B4CA;
     color: black;
     border: none;
     font-size: 16px;
@@ -48,7 +52,7 @@ body {
     margin-top: 30px;
     height: 50px;
     width: 200px;
-    background-color: #eceae5;
+    background-color: #98B4CA;
     color: black;
     border: none;
     font-size: 16px;
