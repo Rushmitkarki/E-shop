@@ -26,4 +26,6 @@ public interface ItemService {
     List<Item> getBySellerId(int id);
 
     long getItemCount();
+
+    List<Item> sortItem(String order);
 }
