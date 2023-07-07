@@ -6,6 +6,14 @@
     font-size: 16px;
     transition: all 500ms ease; 
 }
+.positioned-image {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
 .row {
     background-color: #3b7eb6;
     color: #ffffff;
