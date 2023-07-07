@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -101,6 +102,24 @@ public class BuyerController {
         return "viewItems";
     }
 
+    @GetMapping("/item/sort/{order}")
+    public String sortCatalog(@PathVariable String order,Model model){
+        model.addAttribute("user",userService.getActiveUser().orElse(null));
+        model.addAttribute("Categories",categoryService.getData());
+
+        System.out.println(order);
+        List<Item> items=itemService.sortItem(order);
+        model.addAttribute("items",items.stream().map(item -> Item.builder()
+                .itemId(item.getItemId())
+                .itemPrice(item.getItemPrice())
+                .imageBase64(getImageBase64(item.getItemImage()))
+                .itemDescription(item.getItemDescription())
+                .build()
+        ));
+
+        return "catalog";
+    }
+
     public String getImageBase64(String fileName) {
         String filePath = System.getProperty("user.dir") + "/item_img/";
         File file = new File(filePath + fileName);
@@ -113,4 +132,6 @@ public class BuyerController {
         }
         return Base64.getEncoder().encodeToString(bytes);
     }
+
+
 }
