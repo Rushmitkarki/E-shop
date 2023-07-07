@@ -40,4 +40,9 @@ public class UserController {
         userService.deleteAccount();
         return "redirect:/login";
     }
+
+    @GetMapping("/about")
+    public String about(){
+        return "AboutUs";
+    }
 }
