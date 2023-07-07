@@ -1,6 +1,5 @@
 package com.ecommerce.ecommerce.service.impl;
 
-import com.ecommerce.ecommerce.dto.UserDto;
 import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -14,8 +13,6 @@ import com.ecommerce.ecommerce.service.CategoryService;
 import com.ecommerce.ecommerce.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -24,7 +21,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -114,6 +110,25 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public long getItemCount(){
         return itemRepo.count();
+    }
+
+    @Override
+    public List<Item> sortItem(String order) {
+        if(order.equals("A")){
+            return itemRepo.orderByNameAsc();
+        }
+        else if(order.equals("Z")){
+            return itemRepo.orderByNameDesc();
+        }
+        else if(order.equals("L")){
+            return itemRepo.orderByPriceAsc();
+        }
+        else if(order.equals("H")){
+            return itemRepo.orderByPriceDesc();
+        }
+        else{
+            return itemRepo.findAll();
+        }
     }
 
     @Override
