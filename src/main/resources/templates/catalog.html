@@ -44,12 +44,7 @@
                 <li class="nav-item ps-5">
                     <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
                 </li>
-                <li class="nav-item ps-5">
-                    <a href="#" class="nav-link">Logout</a>
-                </li>
-                <li class="nav-item ps-5">
-                    <a href="#" class="nav-link">Delete Account</a>
-                </li>
+
             </ul>
             <form class="d-flex" th:action="@{/buyer/search}" th:method="post">
                 <input class="form-control me-2" type="search" name="searchName" placeholder="Search" aria-label="Search">
@@ -63,6 +58,23 @@
 
 
 <main>
+    <div class="row">
+        <div class="col-10 m-5"></div>
+        <div class="col-1">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    View As
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" th:href="@{/buyer/item/sort/A}">A-Z</a></li>
+                    <li><a class="dropdown-item" th:href="@{/buyer/item/sort/Z}">Z-A</a></li>
+                    <li><a class="dropdown-item" th:href="@{/buyer/item/sort/L}">Low to High</a></li>
+                    <li><a class="dropdown-item" th:href="@{/buyer/item/sort/H}">High to Low</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-2"></div>
         <div class="col-9">

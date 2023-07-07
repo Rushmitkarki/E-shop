@@ -23,6 +23,7 @@ public class Item {
     @Column(name="item_price", length=50, nullable=false)
     private Integer itemPrice;
 
+
     @Column(name="item_quantity", length=50, nullable=false)
     private Integer itemQuantity;
 
