@@ -181,10 +181,10 @@
 
                     <head>
                         <title>Chat</title>
-                        <link rel="stylesheet" type="text/css" href="../static/CSS/Chat.css">
+                        <link rel="stylesheet" type="text/css" th:href="@{/CSS/Chat.css}" href="../static/CSS/Chat.css">
                     </head>
 
-                    <body>
+                    <body >
                         <div class="container">
                             <div class="body" th:each="chat:${chat}">
                                 <p class="message">Hello</p>
