@@ -129,6 +129,30 @@
                                 <hr class="dropdown-divider">
                             </li>
 
+
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                            <button type=submit class="dropdown-item" >Logout</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form th:action="@{user\delete}" method="post">
+                                <button class="dropdown-item" >Delete Account</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item ps-5">
+                    <a class="nav-link" href="#" th:text="${count}"><i class="fa-solid fa-bell"></i></a>
+                </li>
+                <li class="nav-item ps-5">
+                    <a href="" class="nav-link"><i class="fa-solid fa-message"></i></a>
+                </li>
+                <li class="nav-item ps-5">
+                    <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
+                </li>
+            </ul>
+
                             <li>
                                 <form th:action="@{/logout}" method="post">
                                     <button type=submit class="dropdown-item">Logout</button>
