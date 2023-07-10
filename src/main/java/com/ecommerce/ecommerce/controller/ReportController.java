@@ -34,6 +34,6 @@ public class ReportController {
     @PostMapping("/save")
     public String saveReport(ReportDto reportDto){
         reportService.reportItem(reportDto);
-        return "redirect:/{id}"+reportDto.getItemId();
+        return "redirect:/buyer/item/"+reportDto.getItemId();
     }
 }
