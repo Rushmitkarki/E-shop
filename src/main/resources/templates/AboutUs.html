@@ -14,8 +14,7 @@
             font-family: Inter;
         }
         body{
-            background-color: #BCE4EB ;
-
+           background-color: #BCE4EB ;
 
         }
         .heading{
@@ -95,20 +94,6 @@
             line-height: 1.5;
             color: black;
         }
-        /*.about-content .read-more{*/
-        /*    display: inline-block;*/
-        /*    padding: 10px 20px;*/
-        /*    background-color: #FFC128;*/
-        /*    color: #fff;*/
-        /*    font-size: 19px;*/
-        /*    text-decoration: none;*/
-        /*    border-radius:25px ;*/
-        /*    margin-top: 15px;*/
-        /*    transition: 0.3s ease;*/
-        /*}*/
-        /*.about-content .read-more:hover{*/
-        /*    background-color: #FFC128;*/
-        /*}*/
         @media screen and (max-width: 768px){
             .heading{
                 padding: 0px 20px;
@@ -135,14 +120,56 @@
                 padding: 0px;
                 font-size: 16px;
             }
-            /*.about-content .read-more{*/
-            /*    font-size: 16px;*/
-            /*}*/
+        }
+        /* Footer Box */
+        .footer_box {
+            background-color: #2a2a34;
+            color: #fff;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
 
+        .footer_content {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo_container {
+            margin-right: 20px;
+        }
+
+        .logo_container img {
+            width: 150px;
+            height: 150px;
+        }
+
+        .centered_text {
+            flex-grow: 1;
+            text-align: center;
+        }
+        .kilimanjaro_part {
+            margin-left: 20px;
+        }
+        .footer_box h3 {
+            font-size: 18px;
+            color: white;
+            font-family: Inter;
+            margin-bottom: 10px;
+        }
+
+        .footer_box p {
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 10px;
+        }
+
+        .footer_box h5 {
+            color: #fff;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
+
     <div class="heading">
         <img src="../static/IMG/logo.png" th:src="@{/IMG/logo.png}" alt="" width="70" height="70">
         <h1>About Us</h1>
@@ -161,11 +188,32 @@
                     We always keep an eye on the latest trends and put our customers’ wishes first.
                     That is why we have satisfied customers, and are thrilled to be a part of the industry.
                     The interests of our customers are always top priority for us, so we hope you will enjoy our products as much as we enjoy making them available to you.</p>
-<!--                <a href="" class="read-more">Read More</a>-->
             </div>
         </section>
 
     </div>
+    <footer class="footer_box">
+        <div class="footer_content">
+            <div class="logo_container">
+                <img src="../static/IMG/logo.png" th:src="@{/IMG/logo.png}" />
+            </div>
+            <div class="centered_text">
+                <p class="row1">©2023 All Rights Reserved</p>
+                <p class="row2">Terms and condition</p>
+            </div>
+            <div class="kilimanjaro_part">
+                <h5>Contact Us</h5>
+                <div class="kilimanjaro_single_contact_info">
+                    <h5>Phone:</h5>
+                    <p>+977 987645375643 <br> +01 4562538</p>
+                </div>
+                <div class="kilimanjaro_single_contact_info">
+                    <h5>Email:</h5>
+                    <p>eshop@email.com <br> support@email.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>        
