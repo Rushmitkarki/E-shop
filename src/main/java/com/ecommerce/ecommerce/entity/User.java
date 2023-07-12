@@ -61,30 +61,13 @@ public class User implements UserDetails {
     @Transient
     private String imageBase64;
 
-
-    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Item> items;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
 
-    public void addToItem(Item item){
-       if(items==null){
-          items=new ArrayList<>();
-       }
-       items.add(item);
-       item.setBuyer(this);
-    }
 
-    public void removeFromItem(Item item){
-       if(items!=null){
-          items.remove(item);
-          item.setBuyer(null);
-       }
-    }
 
     @Override
     public String getUsername() {

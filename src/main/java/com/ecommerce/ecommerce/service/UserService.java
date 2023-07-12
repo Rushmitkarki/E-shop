@@ -21,12 +21,6 @@ public interface UserService {
 
     void setSession(User user);
 
-    void addToItem(int userId, ItemDto itemDto);
-    void removeFromItem(int userId, int itemId);
-
-    UserDto mapToDto(User user);
-
-    Item mapToItem(ItemDto itemDto);
 
     void verifyUser(String email,String citizenshipNumber);
 

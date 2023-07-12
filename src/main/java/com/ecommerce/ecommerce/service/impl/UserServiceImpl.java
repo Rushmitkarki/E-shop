@@ -121,41 +121,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public void addToItem(int userId, ItemDto itemDto) {
-
-        User user=userRepo.findById(userId).orElse(null);
-        if(user!=null){
-            Item item=mapToItem(itemDto);
-            user.addToItem(item);
-            userRepo.save(user);
-
-        }
-    }
-
-    @Override
-    public void removeFromItem(int userId, int itemId) {
-        User user=userRepo.findById(userId).orElse(null);
-        if(user!=null){
-            Item itemToRemove=user.getItems().stream()
-                    .filter(item -> item.getItemId().equals(itemId))
-                    .findFirst().orElse(null);
-            if(itemToRemove!=null){
-                user.getItems().remove(itemToRemove);
-                userRepo.save(user);
-            }
-        }
-    }
-
-    @Override
-    public UserDto mapToDto(User user) {
-        return modelMapper.map(user, UserDto.class);
-    }
-
-    @Override
-    public Item mapToItem(ItemDto itemDto) {
-        return modelMapper.map(itemDto, Item.class);
-    }
 
     @Override
     public void verifyUser(String email, String citizenshipNumber) {

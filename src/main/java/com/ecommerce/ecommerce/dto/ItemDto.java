@@ -21,8 +21,6 @@ public class ItemDto {
     private int category;
 
     private MultipartFile itemImage;
-
-
     private String email;
 
 

@@ -43,8 +43,5 @@ public class Item {
     @JoinColumn(name = "seller_id", nullable = false)
     private User seller;
 
-    @ManyToOne
-    @JoinColumn(name = "buyer_id")
-    private User buyer;
 
 }
