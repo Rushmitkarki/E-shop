@@ -15,10 +15,7 @@ import java.util.List;
 public class NotificationServiceImpl implements NotificationService {
     @Override
     public void addNotification(NotificationDto notificationDto) {
-        Notification notification = new Notification();
-        notification.setNotifyId(notificationDto.getNotifyId());
-        notification.setUser(notificationDto.getUser());
-        notification.setNotifyContent(notificationDto.getNotifyContent());
+
     }
 
     @Override
