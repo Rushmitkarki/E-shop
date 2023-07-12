@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Map;
+
 @Table
 @Entity
 @Getter
@@ -50,4 +53,7 @@ public class Bill {
 
     @Column(name="bill_payment", length=50)
     private String billPayment;
+
+
+
 }

@@ -1,9 +1,12 @@
 package com.ecommerce.ecommerce.dto;
 
+import com.ecommerce.ecommerce.entity.Item;
 import lombok.*;
 import jakarta.persistence.*;
 import  jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +22,7 @@ public class UserDto {
     private String email;
     private String password;
 
+    private List<Item> items;
 
     private String role;
     private String status;

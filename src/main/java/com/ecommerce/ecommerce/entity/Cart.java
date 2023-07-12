@@ -34,4 +34,8 @@ public class Cart {
 
     @Column(name = "cart_status")
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "bill_id")
+    private Bill bill;
 }

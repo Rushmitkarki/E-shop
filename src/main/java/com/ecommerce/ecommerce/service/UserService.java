@@ -1,6 +1,8 @@
 package com.ecommerce.ecommerce.service;
 
+import com.ecommerce.ecommerce.dto.ItemDto;
 import com.ecommerce.ecommerce.dto.UserDto;
+import com.ecommerce.ecommerce.entity.Item;
 import com.ecommerce.ecommerce.entity.User;
 import lombok.AllArgsConstructor;
 
@@ -18,6 +20,13 @@ public interface UserService {
     void deleteById(Integer id);
 
     void setSession(User user);
+
+    void addToItem(int userId, ItemDto itemDto);
+    void removeFromItem(int userId, int itemId);
+
+    UserDto mapToDto(User user);
+
+    Item mapToItem(ItemDto itemDto);
 
     void verifyUser(String email,String citizenshipNumber);
 
