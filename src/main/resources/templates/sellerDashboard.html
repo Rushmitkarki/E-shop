@@ -177,7 +177,9 @@
         <h4 class="modal-title">Notification</h4>
       </div>
       <div class="modal-body">
-        <p>Someone has added an item.</p>
+        <p>New item has been added.</p>
+        <p>ID: <span id="notifyId"></span></p>
+        <p>Username: <span id="username"></span></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -186,5 +188,17 @@
 
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $("#modal").on("show.bs.modal", function(event) {
+      var notification = $(event.relatedTarget).data("notification");
+      $("#notifyId").text(notification.notifyId);
+      $("#username").text(notification.user);
+    });
+  });
+</script>
+
+
 </body>
 </html>

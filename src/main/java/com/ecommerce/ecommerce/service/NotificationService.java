@@ -11,5 +11,5 @@ public interface NotificationService {
 
     List<Notification> getData();
 
-    Category getByIdNoOpt(Integer id);
+    Notification getByIdNoOpt(Integer id);
 }
