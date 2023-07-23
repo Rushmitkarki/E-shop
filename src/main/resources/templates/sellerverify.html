@@ -9,35 +9,138 @@
             background-color: #ffc127; /* Replace with your desired background color */
             padding: 20px;
         }
+        body{
+            /*background: url(Images/background.png), lightgray 50% / cover no-repeat;*/
+            background-image: url("/IMG/background.png");
+            background-repeat: no-repeat;
+            background-size: 1349px 808pxs;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .custom-button {
+            width: 203px;
+            height: 42px;
+            position: absolute;
+            left: 217px;
+            top: 635px;
+            background-color: #98B4CA;
+            font-size: 20px;
+            font-family: Comic Sans MS;
+            font-weight: 400;
+        }
+        .Hello{
+            width: 180px;
+            height: 77px;
+            left: 41px;
+            top: 200px;
+            position: absolute;
+            color: black;
+            font-size: 50px;
+            font-family: Inter;
+            font-weight: 700;
+            word-wrap: break-word
+        }
+        .PleaseEnterYourInformationBelowToContinue{
+            width: 784px;
+            height: 41px;
+            left: 40px;
+            top: 260px;
+            position: absolute;
+            color: black;
+            font-size: 33px;
+            font-family: Inter;
+            font-weight: 300;
+            word-wrap: break-word
+        }
+        .EshopLogo1{
+            width: 150px;
+            height: 147px;
+            left: 11px;
+            top: 13px;
+            position: absolute;
+            border-radius: 250px
+        }
+        .form-control{
+            width: 608px;
+            height: 74px;
+            left: 34px;
+            top: 390px;
+            position: absolute;
+            background: #FFF5F5;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
+            border: 0.50px black solid
+        }
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            left: 40px;
+            top: 450px;
+        }
+
+        .btn {
+            border:solid gray;
+            color: gray;
+            background-color: white;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        .upload-btn-wrapper .file-name {
+            margin-left: 8px;
+        }
+        .uploaded-image {
+            position: absolute;
+            top: 450px;
+            right: 391px;
+            margin-top: 20px;
+            max-width: 300px;
+            max-height: 300px;
+        }
+
     </style>
 </head>
 <body >
-<div class="container mt-5">
-
-    <form method="post" th:action="@{/seller/verify/{email}(email=${email})}">
-        <div class="card p-4">
-            <div class="text-center mb-4">
-                <img th:src="@{/IMG/Cart.svg}" alt="Cart Icon">
-                <h1 class="mt-4">VERIFICATION</h1>
-                <img  th:src="@{/IMG/Verification.svg}" alt="Verification Icon">
-            </div>
-            <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-
-                Invalid pan number.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <div class="form-group">
-                <input th:field="*{email}" th:value="${email}" type="hidden">
-                <label for="pan-number">Please enter your pan number to verify that you are allowed to sell items</label>
-                <textarea class="form-control" id="pan-number" name="panNumber" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></textarea>
-            </div>
-
-
-            <button class="btn btn-primary btn-lg" type="submit">Continue</button>
-        </div>
-    </form>
+<div class="SellerVerification" ``style="width: 1440px; height: 1024px; position: relative; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); background-image: url(https://via.placeholder.com/1440x1024)">
+    <div class="Hello">Hello !</div>
+    <div class="PleaseEnterYourInformationBelowToContinue">Please enter your information below to continue.</div>
+    <button class="custom-button" type="submit">Continue</button>
+    <img class="EshopLogo1" src="../static/IMG/logo.png" th:src="@{/IMG/logo.png}" alt="" width="70" height="70"/>
+    <div class="form-group">
+        <input th:field="*{email}" th:value="${email}" type="hidden">
+        <label for="pan-number" style="width: 655px; height: 47px; left: 34px; top: 335px; position: absolute; color: black; font-size: 40px; font-family: Inter; font-weight: 400; word-wrap: break-word">Please enter your business pan number.</label>
+        <textarea class="form-control" id="pan-number" name="panNumber" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></textarea>
+    </div>
+    <div class="upload-btn-wrapper">
+        <h4 class="upload-text"> Please upload your pan proof here:</h4>
+        <button class="btn">Choose Image</button>
+        <input type="file" name="image" id="image-input" accept="image/*">
+        <span class="file-name">No file chosen</span>
+    </div>
+    <img class="uploaded-image" id="uploaded-image" src="" alt="Uploaded Image">
 </div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+    document.getElementById('image-input').addEventListener('change', function() {
+        var fileInput = document.getElementById('image-input');
+        var fileName = document.querySelector('.file-name');
+        fileName.textContent = fileInput.files[0].name;
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('uploaded-image').src = e.target.result;
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+    });
+</script>
 </body>
 </html>
