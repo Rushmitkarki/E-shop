@@ -62,13 +62,12 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fs-3 pt-3 pb-3" style="background-color: #FFC128">
+    <nav class="navbar navbar-expand-lg navbar-light fs-3 pt-3 pb-3" style="background-color: #98B4CA">
         <div class="container-fluid ">
-            <img th:src="@{/IMG/logo.png}" alt="" width="100" height="100">
-
+            <img src="../static/IMG/logo.png" img th:src="@{/IMG/logo.png}" alt="" width="100" height="100"/>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse ps-5" id="navbarSupportedContent">
@@ -133,54 +132,12 @@
                     onclick="handleCheckboxClick('customCheck1')">
                 <label class="custom-control-label" for="customCheck1">Men</label>
             </div>
-            <ul>
-                <input type="checkbox" id="tshirtCheckbox" onchange="goToNextPage()">
-                <label for="tshirtCheckbox">Tshirt </label>
-            </ul>
-            <ul>
-                <input type="checkbox" id="bagCheckbox" onchange="goToNextPage()">
-                <label for="tshirtCheckbox">Bag </label>
-            </ul>
-            <ul>
-                <input type="checkbox" id="shoesCheckbox" onchange="goToNextPage()">
-                <label for="tshirtCheckbox">Shoes </label>
-            </ul>
-            <ul>
-                <input type="checkbox" id="jacketCheckbox" onchange="goToNextPage()">
-                <label for="tshirtCheckbox">Jacket </label>
-            </ul>
-            <ul>
-                <input type="checkbox" id="jeansCheckbox" onchange="goToNextPage()">
-                <label for="tshirtCheckbox">Jeans </label>
-            </ul>
-
-
 
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="customCheck2"
                     onclick="handleCheckboxClick('customCheck2')" onchange="goToNextPage()">
                 <label class="custom-control-label" for="customCheck1">Women</label>
             </div>
-            <ul>
-                <input type="checkbox" id="tshirtCheckbox1" onchange="goToNextPage()">
-                <label for="tshirtCheckbox">Tshirt </label>
-            </ul>
-            <ul>
-                <input type="checkbox" id="bagCheckbox1" onchange="goToNextPage()">
-                <label for="tshirtCheckbox">Bag </label>
-            </ul>
-            <ul>
-                <input type="checkbox" id="shoesCheckbox1" onchange="goToNextPage()">
-                <label for="tshirtCheckbox">Shoes </label>
-            </ul>
-            <ul>
-                <input type="checkbox" id="jacketCheckbox1" onchange="goToNextPage()">
-                <label for="tshirtCheckbox">Jacket </label>
-            </ul>
-            <ul>
-                <input type="checkbox" id="jeansCheckbox1" onchange="goToNextPage()">
-                <label for="tshirtCheckbox">Jeans </label>
-            </ul>
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="customCheck3"
                     onclick="handleCheckboxClick('customCheck3')" onchange="goToNextPage()">
