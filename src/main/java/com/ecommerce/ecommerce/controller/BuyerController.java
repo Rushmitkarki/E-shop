@@ -2,9 +2,7 @@ package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.entity.Item;
 import com.ecommerce.ecommerce.entity.User;
-import com.ecommerce.ecommerce.service.CategoryService;
-import com.ecommerce.ecommerce.service.ItemService;
-import com.ecommerce.ecommerce.service.UserService;
+import com.ecommerce.ecommerce.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -26,6 +25,8 @@ public class BuyerController {
     private final CategoryService categoryService;
     private final ItemService itemService;
     private final UserService userService;
+    private final RatingService ratingService;
+    private final CommentService commentService;
     @GetMapping("/catalog/{Id}")
     public String getCatalog(Model model, @PathVariable int Id){
         model.addAttribute("user",userService.getActiveUser().orElse(null));
@@ -81,6 +82,7 @@ public class BuyerController {
     @GetMapping("dashboard")
     public String getDashboard(Model model){
 
+        model.addAttribute("count",itemService.getItemCount());
         model.addAttribute("user",userService.getActiveUser().orElse(null));
         model.addAttribute("Categories",categoryService.getData());
         model.addAttribute("items",itemService.getFourItems());
@@ -95,7 +97,27 @@ public class BuyerController {
         Item item=itemService.getByIdNoOpt(Id).orElse(null);
         model.addAttribute("item",item);
         model.addAttribute("imageBase64" ,getImageBase64(item.getItemImage()));
+        model.addAttribute("rating",ratingService.getAverageRating(Id).orElse(.0));
+        model.addAttribute("comments",commentService.getCommentsByItemId(Id));
         return "viewItems";
+    }
+
+    @GetMapping("/item/sort/{order}")
+    public String sortCatalog(@PathVariable String order,Model model){
+        model.addAttribute("user",userService.getActiveUser().orElse(null));
+        model.addAttribute("Categories",categoryService.getData());
+
+        System.out.println(order);
+        List<Item> items=itemService.sortItem(order);
+        model.addAttribute("items",items.stream().map(item -> Item.builder()
+                .itemId(item.getItemId())
+                .itemPrice(item.getItemPrice())
+                .imageBase64(getImageBase64(item.getItemImage()))
+                .itemDescription(item.getItemDescription())
+                .build()
+        ));
+
+        return "catalog";
     }
 
     public String getImageBase64(String fileName) {
@@ -110,4 +132,6 @@ public class BuyerController {
         }
         return Base64.getEncoder().encodeToString(bytes);
     }
+
+
 }

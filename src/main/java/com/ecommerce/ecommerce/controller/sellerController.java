@@ -37,7 +37,7 @@ public class sellerController {
     @GetMapping("/dashboard")
     public String sellerDashboard(Model model){
         model.addAttribute("user",userService.getActiveUser().orElse(null));
-
+        model.addAttribute("count",itemService.getItemCount());
 
         return "sellerDashboard";
     }
@@ -45,6 +45,7 @@ public class sellerController {
     @GetMapping("/inventory")
     public String getInventory(Model model){
         User user=userService.getActiveUser().orElse(null);
+        model.addAttribute("user",user);
         List<Item> items= itemService.getBySellerId(user.getUserId());
         model.addAttribute("items",items.stream().map(item -> Item.builder()
                 .itemId(item.getItemId())
