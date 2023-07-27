@@ -12,7 +12,7 @@
         body{
             background-image: url(../static/IMG/background.png);
             background-repeat: no-repeat;
-            background-size: 1349px 808pxs;
+            background-size: 1349px 600pxs;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
@@ -25,7 +25,7 @@
             top: 635px;
             background-color: #98B4CA;
             font-size: 20px;
-            font-family: Comic Sans MS;
+            font-family: Inter;
             font-weight: 400;
         }
         .Hello{
@@ -47,7 +47,7 @@
             top: 260px;
             position: absolute;
             color: black;
-            font-size: 33px;
+            font-size: 25px;
             font-family: Inter;
             font-weight: 300;
             word-wrap: break-word
@@ -106,6 +106,10 @@
             max-width: 300px;
             max-height: 300px;
         }
+        .upload-text{
+            font-family: Inter;
+            font-size: 20;
+        }
 
     </style>
 </head>
@@ -117,11 +121,11 @@
     <img class="EshopLogo1" src="../static/IMG/logo.png" th:src="@{/IMG/logo.png}" alt="" width="70" height="70"/>
     <div class="form-group">
         <input th:field="*{email}" th:value="${email}" type="hidden">
-        <label for="pan-number" style="width: 655px; height: 47px; left: 34px; top: 335px; position: absolute; color: black; font-size: 40px; font-family: Inter; font-weight: 400; word-wrap: break-word">Please enter your business pan number.</label>
+        <label for="pan-number" style="width: 655px; height: 47px; left: 34px; top: 335px; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 400; word-wrap: break-word">Please enter your business pan number.</label>
         <textarea class="form-control" id="pan-number" name="panNumber" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></textarea>
     </div>
     <div class="upload-btn-wrapper">
-        <h4 class="upload-text"> Please upload your pan proof here:</h4>
+        <h4 class="upload-text"> You need to upload your pan proof:</h4>
         <button class="btn">Choose Image</button>
         <input type="file" name="image" id="image-input" accept="image/*">
         <span class="file-name">No file chosen</span>
