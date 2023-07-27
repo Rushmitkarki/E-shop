@@ -4,12 +4,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffc128;
+    background-color: #98b4ca;
   }
   .positioned-image {
     position: absolute;
-    top: 100px; /* Adjust the top position */
-    left: 600px; /* Adjust the left position */
+    top: 110px; /* Adjust the top position */
+    left: 700px; /* Adjust the left position */
 }
 body {
     display: flex;
