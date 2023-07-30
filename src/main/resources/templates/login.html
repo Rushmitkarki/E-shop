@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <!-- Latest compiled and minified CSS -->
@@ -29,9 +29,9 @@
     </style>
 </head>
 <body>
-    <img class="EshopLogo1" src="../static/IMG/logo.png" th:src="@{/IMG/logo.png}" alt="" width="100" height="100"/>
+<img class="EshopLogo1" src="../static/IMG/logo.png" th:src="@{/IMG/logo.png}" alt="" width="100" height="100"/>
 <div class="row p-50 h-100">
-     <!-- background color -->
+    <!-- background color -->
     <div class="col-7 " style="background-image: url(../static/IMG/background.png)">
         <div class="container mt-5 p-5">
 
@@ -45,8 +45,8 @@
                     <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
 
                         Invalid email or password.
-                         <!-- login button-->
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <!-- login button-->
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
                     <div class="row pt-4">
@@ -75,7 +75,7 @@
                 </form>
             </div>
         </div>
-            </div>
+    </div>
 </div>
 
 
