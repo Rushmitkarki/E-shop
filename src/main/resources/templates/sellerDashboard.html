@@ -23,11 +23,11 @@
 
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
-        ['Year', 'Sales', 'Expenses'],
-        ['2004',  1000,      400],
-        ['2005',  1170,      460],
-        ['2006',  660,       1120],
-        ['2007',  1030,      540]
+        ['Month', 'Sales', 'Expenses'],
+        ['June',  1000,      400],
+        ['July',  1170,      460],
+        ['August',  660,       1120],
+        ['September',  1030,      540]
       ]);
 
       var options = {
@@ -51,11 +51,11 @@
 
       var data = google.visualization.arrayToDataTable([
         ['Category', 'Item Sold'],
-        ['Work',     11],
-        ['Eat',      2],
-        ['Commute',  2],
-        ['Watch TV', 2],
-        ['Sleep',    7]
+        ['Clothing',     11],
+        ['Shoes',      2],
+        ['Boots',  2],
+        ['Laptop', 2],
+  
       ]);
 
       var options = {
@@ -99,9 +99,7 @@
         <li class="nav-item ps-5">
           <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i> My Inventory</a>
         </li>
-        <li class="nav-item ps-5">
-          <a class="nav-link" href="#" th:text="${user.fname}+' '+${user.lname}"><i class="fa-solid fa-user"></i></a>
-        </li>
+
         <li class="nav-item ps-5">
           <a class="nav-link" href="AboutUs.html"><i class="fa-solid fa-circle-info"></i> About Us</a>
         </li>
@@ -120,6 +118,15 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
       </form>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item ps-5">
+          <a class="nav-link" href="#" th:text="${user.fname}+' '+${user.lname}"><i class="fa-solid fa-user"></i></a>
+        </li>`
+        <li class="nav-item ps-5">
+          <a class="nav-link" href="#"><i class="fa-solid fa-bell"></i> </a>
+        </li>
+
+      </ul>
 
     </div>
   </div>
@@ -165,6 +172,36 @@
 
 </div>
 
+<footer style="background-color: black ">
+  <div class="row p-5">
+    <div class="col-1 p-1">
+      <img src="../static/IMG/logo.png" alt="" width="100" height="100">
+      <p style="color: #0a53be;">E Commerce</p>
+    </div>
+    <div class="col-1 pl-5">
+      <h3 style="color: #0a53be">Social </h3>
+      <div class="logo" style="height: 20px;width: 20px">
+        <a href="https://www.instagram.com/abhigya__shrestha/"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+      <div class="logo" style="height: 20px;width: 20px">
+        <a href="https://www.facebook.com/profile.php?id=100004288247701/"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+      <div class="logo" style="height: 20px;width: 20px">
+        <a href="https://www.tiktok.com/@prociyashrestha?lang=en"><i class="fa-brands fa-tiktok"></i></a>
+      </div>
+      <div class="logo" style="height: 20px;width: 20px">
+        <a href="https://www.instagram.com/abhigya__shrestha/"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
+      <div class="logo" style="height: 20px;width: 20px">
+        <a href="https://wa.me/9844642649"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</footer>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
