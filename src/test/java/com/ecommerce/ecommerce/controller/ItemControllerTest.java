@@ -1,6 +1,5 @@
 package com.ecommerce.ecommerce.controller;
 
-
 import com.ecommerce.ecommerce.dto.ItemDto;
 import com.ecommerce.ecommerce.entity.Item;
 import com.ecommerce.ecommerce.repo.ItemRepo;
@@ -15,8 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockHttpServletRequestDsl;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -27,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ItemControllerTest{
+public class ItemControllerTest {
     private MockMvc mockMvc;
 
     ObjectMapper objectMapper = new ObjectMapper();
@@ -36,16 +33,15 @@ public class ItemControllerTest{
     @Mock
     private ItemRepo itemRepo;
 
-
     @InjectMocks
     private ItemController itemController;
 
-    ItemDto itemDto1 = new ItemDto(null,"item1",1,1,"test",1,null,null);
-    ItemDto itemDto2 = new ItemDto(null,"item2",1,1,"test",1,null,null);
-    ItemDto itemDto3 = new ItemDto(null,"item3",1,1,"test",1,null,null);
+    ItemDto itemDto1 = new ItemDto(null, "item1", 1, 1, "test", 1, null, null);
+    ItemDto itemDto2 = new ItemDto(null, "item2", 1, 1, "test", 1, null, null);
+    ItemDto itemDto3 = new ItemDto(null, "item3", 1, 1, "test", 1, null, null);
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = standaloneSetup(itemController).build();
     }
@@ -60,7 +56,7 @@ public class ItemControllerTest{
                 .itemDescription("test")
                 .itemImage(null)
                 .category(null)
-                .user(null)
+                .seller(null)
                 .build();
 
         Mockito.when(itemRepo.save(item)).thenReturn(item);
@@ -72,14 +68,8 @@ public class ItemControllerTest{
                 .accept(MediaType.APPLICATION_JSON)
                 .content(content);
 
-        mockMvc.perform(mockRequest).
-                andExpect(status().isOk())
+        mockMvc.perform(mockRequest).andExpect(status().isOk())
                 .andExpect(jsonPath("S", notNullValue()));
     }
-
-
-
-
-
 
 }

@@ -1,9 +1,11 @@
 package com.ecommerce.ecommerce.service.impl;
 
 import com.ecommerce.ecommerce.dto.CartDto;
+import com.ecommerce.ecommerce.entity.Bill;
 import com.ecommerce.ecommerce.entity.Cart;
 import com.ecommerce.ecommerce.entity.Item;
 import com.ecommerce.ecommerce.entity.User;
+import com.ecommerce.ecommerce.repo.BillRepo;
 import com.ecommerce.ecommerce.repo.CartRepo;
 import com.ecommerce.ecommerce.service.CartService;
 import com.ecommerce.ecommerce.service.ItemService;
@@ -25,6 +27,8 @@ public class CartServiceImpl implements CartService {
     private final ItemService itemService;
 
     private final CartRepo cartRepo;
+
+    private final BillRepo billRepo;
     @Override
     public void addCart(CartDto cartDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -58,6 +62,17 @@ public class CartServiceImpl implements CartService {
     public void setStatus(int id) {
         Cart cart = cartRepo.findById(id).orElse(null);
         cart.setStatus("Paid");
+        cartRepo.save(cart);
+    }
+
+    @Override
+    public List<Cart> getCartByBillId(int billId) {
+        return cartRepo.findByBillId(billId);
+    }
+
+    @Override
+    public void addBillId(Bill bill, Cart cart) {
+        cart.setBill(bill);
         cartRepo.save(cart);
     }
 

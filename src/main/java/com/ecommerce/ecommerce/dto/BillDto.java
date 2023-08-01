@@ -1,10 +1,13 @@
 package com.ecommerce.ecommerce.dto;
 
 
+import com.ecommerce.ecommerce.entity.Cart;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,5 +27,6 @@ public class BillDto {
     private double billAmount;
     private String billDate;
     private String billPayment;
+
 
 }

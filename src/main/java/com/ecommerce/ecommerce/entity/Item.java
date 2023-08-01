@@ -41,7 +41,8 @@ public class Item {
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "email")
-    private User user;
+    @JoinColumn(name = "seller_id", nullable = false)
+    private User seller;
+
 
 }
