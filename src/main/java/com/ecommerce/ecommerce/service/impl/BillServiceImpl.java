@@ -3,9 +3,11 @@ package com.ecommerce.ecommerce.service.impl;
 
 import com.ecommerce.ecommerce.dto.BillDto;
 import com.ecommerce.ecommerce.entity.Bill;
+import com.ecommerce.ecommerce.entity.Cart;
 import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.repo.BillRepo;
 import com.ecommerce.ecommerce.service.BillService;
+import com.ecommerce.ecommerce.service.CartService;
 import com.ecommerce.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,8 +26,9 @@ public class BillServiceImpl implements BillService {
 
     private final UserService userService;
 
+    private final CartService cartService;
     @Override
-    public void saveBill(BillDto billDto) {
+    public void saveBill(BillDto billDto, List<Cart> carts) {
         Bill bill = new Bill();
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -51,10 +55,19 @@ public class BillServiceImpl implements BillService {
         bill.setBillAddress(billDto.getBillAddress());
         bill.setBillPayment(billDto.getBillPayment());
         billRepo.save(bill);
+        for(Cart cart: carts){
+            cartService.addBillId(bill, cart);
+        }
     }
 
     @Override
     public Optional<Bill> getByIdNoOpt(Integer id) {
         return billRepo.findById(id);
+    }
+
+    @Override
+    public int getLatestBillId() {
+        Bill latestBill = billRepo.findTopByOrderByIdDesc().orElse(new Bill());
+        return latestBill.getBillId();
     }
 }

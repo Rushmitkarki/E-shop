@@ -71,7 +71,7 @@ public class ItemServiceImpl implements ItemService {
         }
 
         item.setCategory(category);
-        item.setUser(user);
+        item.setSeller(user);
 
 
         itemRepo.save(item);

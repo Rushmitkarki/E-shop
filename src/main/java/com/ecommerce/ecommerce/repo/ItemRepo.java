@@ -21,7 +21,7 @@ List<Item> getByPartialName(@Param("partialName") String partialName);
 
 
 //Get by seller
-    @Query(value="select * from Item where email = ?1", nativeQuery = true)
+    @Query(value="select * from Item where seller_id = ?1", nativeQuery = true)
     List<Item> getBySellerId(int id);
 
     @Query(value="select * from Item where price = ?1 order by name", nativeQuery = true)

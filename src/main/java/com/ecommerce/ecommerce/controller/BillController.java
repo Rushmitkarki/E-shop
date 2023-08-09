@@ -30,6 +30,8 @@ public class BillController {
 
     private final UserService userService;
 
+    public static String uploadDir = System.getProperty("user.dir") + "/bill";
+
     @GetMapping("/checkout")
     public String getBill(Model model) {
 
@@ -44,22 +46,32 @@ public class BillController {
     @PostMapping("/save")
     public String saveBill(BillDto billDto) {
 
-        System.out.println(billDto.getBillId());
-        System.out.println(billDto.getBillSubAmount());
+        int billId = 0;
         User user = userService.getActiveUser().orElse(new User());
         int userId = user.getUserId();
+
         List<Cart> carts = cartService.getDataByUserId(userId);
-        for (Cart cart : carts) {
-            cartService.setStatus(cart.getId());
-        }
-        billService.saveBill(billDto);
+        billService.saveBill(billDto, carts);
+        billId=billService.getLatestBillId();
         if (Objects.equals(billDto.getBillPayment(), "Cash")) {
             return "redirect:/buyer/bill/checkout";
         }
 
-        return "redirect:/buyer/bill/QR";
+        return "redirect:/buyer/bill/show/"+billId;
 
     }
+
+@GetMapping("/show/{id}")
+public String showBill(Model model, @PathVariable int id){
+        User user = userService.getActiveUser().orElse(new User());
+    Bill bill = billService.getByIdNoOpt(id).orElse(new Bill());
+    List<Cart> carts = cartService.getCartByBillId(bill.getBillId());
+    model.addAttribute("carts", carts);
+        model.addAttribute("bill", bill);
+        return "bill";
+        }
+
+
 
     @GetMapping("/QR")
     public String getQR() {
@@ -68,7 +80,6 @@ public class BillController {
 
     @PostMapping("/upload")
     public String uploadBill(BillDto billDto) {
-        billService.saveBill(billDto);
         return "redirect:/buyer/bill/checkout";
     }
 }

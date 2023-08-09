@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.service.impl;
 
 import com.ecommerce.ecommerce.config.PasswordEncoderUtil;
+import com.ecommerce.ecommerce.dto.ItemDto;
 import com.ecommerce.ecommerce.dto.UserDto;
 import com.ecommerce.ecommerce.entity.Bill;
 import com.ecommerce.ecommerce.entity.Cart;
@@ -12,6 +13,7 @@ import com.ecommerce.ecommerce.repo.*;
 import com.ecommerce.ecommerce.service.UserService;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +36,7 @@ public class UserServiceImpl implements UserService {
     private final BillRepo billRepo;
     private final RatingRepo ratingRepo;
     private final CommentRepo commentRepo;
+    private static final ModelMapper modelMapper = new ModelMapper();
 
     @Override
     public void registerUser(UserDto userDto) {
@@ -116,6 +120,7 @@ public class UserServiceImpl implements UserService {
         userRepo.save(user);
 
     }
+
 
     @Override
     public void verifyUser(String email, String citizenshipNumber) {

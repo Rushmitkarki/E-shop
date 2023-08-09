@@ -108,6 +108,7 @@ public class BuyerController {
         model.addAttribute("imageBase64" ,getImageBase64(item.getItemImage()));
         model.addAttribute("rating",ratingService.getAverageRating(Id).orElse(.0));
         model.addAttribute("comments",commentService.getCommentsByItemId(Id));
+        User user=userService.getActiveUser().orElse(null);
         return "viewItems";
     }
 

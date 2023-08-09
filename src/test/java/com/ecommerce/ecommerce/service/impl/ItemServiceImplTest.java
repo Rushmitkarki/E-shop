@@ -14,7 +14,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 @SpringBootTest
 class ItemServiceImplTest {
 
@@ -33,7 +32,7 @@ class ItemServiceImplTest {
         item.get().setItemPrice(1);
         item.get().setItemQuantity(1);
         item.get().setCategory(null);
-        item.get().setUser(null);
+        item.get().setSeller(null);
         item.get().setItemImage(null);
 
         Mockito.when(itemServiceImpl.getByIdNoOpt(1)).thenReturn(item);

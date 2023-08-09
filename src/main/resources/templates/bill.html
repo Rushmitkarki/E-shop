@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Bill Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Bill</h1>
+    <h2>Order Details</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody th:each="cart:${carts}">
+        <tr>
+            <td th:text="${cart.item.itemName}">Product 1</td>
+            <td th:text="${cart.item.itemPrice}">1000.00</td>
+            <td th:text="${cart.quantity}">2</td>
+            <td th:text="${cart.total}">2000.00</td>
+        </tbody>
+    </table>
+    <div class="text-right">
+        <p><strong>Subtotal:</strong> <span th:text="${bill.billSubAmount}"></span></p>
+        <p><strong>Shipping:</strong> <span th:text="${bill.shipping}"></span></p>
+        <p><strong>Tax:</strong> <span th:text="${bill.tax}"></span></p>
+        <p><strong>Total:</strong> <span th:text="${bill.billAmount}"></span></p>
+    </div>
+    <h2>Billing Information</h2>
+    <p >Name: <span th:text="${bill.user.fname}+' '+ ${bill.user.lname}"></span></p>
+    <p>Email:
+        <span th:text="${bill.user.email}"></span>
+    </p>
+    <p>Address: <span th:text="${bill.billAddress}"></span> </p>
+    <p>Phone:
+        <span th:text="${bill.user.phoneNumber}"></span>
+
+    </p>
+
+    <a href="#" onclick="window.print();">Download</a>
+</div>
+
+</body>
+</html>

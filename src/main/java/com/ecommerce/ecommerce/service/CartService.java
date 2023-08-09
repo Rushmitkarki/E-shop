@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.service;
 
 import com.ecommerce.ecommerce.dto.CartDto;
+import com.ecommerce.ecommerce.entity.Bill;
 import com.ecommerce.ecommerce.entity.Cart;
 
 import java.util.List;
@@ -14,4 +15,8 @@ public interface CartService {
     void deleteCart(int id);
 
     void setStatus(int id);
+
+    List<Cart> getCartByBillId(int billId);
+
+    void addBillId(Bill bill, Cart cart);
 }
