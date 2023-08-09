@@ -92,16 +92,6 @@ public class ItemServiceImpl implements ItemService {
         return itemRepo.findAll();
     }
 
-    @Override
-    public List<Item> getByCategory(int id) {
-        return itemRepo.getByCategory(id);
-    }
-
-
-    @Override
-    public List<Item> getByPartialName(String name) {
-        return itemRepo.getByPartialName(name);
-    }
 
     public List<Item> getFourItems() {
         List<Item> allItems = getData(); // Assuming this returns a List<Item>
@@ -129,6 +119,27 @@ public class ItemServiceImpl implements ItemService {
         else{
             return itemRepo.findAll();
         }
+    }
+
+    @Override
+    public int countAllItems(String partialName) {
+        return itemRepo.countAllItems(partialName);
+    }
+
+    @Override
+    public int countAllItemsByCategoryId(int id, String partialName) {
+        return itemRepo.countAllByCategoryId(id, partialName);
+    }
+
+    @Override
+    public List<Item> getSixItems(int page, String partialName) {
+        int offset = (page - 1) * 6;
+        return itemRepo.findSixItems(offset, partialName);
+    }
+
+    @Override
+    public List<Item> getSixItemsByCategoryId(int id, int page, String partialName) {
+        return itemRepo.findSixItemsByCategoryId(id, (page - 1) * 6, partialName);
     }
 
     @Override

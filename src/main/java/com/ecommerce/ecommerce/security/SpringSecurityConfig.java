@@ -53,7 +53,13 @@ public class SpringSecurityConfig {
                 .usernameParameter("email")
                 .permitAll()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
 
         return httpSecurity.build();
     }

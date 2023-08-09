@@ -27,57 +27,66 @@ public class BuyerController {
     private final UserService userService;
     private final RatingService ratingService;
     private final CommentService commentService;
-    @GetMapping("/catalog/{Id}")
-    public String getCatalog(Model model, @PathVariable int Id){
-        model.addAttribute("user",userService.getActiveUser().orElse(null));
-        model.addAttribute("Categories",categoryService.getData());
-        model.addAttribute("Category",categoryService.getByIdNoOpt(Id));
-        List<Item> items=itemService.getByCategory(Id);
-        model.addAttribute("items",items.stream().map(item -> Item.builder()
-                .itemId(item.getItemId())
-                .itemPrice(item.getItemPrice())
-                .imageBase64(getImageBase64(item.getItemImage()))
-                .itemDescription(item.getItemDescription())
-                .build()
-        ));
-
-        return "catalog";
-    }
-
     @GetMapping("/catalog")
-    public String getCatalog(Model model){
+    public String menuByCategory(Model model, @RequestParam(defaultValue = "0") int id,@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "") String partialName) throws IOException {
+        int totalItems;
+        if(id==0) {
+            totalItems = itemService.countAllItems(partialName);
+        }
+        else{
+            totalItems = itemService.countAllItemsByCategoryId(id,partialName);
+        }
 
-        model.addAttribute("user",userService.getActiveUser().orElse(null));
-        model.addAttribute("Categories",categoryService.getData());
-        List<Item> items=itemService.getData();
-        model.addAttribute("items",items.stream().map(item -> Item.builder()
+        int pageSize=6;
+
+        // Calculate the total number of pages based on the page size and total items
+        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+        if(totalPages==0){
+            totalPages=1;
+        }
+        // Ensure the requested page is within the valid range
+        if (page < 1) {
+            page = 1;
+        } else if (page > totalPages) {
+            page = totalPages;
+        }
+
+        // Calculate the starting index and ending index for the subset of items to display
+        int startIndex = (page - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, totalItems);
+
+
+
+
+
+        List<Item> items =new ArrayList<>();
+        if(id==0){
+            items=itemService.getSixItems(page,partialName);
+        }else{
+            items=itemService.getSixItemsByCategoryId(id,page,partialName);
+        }
+
+
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("categories", categoryService.getData());
+        model.addAttribute("items", items.stream().map(item -> Item.builder()
                 .itemId(item.getItemId())
+                .itemName(item.getItemName())
                 .itemPrice(item.getItemPrice())
-                .imageBase64(getImageBase64(item.getItemImage()))
                 .itemDescription(item.getItemDescription())
+                .itemQuantity(item.getItemQuantity())
+                .imageBase64(getImageBase64(item.getItemImage()))
+                .category(item.getCategory())
                 .build()
         ));
 
+        User activeUser = userService.getActiveUser().get();
+        model.addAttribute("user",activeUser);
         return "catalog";
     }
 
-    @PostMapping("/search")
-    public String getSearch(Model model,@RequestParam("searchName") String name){
-
-        model.addAttribute("user",userService.getActiveUser().orElse(null));
-        model.addAttribute("Categories",categoryService.getData());
-        List<Item> items=itemService.getByPartialName(name);
-        model.addAttribute("items",items.stream().map(item -> Item.builder()
-                        .itemId(item.getItemId())
-                        .itemPrice(item.getItemPrice())
-                        .imageBase64(getImageBase64(item.getItemImage()))
-                        .itemDescription(item.getItemDescription())
-                        .build()
-
-                ));
-
-        return "catalog";
-    }
 
     @GetMapping("dashboard")
     public String getDashboard(Model model){

@@ -17,9 +17,8 @@ public interface ItemService {
 
     List<Item> getData();
 
-    List<Item> getByCategory(int id);
 
-    List<Item> getByPartialName(String name);
+
 
     List<Item> getFourItems();
 
@@ -28,4 +27,12 @@ public interface ItemService {
     long getItemCount();
 
     List<Item> sortItem(String order);
+
+    int countAllItems(String partialName);
+
+    int countAllItemsByCategoryId(int id, String partialName);
+
+    List<Item> getSixItems(int page, String partialName);
+
+    List<Item> getSixItemsByCategoryId(int id, int page, String partialName);
 }

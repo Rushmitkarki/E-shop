@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/seller")
-public class sellerController {
+public class SellerController {
     private final UserService userService;
 
     private  final ItemService itemService;

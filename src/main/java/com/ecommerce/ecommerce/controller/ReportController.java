@@ -3,6 +3,7 @@ package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.dto.ReportDto;
 import com.ecommerce.ecommerce.entity.Item;
+import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.service.ItemService;
 import com.ecommerce.ecommerce.service.ReportService;
 import com.ecommerce.ecommerce.service.UserService;
@@ -26,8 +27,12 @@ public class ReportController {
     public String reportItem(@PathVariable int id, Model model){
         Item item = itemService.getByIdNoOpt(id).get();
         model.addAttribute("item",item);
-        model.addAttribute("user",userService.getActiveUser().get());
-
+        User user = userService.getActiveUser().orElse(null);
+        System.out.println(user);
+        if (user == null){
+            return "redirect:/login";
+        }
+        model.addAttribute("user",user);
         return "Report";
     }
 
