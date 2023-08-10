@@ -1,198 +1,196 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <link rel="stylesheet" href="../static/CSS/Dashboard.css" th:href="@{/CSS/Dashboard.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/CSS/project.css}" href="../static/CSS/project.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/CSS/header.css" rel="stylesheet" th:href="@{/CSS/header.css}">
+    <link href="../static/CSS/footer.css" rel="stylesheet" th:href="@{/CSS/footer.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Dashboard</title>
 </head>
 
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-light fs-3 pt-3 pb-3" style="background-color: #FFC128">
-    <div class="container-fluid">
-        <img src="../static/IMG/logo.png" th:src="@{/IMG/logo.png}" alt="" width="100" height="100">
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse ps-5 active" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item ps-5">
-                    <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-house"></i> Home</a>
-                </li>
-                <li class="nav-item dropdown ps-5">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-list"></i>
-                        Categories
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" th:href="@{/buyer/catalog}">All Products</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li th:each="category : ${Categories}">
-                            <a class="dropdown-item" th:href="@{/buyer/catalog/{id}(id=${category.catId})}" th:text="${category.catName}"></a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item ps-5">
-                    <a class="nav-link" th:href="@{/buyer/cart/view}"><i class="fa-solid fa-cart-shopping"></i> My Cart</a>
-                </li>
-                <li class="nav-item ps-5 dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="Dropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user"></i> <span th:text="${user.fname}+${user.lname}"></span>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="Dropdown">
-                        <li>
-                            <a th:href="@{/user/view}" class="dropdown-item">Profile</a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-
-                        <li>
-                            <form th:action="@{/logout}" method="post">
-                            <button type=submit class="dropdown-item" >Logout</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form th:action="@{/user/delete}" method="post">
-                                <button class="dropdown-item" >Delete Account</button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-bell"></i></a>
-                </li>
-                <li class="nav-item ps-5">
-                    <a href="" class="nav-link"><i class="fa-solid fa-message"></i></a>
-                </li>
-                <li class="nav-item ps-5">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
-                </li>
-            </ul>
+<header class="sticky-top" th:if="${user.role=='Buyer'}">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid" style="min-height: 80px">
+            <a class="navbar-brand" href="#">
+                <!-- Replace the text with your logo or image -->
+                <img src="../static/IMG/logo.png" alt="Logo" th:src="@{/IMG/logo.png}" style="height: 5em;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#buyerNavbarSupportedContent" aria-controls="buyerNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/dashboard/}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  th:href="@{/buyer/catalog}">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                            <i class="fas fa-bell"></i> Notifications
+                        </button>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/user/view">View Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteBuyerConfirmationModal">Delete Account</button></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" data-bs-target="#logoutBuyerConfirmationModal" data-bs-toggle="modal">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
 
-            <form class="d-flex" th:action="@{/buyer/search}" th:method="post">
-                <input class="form-control me-2" type="search" name="searchName" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-
-
-            </form>
+</header>
+<!--Delete Modal-->
+<div class="modal fade" id="deleteBuyerConfirmationModal" tabindex="-1" aria-labelledby="deleteBuyerConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteBuyerConfirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this account?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <!-- Delete link to the delete URL -->
+                <form th:action="@{/user/delete}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
         </div>
     </div>
-</nav>
-    <div class="navbar-container">
-        <div class="sec-navbar">
-            <a class="sec-navbar-item" href="#" style="margin-left: 50px;"> Men</a>
-            <a class="sec-navbar-item" href="#" style="margin-left: 40px;">Women</a>
-            <a class="sec-navbar-item" href="#" style="margin-left: 40px;">Baby and Kids</a>
-            <a class="sec-navbar-item" href="#" style="margin-left: 40px;">Books</a>
-            <a class="sec-navbar-item" href="#" style="margin-left: 40px;">Shoes</a>
-            <a class="sec-navbar-item" href="#" style="margin-left: 40px;">Household</a>
-            <a class="sec-navbar-item" href="#" style="margin-left: 40px;">All Departments</a>
+</div>
+
+<div class="modal fade" id="logoutBuyerConfirmationModal" tabindex="-1" aria-labelledby="logoutBuyerConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutBuyerConfirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to log out?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <!-- Delete link to the delete URL -->
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- Notifications Modal -->
+<div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <!-- You can dynamically populate notifications here -->
+                    <li class="list-group-item">New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+
+                    <!-- ... (More notifications) ... -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main>
     <div class="cont">
-        <div class="rectangle">
-            <div id="offersCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="img/offer1.jpg" class="d-block w-100" alt="Offer 1">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="img/offer2.jpg" class="d-block w-100" alt="Offer 2">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="img/offer3.jpg" class="d-block w-100" alt="Offer 3">
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#offersCarousel" role="button" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#offersCarousel" role="button" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </a>
-            </div>
-            <div class="text-rectangle">
-                <h3>Your Offer Title</h3>
-                <h4>Your Offer Description</h4>
-            </div>
-        </div>
         <div class="container">
             <div class="row">
-                <div class="col-md-6" th:each="item, iterStat : ${items}" th:if="${iterStat.index % 2 == 0}">
-                    <div class="card">
-                        <img class="card-img-top" th:src="@{'img/' + ${item.itemImage}}" th:alt="${item.itemName}">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${item.itemName}"></h5>
-                            <p class="card-text" th:text="${item.itemDescription}"></p>
-                            <a href="#" class="btn btn-primary">View Details</a>
-                        </div>
+                <div class="col-md-12">
+                    <div class="rectangle">
+            <!-- Your rectangle content goes here -->
+                        <h1>Welcome, <span th:text="${user.fname}+' '+${user.lname}"></span></h1>
+                        <p>Explore our latest products and offers.</p>
                     </div>
                 </div>
-                <div class="col-md-6" th:each="item, iterStat : ${items}" th:if="${iterStat.index % 2 != 0}">
-                    <div class="card">
-                        <img class="card-img-top" th:src="@{'img/' + ${item.itemImage}}" th:alt="${item.itemName}">
+            </div>
+            <div class="row">
+                <div class="col-md-6" th:each="item :${items}" >
+                    <div class="card mb-3">
+                        <img class="card-img-top custom-card-img" th:src="'data:image/png;base64,'+${item.ImageBase64}" th:alt="${item.itemName}" >
                         <div class="card-body">
                             <h5 class="card-title" th:text="${item.itemName}"></h5>
                             <p class="card-text" th:text="${item.itemDescription}"></p>
-                            <a href="#" class="btn btn-primary">View Details</a>
+                            <a th:href="@{/buyer/item/{id}(id=${item.itemId})}" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Rest of the code -->
-
-
     </div>
+</main>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col">
+                <h4>company</h4>
+                <ul>
+                    <li><a href="/user/about">about us</a></li>
+                    <li><a href="#">our services</a></li>
+                    <li><a href="/user/terms">terms and condition</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4></h4>
+                <ul>
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">shipping</a></li>
+                    <li><a href="#">returns</a></li>
+                    <li><a href="#">order status</a></li>
+                    <li><a href="#">payment options</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>online shop</h4>
+                <ul>
+                    <li><a href="#">shoes</a></li>
+                    <li><a href="#">dress</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>follow us</h4>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/slesha.dahal.3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.tiktok.com/@prociyashrestha"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/kriteemmuu/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/abhigya-shrestha-585564231/"><i class="fab fa-linkedin-in"></i></a>
 
-<!--    <div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">>-->
-<!--        <div class="modal-dialog">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h1>Buyer Chat</h1>-->
-
-<!--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">-->
-<!--                        <span aria-hidden="true">&times;</span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
-
-<!--                    <head>-->
-<!--                        <title>Chat</title>-->
-<!--                        <link rel="stylesheet" type="text/css" href="../static/CSS/Chat.css">-->
-<!--                    </head>-->
-
-<!--                    <body>-->
-<!--                        <div class="container">-->
-<!--                            <div class="body" th:each="chat:${chat}">-->
-<!--                                <p class="message">Hello</p>-->
-<!--                                <p class="message user_message">Hi</p>-->
-<!--                            </div>-->
-<!--                            <div class="footer">-->
-<!--                                <form>-->
-<!--                                    -->
-<!--                                    <select class="form-select" id="sel1" name="user2">-->
-<!--                                        <option th:each="seller:${sellers}" th:text="${seller.fname} + ' ' + ${seller.lname}" th:value="${seller.userId}"></option> -->
-<!--                                    </select>-->
-<!--                                    <input type="text" name="chatText">-->
-<!--                                    <button>SEND</button>-->
-<!--                                    </input>-->
-<!--                                </form>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </body>-->
-
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

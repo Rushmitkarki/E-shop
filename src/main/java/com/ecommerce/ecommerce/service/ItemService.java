@@ -35,4 +35,12 @@ public interface ItemService {
     List<Item> getSixItems(int page, String partialName);
 
     List<Item> getSixItemsByCategoryId(int id, int page, String partialName);
+
+    int countAllItemsBySeller(String partialName,int sellerId);
+
+    int countAllItemsByCategoryIdAndSeller(int id, String partialName,int sellerId);
+
+    List<Item> getSixItemsByCategoryIdAndSeller(int id, int page, String partialName, Integer userId);
+
+    List<Item> getSixItemsBySeller(int page, String partialName, Integer userId);
 }

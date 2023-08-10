@@ -5,50 +5,164 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>View Cart</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
-  <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
+  <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/CSS/header.css}">
+  <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/CSS/footer.css}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<header class="sticky-top" th:if="${user.role=='User'}">
+<header class="sticky-top" th:if="${user.role=='Buyer'}">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid" style="min-height: 80px">
       <a class="navbar-brand" href="#">
         <!-- Replace the text with your logo or image -->
-        <img src="../../static/img/logo4.png" alt="Logo" th:src="@{/img/logo4.png}">
+        <img src="../static/IMG/logo.png" alt="Logo" th:src="@{/IMG/logo.png}" style="height: 5em;">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#buyerNavbarSupportedContent" aria-controls="buyerNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
             <a class="nav-link" th:href="@{/dashboard/}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  th:href="@{/dashboard/menu}">Menu</a>
+            <a class="nav-link"  th:href="@{/buyer/catalog}">Menu</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/cart/list">Cart</a>
+            <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+              <i class="fas fa-bell"></i> Notifications
+            </button>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" role="button" th:text="${user.firstName}" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle active" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
               Profile
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/user/profile">View Profile</a></li>
+              <li><a class="dropdown-item" href="/user/view">View Profile</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">Delete Account</button></li>
+              <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteBuyerConfirmationModal">Delete Account</button></li>
             </ul>
           </li>
           <li class="nav-item">
-            <button class="nav-link" type="button" data-bs-target="#logoutConfirmationModal" data-bs-toggle="modal">Logout</button>
+            <button class="nav-link" type="button" data-bs-target="#logoutBuyerConfirmationModal" data-bs-toggle="modal">Logout</button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
+
 </header>
+<!--Delete Modal-->
+<div class="modal fade" id="deleteBuyerConfirmationModal" tabindex="-1" aria-labelledby="deleteBuyerConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteBuyerConfirmationModalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this account?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <!-- Delete link to the delete URL -->
+        <form th:action="@{/user/delete}" method="post">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="logoutBuyerConfirmationModal" tabindex="-1" aria-labelledby="logoutBuyerConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutBuyerConfirmationModalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to log out?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <!-- Delete link to the delete URL -->
+        <form th:action="@{/logout}" method="post">
+          <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notifications Modal -->
+<div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <!-- You can dynamically populate notifications here -->
+          <li class="list-group-item">New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+
+          <!-- ... (More notifications) ... -->
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="footer-col">
+        <h4>company</h4>
+        <ul>
+          <li><a href="/user/about">about us</a></li>
+          <li><a href="#">our services</a></li>
+          <li><a href="/user/terms">terms and condition</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4></h4>
+        <ul>
+          <li><a href="#">Feedback</a></li>
+          <li><a href="#">shipping</a></li>
+          <li><a href="#">returns</a></li>
+          <li><a href="#">order status</a></li>
+          <li><a href="#">payment options</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>online shop</h4>
+        <ul>
+          <li><a href="#">shoes</a></li>
+          <li><a href="#">dress</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>follow us</h4>
+        <div class="social-links">
+          <a href="https://www.facebook.com/slesha.dahal.3"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@prociyashrestha"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.instagram.com/kriteemmuu/"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/abhigya-shrestha-585564231/"><i class="fab fa-linkedin-in"></i></a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
 <main>
 
   <div class="container mt-5">
@@ -68,8 +182,8 @@
         <tr>
           <td th:text="${cart.item.itemName}">Pizza</td>
           <td th:text="${cart.item.itemPrice}">$10.99</td>
-          <td th:text="${cart.cartQty}">2</td>
-          <td th:text="${cart.totalPrice}">$21.98</td>
+          <td th:text="${cart.quantity}">2</td>
+          <td th:text="${cart.total}">$21.98</td>
           <td>
             <div class="row">
               <div class="col-2">
@@ -90,7 +204,7 @@
                           </p>
                           <input type="hidden" name="id" th:value="${cart.id}">
                           <label for="qty">Quantity</label>
-                          <input type="number" id="qty" name="cartQty" th:value="${cart.cartQty}">
+                          <input type="number" id="qty" name="cartQty" th:value="${cart.quantity}">
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -117,7 +231,7 @@
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <!-- Delete link to the delete URL -->
-                        <form th:action="@{/cart/delete/{id}(id=${cart.id})}" method="post">
+                        <form th:action="@{/buyer/cart/delete/{id}(id=${cart.id})}" method="post">
                           <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                       </div>
@@ -149,7 +263,7 @@
     <div class="row mt-4">
       <div class="col-md-6 offset-md-6">
         <h3>Payment</h3>
-        <form th:action="@{/bill/generate}" method="post">
+        <form th:action="@{/buyer/bill/checkout}" method="get">
           <button type="submit" class="btn btn-primary">Checkout</button>
         </form>
       </div>
@@ -158,91 +272,6 @@
 </main>
 
 
-<footer >
-  <div class="container-fluid bg-dark text-light py-4">
-    <div class="row">
-      <div class="col-md-3">
-        <h5>Explore</h5>
-        <ul class="list-unstyled">
-          <li><a href="#">Menu</a></li>
-          <li><a href="#">Order Now</a></li>
-          <li><a href="#">Deals</a></li>
-        </ul>
-      </div>
-      <div class="col-md-3">
-        <h5>Support</h5>
-        <ul class="list-unstyled">
-          <li><a href="#">Customer Service</a></li>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="col-md-3">
-        <h5>About Us</h5>
-        <ul class="list-unstyled">
-          <li><a href="#">Our Story</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-      </div>
-      <div class="col-md-3">
-        <h5>Follow Us</h5>
-        <ul class="list-unstyled">
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">Twitter</a></li>
-          <li><a href="#">Instagram</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid bg-secondary text-light text-center py-2">
-    <p>&copy; 2023 Food Ordering Website. All rights reserved.</p>
-  </div>
-</footer>
-
-<!--Delete Modal-->
-<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmation</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete this account?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <!-- Delete link to the delete URL -->
-        <form th:action="@{/user/delete}" method="post">
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!--Logout Confirmation model-->
-<div class="modal fade" id="logoutConfirmationModal" tabindex="-1" aria-labelledby="logoutConfirmationModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="logoutConfirmationModalLabel">Confirmation</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to log out?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <!-- Delete link to the delete URL -->
-        <form th:action="@{/user/logout}" method="post">
-          <button type="submit" class="btn btn-danger">Logout</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

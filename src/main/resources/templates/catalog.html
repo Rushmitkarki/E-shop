@@ -69,12 +69,12 @@
         <div class="container-fluid" style="min-height: 80px">
             <a class="navbar-brand" href="#">
                 <!-- Replace the text with your logo or image -->
-                <img src="../static/IMG/logo.png" alt="Logo" th:src="@{/img/logo4.png}" style="height: 5em;">
+                <img src="../static/IMG/logo.png" alt="Logo" th:src="@{/IMG/logo.png}" style="height: 5em;">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#buyerNavbarSupportedContent" aria-controls="buyerNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/dashboard/}">Home</a>
@@ -83,7 +83,12 @@
                         <a class="nav-link"  th:href="@{/buyer/catalog}">Menu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cart/list">Cart</a>
+                        <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                            <i class="fas fa-bell"></i> Notifications
+                        </button>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -92,17 +97,85 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/user/view">View Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">Delete Account</button></li>
+                            <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteBuyerConfirmationModal">Delete Account</button></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" type="button" data-bs-target="#logoutConfirmationModal" data-bs-toggle="modal">Logout</button>
+                        <button class="nav-link" type="button" data-bs-target="#logoutBuyerConfirmationModal" data-bs-toggle="modal">Logout</button>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+
 </header>
+<!--Delete Modal-->
+<div class="modal fade" id="deleteBuyerConfirmationModal" tabindex="-1" aria-labelledby="deleteBuyerConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteBuyerConfirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this account?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <!-- Delete link to the delete URL -->
+                <form th:action="@{/user/delete}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="logoutBuyerConfirmationModal" tabindex="-1" aria-labelledby="logoutBuyerConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutBuyerConfirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to log out?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <!-- Delete link to the delete URL -->
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notifications Modal -->
+<div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <!-- You can dynamically populate notifications here -->
+                    <li class="list-group-item">New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+
+                    <!-- ... (More notifications) ... -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Menu Section -->
 <section class="menu-section">
     <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${param.invalidQuantity}">
@@ -144,15 +217,24 @@
                                 <p class="card-text"><strong>Category:</strong> <span th:text="${item.category.catName}">Pizza</span></p>
                                 <p class="card-text"><strong>Price:</strong> <span th:text="${item.itemPrice}">$12.99</span></p>
                                 <p class="card-text"><strong>Available Quantity:</strong> <span th:text="${item.itemQuantity}">10</span></p>
-                                <button class="btn btn-primary" th:if="${item.itemQuantity>0}" id="cartBtn" data-bs-toggle="modal" data-bs-target="#cartConfirmationModal" th:data-item-id="${item.itemId}" th:data-item-name="${item.itemName}" th:data-item-price="${item.itemPrice}" th:data-item-quantity="${item.itemQuantity}">Add to Cart</button>
-                                <button class="btn btn-primary" th:if="${item.itemQuantity<=0}" data-bs-toggle="modal" data-bs-target="#errorMsg">Add to Cart</button>
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <form th:action="@{/buyer/item/{id}(id=${item.itemId})}" method="post">
+                                        <!-- View Item page -->
+                                        <button class="btn btn-primary" type="submit">View Item</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- Add to cart -->
+                                        <button class="btn btn-primary" th:if="${item.itemQuantity>0}" id="cartBtn" data-bs-toggle="modal" data-bs-target="#cartConfirmationModal" th:data-item-id="${item.itemId}" th:data-item-name="${item.itemName}" th:data-item-price="${item.itemPrice}" th:data-item-quantity="${item.itemQuantity}">Add to Cart</button>
+                                        <button class="btn btn-primary" th:if="${item.itemQuantity<=0}" data-bs-toggle="modal" data-bs-target="#errorMsg">Add to Cart</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Cart Confirmation Modal -->
-
-                    <!-- Add more menu items here -->
                 </div>
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
@@ -173,6 +255,7 @@
                 </ul>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <!--Error Msg Modal-->
@@ -198,7 +281,7 @@
                 <h5 class="modal-title" id="addToCartModalLabel">Add to Cart</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form th:action="@{/cart/add}" method="post">
+            <form th:action="@{/buyer/cart/add}" method="post">
                 <div class="modal-body">
 
                     <input type="hidden" id="itemId" name="itemId" >
@@ -206,9 +289,9 @@
                     <p>Item Price: Rs.<span id="itemPrice"></span></p>
                     <p>Available Quantity: <span id="itemQuantity" ></span></p>
                     <label for="orderQty">Order Quantity:</label>
-                    <input type="number" id="orderQty" class="form-control" value="0" name="cartQty">
+                    <input type="number" id="orderQty" class="form-control" value="0" name="quantity">
                     <p>Total Price: Rs.<span id="totalPrice"></span></p>
-                    <input id="total" name="totalPrice" hidden>
+                    <input id="total" name="total" hidden>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -261,49 +344,8 @@
     </div>
 </footer>
 
-<!--Delete Modal-->
-<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this account?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <!-- Delete link to the delete URL -->
-                <form th:action="@{/user/delete}" method="post">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!--Logout Confirmation model-->
-<div class="modal fade" id="logoutConfirmationModal" tabindex="-1" aria-labelledby="logoutConfirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="logoutConfirmationModalLabel">Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to log out?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <!-- Delete link to the delete URL -->
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit" class="btn btn-danger">Logout</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 </body>
 <script>

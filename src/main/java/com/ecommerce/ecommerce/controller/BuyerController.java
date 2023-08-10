@@ -27,6 +27,7 @@ public class BuyerController {
     private final UserService userService;
     private final RatingService ratingService;
     private final CommentService commentService;
+    private final RecentService recentService;
     @GetMapping("/catalog")
     public String menuByCategory(Model model, @RequestParam(defaultValue = "0") int id,@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "") String partialName) throws IOException {
         int totalItems;
@@ -94,8 +95,8 @@ public class BuyerController {
         model.addAttribute("count",itemService.getItemCount());
         model.addAttribute("user",userService.getActiveUser().orElse(null));
         model.addAttribute("Categories",categoryService.getData());
-        model.addAttribute("items",itemService.getFourItems());
-
+        List<Item> items=recentService.getRecentItems();
+        model.addAttribute("items",items);
         return "Dashboard";
     }
 
@@ -128,6 +129,12 @@ public class BuyerController {
         ));
 
         return "catalog";
+    }
+
+    @PostMapping("/item/{id}")
+    public String setRecent(@PathVariable int id){
+        recentService.addToRecent(id);
+        return "redirect:/buyer/item/"+id;
     }
 
     public String getImageBase64(String fileName) {

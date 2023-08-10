@@ -2,6 +2,7 @@ package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.dto.BillDto;
 import com.ecommerce.ecommerce.dto.CartDto;
+import com.ecommerce.ecommerce.entity.Cart;
 import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.service.CartService;
 import com.ecommerce.ecommerce.service.UserService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/buyer/cart")
@@ -36,7 +39,14 @@ public class CartController {
         String email = authentication.getName();
         User user = userService.getByEmail(email).orElse(new User());
         int userId = user.getUserId();
+        List<Cart> carts = cartService.getDataByUserId(userId);
+        int total=0;
+        for(Cart cart:carts){
+            total+=cart.getTotal();
+        }
+        model.addAttribute("user",user);
         model.addAttribute("carts", cartService.getDataByUserId(userId));
+        model.addAttribute("total",total);
         return "viewCart";
     }
 

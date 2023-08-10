@@ -49,7 +49,7 @@ public class ItemController {
         return "redirect:/seller/item/add";
     }
 
-    @GetMapping("/update/{id}")
+    @GetMapping("/edit/{id}")
     public String getUpdateItemPage(Model model,@PathVariable("id") int id){
         model.addAttribute("user",userService.getActiveUser().orElse(null));
 

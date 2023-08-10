@@ -2,6 +2,7 @@ package com.ecommerce.ecommerce.service.impl;
 
 import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.service.UserService;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -61,13 +62,23 @@ public class ItemServiceImpl implements ItemService {
             String originalFilename = itemDto.getItemImage().getOriginalFilename();
             String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
 
-            StringBuilder fileNames = new StringBuilder();
-            System.out.println(UPLOAD_DIRECTORY);
-            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, imageName + fileExtension);
-            fileNames.append(imageName + fileExtension);
-            Files.write(fileNameAndPath, itemDto.getItemImage().getBytes());
+            Path originalFilePath = Paths.get(UPLOAD_DIRECTORY, imageName + fileExtension);
+            Files.write(originalFilePath, itemDto.getItemImage().getBytes());
 
-            item.setItemImage(imageName + fileExtension);
+            int desiredWidth = 300;  // Set your desired width
+            int desiredHeight = 200; // Set your desired height
+
+            // Provide the path to the output resized image
+            String resizedImagePath = UPLOAD_DIRECTORY + "/" + imageName + "_resized" + fileExtension;
+
+            // Resize the image using Thumbnails library
+            Thumbnails.of(originalFilePath.toFile())
+                    .size(desiredWidth, desiredHeight)
+                    .outputFormat(fileExtension.substring(1)) // Remove the dot (.) from the file extension
+                    .toFile(resizedImagePath);
+
+            // Set the image name in the database
+            item.setItemImage(imageName + "_resized" + fileExtension);
         }
 
         item.setCategory(category);
@@ -140,6 +151,28 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> getSixItemsByCategoryId(int id, int page, String partialName) {
         return itemRepo.findSixItemsByCategoryId(id, (page - 1) * 6, partialName);
+    }
+
+    @Override
+    public int countAllItemsBySeller(String partialName, int sellerId) {
+        return itemRepo.countAllItemsBySeller(partialName, sellerId);
+    }
+
+    @Override
+    public int countAllItemsByCategoryIdAndSeller(int id, String partialName, int sellerId) {
+        return itemRepo.countAllByCategoryIdAndSeller(id, partialName,sellerId);
+    }
+
+    @Override
+    public List<Item> getSixItemsByCategoryIdAndSeller(int id, int page, String partialName, Integer sellerId) {
+        int offset = (page - 1) * 6;
+        return itemRepo.findSixItemsByCategoryIdAndSeller(id, offset, partialName, sellerId);
+    }
+
+    @Override
+    public List<Item> getSixItemsBySeller(int page, String partialName, Integer sellerId) {
+        int offset = (page - 1) * 6;
+        return itemRepo.findSixItemsBySeller(offset, partialName, sellerId);
     }
 
     @Override
