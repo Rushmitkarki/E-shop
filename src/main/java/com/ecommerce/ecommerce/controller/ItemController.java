@@ -32,6 +32,7 @@ public class ItemController {
     @GetMapping("/add")
     public String getAddItemPage(Model model){
         model.addAttribute("categories", categoryService.getData());
+        model.addAttribute("user",userService.getActiveUser().get());
 
         return "addItem.html";
     }

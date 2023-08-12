@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.entity.Item;
+import com.ecommerce.ecommerce.entity.Notification;
 import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.service.*;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,8 @@ public class BuyerController {
     private final RatingService ratingService;
     private final CommentService commentService;
     private final RecentService recentService;
+    private final FavoriteService favoriteService;
+    private final NotificationService notificationService;
     @GetMapping("/catalog")
     public String menuByCategory(Model model, @RequestParam(defaultValue = "0") int id,@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "") String partialName) throws IOException {
         int totalItems;
@@ -82,6 +85,8 @@ public class BuyerController {
                 .category(item.getCategory())
                 .build()
         ));
+        List<Notification> notification=notificationService.getNotification();
+        model.addAttribute("notifications",notification);
 
         User activeUser = userService.getActiveUser().get();
         model.addAttribute("user",activeUser);
@@ -89,15 +94,18 @@ public class BuyerController {
     }
 
 
-    @GetMapping("dashboard")
+    @GetMapping("/dashboard")
     public String getDashboard(Model model){
 
         model.addAttribute("count",itemService.getItemCount());
-        model.addAttribute("user",userService.getActiveUser().orElse(null));
+        model.addAttribute("user",userService.getActiveUser().get());
         model.addAttribute("Categories",categoryService.getData());
         List<Item> items=recentService.getRecentItems();
         model.addAttribute("items",items);
-        return "Dashboard";
+        model.addAttribute("wishlistItems",favoriteService.getFavoriteItemsByUser());
+        List<Notification> notification=notificationService.getNotification();
+        model.addAttribute("notifications",notification);
+        return "dashboard";
     }
 
     @GetMapping("/item/{Id}")
@@ -109,7 +117,14 @@ public class BuyerController {
         model.addAttribute("imageBase64" ,getImageBase64(item.getItemImage()));
         model.addAttribute("rating",ratingService.getAverageRating(Id).orElse(.0));
         model.addAttribute("comments",commentService.getCommentsByItemId(Id));
+        if(favoriteService.isFavorite(Id)){
+            model.addAttribute("isFavorite","true");
+        }else{
+            model.addAttribute("isFavorite","false");
+        }
         User user=userService.getActiveUser().orElse(null);
+        List<Notification> notification=notificationService.getNotification();
+        model.addAttribute("notifications",notification);
         return "viewItems";
     }
 

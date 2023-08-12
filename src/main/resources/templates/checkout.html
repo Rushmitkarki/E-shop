@@ -24,10 +24,10 @@
             <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/dashboard/}">Home</a>
+                        <a class="nav-link" th:href="@{/buyer/dashboard}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  th:href="@{/buyer/catalog}">Menu</a>
+                        <a class="nav-link"  th:href="@{/buyer/catalog}">Catalog</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
@@ -38,7 +38,7 @@
                         </button>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
                             Profile
                         </a>
                         <ul class="dropdown-menu">
@@ -58,7 +58,7 @@
 
 </header>
 <!--Delete Modal-->
-<div class="modal fade" th:if="${user.role=='Buyer'}" id="deleteBuyerConfirmationModal" tabindex="-1" aria-labelledby="deleteBuyerConfirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteBuyerConfirmationModal" tabindex="-1" aria-labelledby="deleteBuyerConfirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -79,7 +79,7 @@
     </div>
 </div>
 
-<div class="modal fade" th:if="${user.role=='Buyer'}" id="logoutBuyerConfirmationModal" tabindex="-1" aria-labelledby="logoutBuyerConfirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="logoutBuyerConfirmationModal" tabindex="-1" aria-labelledby="logoutBuyerConfirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -109,9 +109,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <ul class="list-group">
+                <ul class="list-group" th:each="notification:${notifications}">
                     <!-- You can dynamically populate notifications here -->
-                    <li class="list-group-item">New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+                    <li class="list-group-item" th:text="${notification.notifyContent}">
+                        New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
 
                     <!-- ... (More notifications) ... -->
                 </ul>
@@ -124,148 +125,186 @@
 </div>
 
 <body>
-<div class="container">
-    <h1>Checkout</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Your Order</h2>
-            <table class="table" id="table">
-                <thead>
-                <tr>
-                    <th scope="col">Item Name</th>
-                    <th scope="col">Item Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Total</th>
-                </tr>
-                </thead>
-                <tbody th:each="cart:${carts}">
-                <tr>
-                    <td th:text="${cart.getItem().getItemName()}">Nike</td>
-                    <td th:text="${cart.getItem().getItemPrice()}">100.00</td>
-                    <td th:text="${cart.getQuantity()}">2</td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="col-12">
-                <h5 class="text-end">Sub Total: Rs.<span id="sub-total">0.00</span></h5>
-            </div>
-            <div class="col-12">
-                <h5 class="text-end">Shipping: Rs.<span id="Shipping">0.00</span></h5>
-            </div>
-            <div class="col-12">
-                <h5 class="text-end">Tax: Rs.<span id="Tax">0.00</span></h5>
-            </div>
-            <div class="col-12">
-                <h5 class="text-end">Discount: Rs.<span id="discount">0.00</span></h5>
-            </div>
-            <div class="col-12">
-                <h5 class="text-end">Total: Rs.<span id="total">0.00</span></h5>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <h2>Billing Information</h2>
-
-            <form th:action="@{/buyer/bill/save}" th:method="post">
-                <div class="container pt-3 mt-3">
-                    <input  name="billSubAmount" hidden type="text" id="subTotal">
-                    <input   name="shipping" hidden type="text" id="shippingText">
-                    <input  name="tax" type="text" hidden id="taxText">
-                    <input  name="discount" type="text" id="discountText" hidden>
-                    <input  name="total" type="text" id="totalText" hidden>
-                    <div class="row">
-                        <div class="col-12 col-sm-6 mb-3">
-                            <input type="text" name="name" class="form-control" placeholder="Name">
-                        </div>
-                        <div class="col-12 col-sm-6 mb-3">
-                            <input type="text" name="email" class="form-control" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-sm-6 mb-3">
-                            <input type="text" name="billAddress" class="form-control" placeholder="Address">
-                        </div>
-                        <div class="col-6 col-sm-3 mb-3">
-                            <input type="text" name="city" class="form-control" placeholder="City">
-                        </div>
-                        <div class="col-6 col-sm-3 mb-3">
-                            <input type="text" name="state" class="form-control" placeholder="State">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 mb-3">
-                            <input type="text" name="zip" class="form-control" placeholder="Zip Code">
-                        </div>
-                    </div>
+<main>
+    <div th:if="${param.error}" class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> <p th:text="${param.error}"></p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="container">
+        <h1>Checkout</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Your Order</h2>
+                <table class="table" id="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Item Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="cart:${carts}">
+                    <tr>
+                        <td th:text="${cart.getItem().getItemName()}">Nike</td>
+                        <td th:text="${cart.getItem().getItemPrice()}">100.00</td>
+                        <td th:text="${cart.getQuantity()}">2</td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="col-12">
+                    <h5 class="text-end">Sub Total: Rs.<span id="sub-total">0.00</span></h5>
                 </div>
-                <div class="container pt-3 mt-3">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2>Payment Methods</h2>
-                        </div>
-
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-6 col-md-3 mb-3">
-                            <div class="card">
-                                <img src="../static/IMG/credit.jpg" th:src="@{/IMG/credit.png}" class="card-img-top" alt="Credit Card">
-                                <div class="card-body">
-                                    <input class="form-check-input" type="radio" name="payment-method" id="credit-card" value="credit-card">
-                                    <label class="form-check-label" for="credit-card">
-                                        Credit Card
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3 mb-3">
-                            <div class="card">
-                                <img src="cash-on-delivery-image.png" class="card-img-top" alt="Cash on Delivery">
-                                <div class="card-body">
-                                    <input class="form-check-input" type="radio" name="payment-method" id="cash-on-delivery" value="cash-on-delivery">
-                                    <label class="form-check-label" for="cash-on-delivery">
-                                        Cash on Delivery
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3 mb-3">
-                            <div class="card">
-                                <img src="../static/IMG/fonepay.png" th:src="@{/IMG/fonepay.png}" class="card-img-top" alt="Fonepay">
-                                <div class="card-body">
-                                    <input class="form-check-input" type="radio" name="payment-method" id="fonepay" value="fonepay">
-                                    <label class="form-check-label" for="fonepay">
-                                        Fonepay
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3 mb-3">
-                            <div class="card">
-                                <img th:src="@{/IMG/esewa.png}" class="card-img-top" alt="eSewa">
-                                <div class="card-body">
-                                    <input class="form-check-input" type="radio" name="payment-method" id="esewa" value="esewa">
-                                    <label class="form-check-label" for="esewa">
-                                        eSewa
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12">
-                            <input type="submit" value="Checkout" class="btn btn-primary">
-                        </div>
-                    </div>
+                <div class="col-12">
+                    <h5 class="text-end">Shipping: Rs.<span id="Shipping">0.00</span></h5>
                 </div>
-            </form>
+                <div class="col-12">
+                    <h5 class="text-end">Tax: Rs.<span id="Tax">0.00</span></h5>
+                </div>
+                <div class="col-12">
+                    <h5 class="text-end">Discount: Rs.<span id="discount">0.00</span></h5>
+                </div>
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#discountModal">
+                        Apply Discount
+                    </button>
+                </div>
+                <div class="col-12">
+                    <h5 class="text-end">Total: Rs.<span id="total">0.00</span></h5>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>Billing Information</h2>
+
+                <form th:action="@{/buyer/bill/save}" th:method="post">
+                    <div class="container pt-3 mt-3">
+                        <input  name="billSubAmount" hidden type="text" id="subTotal">
+                        <input   name="shipping" hidden type="text" id="shippingText">
+                        <input  name="tax" type="text" hidden id="taxText">
+                        <input  name="discount" type="text" id="discountText" hidden>
+                        <input  name="total" type="text" id="totalText" hidden>
+                        <input name="billAddress" type="text" id="addressText" hidden >
+                        <div class="row">
+                            <div class="col-12 col-sm-6 mb-3">
+                                <input type="text" name="Address" id="address" class="form-control" placeholder="Address" onchange="getAddress()">
+                            </div>
+                            <div class="col-6 col-sm-3 mb-3">
+                                <input type="text" name="city" id="city" class="form-control" placeholder="City" onchange="getAddress()">
+                            </div>
+                            <div class="col-6 col-sm-3 mb-3">
+                                <input type="text" name="state" id="state" class="form-control" placeholder="State" onchange="getAddress()">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <input type="text" name="zip" id="zipcode" class="form-control" placeholder="Zip Code" onchange="getAddress()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container pt-3 mt-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2>Payment Methods</h2>
+                            </div>
+
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="card">
+                                    <img src="../static/IMG/credit.jpg" th:src="@{/IMG/credit.png}" class="card-img-top" alt="Credit Card">
+                                    <div class="card-body">
+                                        <input class="form-check-input" type="radio" name="billPayment" id="credit-card" value="credit-card">
+                                        <label class="form-check-label" for="credit-card">
+                                            Credit Card
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="card">
+                                    <img src="cash-on-delivery-image.png" class="card-img-top" alt="Cash on Delivery">
+                                    <div class="card-body">
+                                        <input class="form-check-input" type="radio" name="billPayment" id="cash-on-delivery" value="Cash">
+                                        <label class="form-check-label" for="cash-on-delivery">
+                                            Cash on Delivery
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="card">
+                                    <img src="../static/IMG/fonepay.png" th:src="@{/IMG/fonepay.png}" class="card-img-top" alt="Fonepay">
+                                    <div class="card-body">
+                                        <input class="form-check-input" type="radio" name="billPayment" id="fonepay" value="fonepay">
+                                        <label class="form-check-label" for="fonepay">
+                                            Fonepay
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="card">
+                                    <img th:src="@{/IMG/esewa.png}" class="card-img-top" alt="eSewa">
+                                    <div class="card-body">
+                                        <input class="form-check-input" type="radio" name="billPayment" id="esewa" value="esewa">
+                                        <label class="form-check-label" for="esewa">
+                                            eSewa
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="submit" value="Checkout" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
         </div>
+    </div>
+</main>
 
-
+<div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="discountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="discountModalLabel">Apply Discount Code</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form th:action="@{/buyer/bill/discount}" method="post">
+                    <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="discountCode" class="form-label">Discount Code</label>
+                        <input type="text" class="form-control" id="discountCode" name="code">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary" >Apply Discount</button>
+            </div>
+                </form>
+        </div>
     </div>
 </div>
 
+
 <script>
+
+    function getAddress(){
+        var address=document.getElementById("address").value;
+        var city=document.getElementById("city").value;
+        var state=document.getElementById("state").value;
+        var zipcode=document.getElementById("zipcode").value;
+        document.getElementById("addressText").value=address + ", " + city + ", " + state + ", " + zipcode;
+    }
+
+
 
     function calculateTotal(){
         var table= document.getElementById("table");
@@ -290,9 +329,10 @@
 
     var tax=5/100*subtotal;
     document.getElementById("Tax").innerText=tax.toFixed(2);
-    var discount=0/100*subtotal;
+    var percent=[[${discount}]];
+    var discount=percent/100*subtotal;
     document.getElementById("discount").innerText=discount.toFixed(2);
-    var billTotal=subtotal+shippingFee+tax+discount;
+    var billTotal=subtotal+shippingFee+tax-discount;
     document.getElementById("total").innerText=billTotal.toFixed(2);
     var subTotalElement=document.getElementById("sub-total");
     subTotalElement.innerText=subtotal.toFixed(2);
@@ -305,16 +345,14 @@
     }
     document.addEventListener("DOMContentLoaded",function (){
         calculateTotal();
-
         }
-
-
-
     )
 
 
 </script>
-<footer class="footer">
+
+
+<footer class="footer mt-3">
     <div class="container">
         <div class="row">
             <div class="footer-col">
@@ -322,7 +360,7 @@
                 <ul>
                     <li><a href="/user/about">about us</a></li>
                     <li><a href="#">our services</a></li>
-                    <li><a href="/user/terms">terms and condition</a></li>
+                    <li><a href="/user/term">terms and condition</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -355,5 +393,6 @@
         </div>
     </div>
 </footer>
+
 </body>
 </html>

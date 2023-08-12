@@ -23,10 +23,10 @@ public class RatingServiceImpl implements RatingService {
     final ItemService itemService;
     @Override
     public void saveRating(RatingDto ratingDto) {
-        Rating rating=new Rating();
         User user=userService.getActiveUser().get();
-        rating.setRating(ratingDto.getRating());
         Item item=itemService.getByIdNoOpt(ratingDto.getItemId()).get();
+        Rating rating=ratingRepo.getByItemIdAndUserId(ratingDto.getItemId(),user.getUserId()).orElse(new Rating());
+        rating.setRating(ratingDto.getRating());
         rating.setItem(item);
         rating.setUser(user);
         ratingRepo.save(rating);

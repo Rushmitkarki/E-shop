@@ -32,4 +32,6 @@ public interface UserService {
 
     void deleteAccount();
 
+    void sendEmail(String email);
+
 }

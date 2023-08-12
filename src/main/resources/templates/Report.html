@@ -91,10 +91,10 @@ main .row:after {
       <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/dashboard/}">Home</a>
+            <a class="nav-link" th:href="@{/buyer/dashboard}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  th:href="@{/buyer/catalog}">Menu</a>
+            <a class="nav-link"  th:href="@{/buyer/catalog}">Catalog</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
@@ -105,7 +105,7 @@ main .row:after {
             </button>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
               Profile
             </a>
             <ul class="dropdown-menu">
@@ -125,7 +125,7 @@ main .row:after {
 
 </header>
 <!--Delete Modal-->
-<div class="modal fade" th:if="${user.role=='Buyer'}" id="deleteBuyerConfirmationModal" tabindex="-1" aria-labelledby="deleteBuyerConfirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteBuyerConfirmationModal" tabindex="-1" aria-labelledby="deleteBuyerConfirmationModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -146,7 +146,7 @@ main .row:after {
   </div>
 </div>
 
-<div class="modal fade" th:if="${user.role=='Buyer'}" id="logoutBuyerConfirmationModal" tabindex="-1" aria-labelledby="logoutBuyerConfirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="logoutBuyerConfirmationModal" tabindex="-1" aria-labelledby="logoutBuyerConfirmationModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -176,9 +176,10 @@ main .row:after {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <ul class="list-group">
+        <ul class="list-group" th:each="notification:${notifications}">
           <!-- You can dynamically populate notifications here -->
-          <li class="list-group-item">New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+          <li class="list-group-item" th:text="${notification.notifyContent}">
+            New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
 
           <!-- ... (More notifications) ... -->
         </ul>
@@ -188,8 +189,8 @@ main .row:after {
       </div>
     </div>
   </div>
-
 </div>
+
 <main>
   <h2>REPORT FORM</h2>
   <div class="container">
@@ -207,7 +208,7 @@ main .row:after {
           <label for="sname">Seller Name</label>
         </div>
         <div class="col-75">
-          <input type="text" id="sname" name="sellername" th:value="${item.user.fname}+' '+${item.user.lname}" placeholder="Seller name..">
+          <input type="text" id="sname" name="sellername" th:value="${item.seller.fname}+' '+${item.seller.lname}" placeholder="Seller name..">
         </div>
       </div>
       <div class="row">

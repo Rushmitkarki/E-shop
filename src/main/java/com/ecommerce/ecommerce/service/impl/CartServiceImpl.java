@@ -46,6 +46,7 @@ public class CartServiceImpl implements CartService {
         cart.setQuantity(quantity);
         cart.setItem(item);
         cart.setUser(user);
+        cart.setStatus("unPaid");
         cart.setTotal(quantity*price);
 
         itemRepo.save(item);
@@ -64,8 +65,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void setStatus(int id) {
-        Cart cart = cartRepo.findById(id).orElse(null);
+    public void setStatus(Cart cart) {
         cart.setStatus("Paid");
         cartRepo.save(cart);
     }

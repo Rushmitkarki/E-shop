@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -15,8 +16,9 @@ public class FavoriteController {
 
     private final FavoriteService favoriteService;
     @PostMapping("/add")
-    public String addFavorite(FavoriteDto favoriteDto) {
-        favoriteService.add(favoriteDto);
+    public String addFavorite(@RequestParam("itemId") int itemId){
+        System.out.println("item id is "+itemId);
+        favoriteService.add(itemId);
         return "redirect:/buyer/dashboard";
     }
 }

@@ -24,10 +24,10 @@
             <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/dashboard/}">Home</a>
+                        <a class="nav-link active" th:href="@{/buyer/dashboard}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  th:href="@{/buyer/catalog}">Menu</a>
+                        <a class="nav-link"  th:href="@{/buyer/catalog}">Catalog</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
@@ -38,7 +38,7 @@
                         </button>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
                             Profile
                         </a>
                         <ul class="dropdown-menu">
@@ -109,9 +109,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <ul class="list-group">
+                <ul class="list-group" th:each="notification:${notifications}">
                     <!-- You can dynamically populate notifications here -->
-                    <li class="list-group-item">New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+                    <li class="list-group-item" th:text="${notification.notifyContent}">
+                        New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
 
                     <!-- ... (More notifications) ... -->
                 </ul>
@@ -147,10 +148,25 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <!-- Displaying Wishlisted Items -->
+                <div class="col-md-12" >
+                    <h2 style="color: white">Your Wishlisted Items</h2>
+                </div>
+                <div class="col-md-6" th:each="wishlistItem :${wishlistItems}" >
+                    <div class="card mb-3">
+                        <img class="card-img-top custom-card-img" th:src="'data:image/png;base64,'+${wishlistItem.ImageBase64}" th:alt="${wishlistItem.itemName}" >
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${wishlistItem.itemName}"></h5>
+                            <p class="card-text" th:text="${wishlistItem.itemDescription}"></p>
+                            <a th:href="@{/buyer/item/{id}(id=${wishlistItem.itemId})}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </main>
-<footer class="footer">
+<footer class="footer mt-3">
     <div class="container">
         <div class="row">
             <div class="footer-col">
@@ -158,7 +174,7 @@
                 <ul>
                     <li><a href="/user/about">about us</a></li>
                     <li><a href="#">our services</a></li>
-                    <li><a href="/user/terms">terms and condition</a></li>
+                    <li><a href="/user/term">terms and condition</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -191,6 +207,7 @@
         </div>
     </div>
 </footer>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

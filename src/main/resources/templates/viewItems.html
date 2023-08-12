@@ -76,10 +76,10 @@
       <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/dashboard/}">Home</a>
+            <a class="nav-link" th:href="@{/buyer/dashboard}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  th:href="@{/buyer/catalog}">Menu</a>
+            <a class="nav-link"  th:href="@{/buyer/catalog}">Catalog</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
@@ -90,7 +90,7 @@
             </button>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
               Profile
             </a>
             <ul class="dropdown-menu">
@@ -161,9 +161,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <ul class="list-group">
+        <ul class="list-group" th:each="notification:${notifications}">
           <!-- You can dynamically populate notifications here -->
-          <li class="list-group-item">New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+          <li class="list-group-item" th:text="${notification.notifyContent}">
+            New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
 
           <!-- ... (More notifications) ... -->
         </ul>
@@ -175,47 +176,7 @@
   </div>
 </div>
 
-<footer class="footer">
-  <div class="container">
-    <div class="row">
-      <div class="footer-col">
-        <h4>company</h4>
-        <ul>
-          <li><a href="/user/about">about us</a></li>
-          <li><a href="#">our services</a></li>
-          <li><a href="/user/terms">terms and condition</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4></h4>
-        <ul>
-          <li><a href="#">Feedback</a></li>
-          <li><a href="#">shipping</a></li>
-          <li><a href="#">returns</a></li>
-          <li><a href="#">order status</a></li>
-          <li><a href="#">payment options</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>online shop</h4>
-        <ul>
-          <li><a href="#">shoes</a></li>
-          <li><a href="#">dress</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>follow us</h4>
-        <div class="social-links">
-          <a href="https://www.facebook.com/slesha.dahal.3"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.tiktok.com/@prociyashrestha"><i class="fab fa-tiktok"></i></a>
-          <a href="https://www.instagram.com/kriteemmuu/"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.linkedin.com/in/abhigya-shrestha-585564231/"><i class="fab fa-linkedin-in"></i></a>
 
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
 <main>
   <div class="row p h-100">
     <div class="col-6 content-section" style="background: white">
@@ -228,8 +189,12 @@
             <div class="col-md-6">
               <div class="row"></div>
               <h1 class="fw-bold mb-3" th:text="${item.itemName}">Item Name</h1>
-              <div class="btns">
-                <Button type="button" onclick="Toogle1();" id="btnh1" class="btn"><i class="fa-solid fa-heart"></i></Button>
+              <div class="btn">
+                <form th:action="@{/favorite/add}" method="post">
+                  <input type="hidden" name="itemId" th:value="${item.itemId}">
+                <button type="submit"  class="btn" style="color:red;" th:if="${isFavorite}=='true'" disabled><i class="fa-solid fa-heart"></i></button>
+                  <button type="submit"  class="btn" th:unless="${isFavorite}=='true'" ><i class="fa-solid fa-heart"></i></button>
+                </form>
             </div>
               <h3 class="mb-3" th:text="${item.category.catName}">Category</h3>
               <p class="mb-3" id="itemDescription">Item Description</p>
@@ -251,9 +216,6 @@
                 <div class="row">
                   <div class="col-5">
                     <button type="submit" class="btn btn-primary mt-3 mb-3">Add to Cart</button>
-                  </div>
-                  <div class="col-2">
-                    <button type="button" class="btn btn-primary mt-3 mb-3" style="background-color: #FFC128;">Favourites</button>
                   </div>
                 </div>
               </form>
@@ -316,9 +278,9 @@
             </div>
           </div>
         </div>
-        <div class="row mt-3">
+          <div class="row mt-3">
           <div class="col-12">
-            <h4>Rate the Seller</h4>
+            <h4>Rate the Item</h4>
               <div class="rating">
                 <input type="radio" id="star5" name="rating" value="5" checked>
                 <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
@@ -338,6 +300,11 @@
             </form>
           </div>
         </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <a th:href="@{/report/{id}(id=${item.itemId})}" class="btn" style="background: #cc0f0f;color: white">Report</a>
+            </div>
+          </div>
       </div>
     </div>
   </div>
@@ -347,15 +314,7 @@
 
 
 <script>
-  var btnvar1 = document.getElementById('btnh1');
-  function Toogle1(){
-      if (btnvar1.style.color == "red") {
-          btnvar1.style.color = "grey"
-      }
-      else{
-          btnvar1.style.color = "red"
-      }
-  }
+
 
   document.getElementById("showMoreBtn").addEventListener("click", function(e) {
     e.preventDefault();
@@ -385,5 +344,47 @@
   });
 
 </script>
+<footer class="footer mt-3">
+  <div class="container">
+    <div class="row">
+      <div class="footer-col">
+        <h4>company</h4>
+        <ul>
+          <li><a href="/user/about">about us</a></li>
+          <li><a href="#">our services</a></li>
+          <li><a href="/user/term">terms and condition</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4></h4>
+        <ul>
+          <li><a href="#">Feedback</a></li>
+          <li><a href="#">shipping</a></li>
+          <li><a href="#">returns</a></li>
+          <li><a href="#">order status</a></li>
+          <li><a href="#">payment options</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>online shop</h4>
+        <ul>
+          <li><a href="#">shoes</a></li>
+          <li><a href="#">dress</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>follow us</h4>
+        <div class="social-links">
+          <a href="https://www.facebook.com/slesha.dahal.3"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@prociyashrestha"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.instagram.com/kriteemmuu/"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/abhigya-shrestha-585564231/"><i class="fab fa-linkedin-in"></i></a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

@@ -77,10 +77,10 @@
             <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/dashboard/}">Home</a>
+                        <a class="nav-link" th:href="@{/buyer/dashboard}">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link"  th:href="@{/buyer/catalog}">Menu</a>
+                    <li class="nav-item ">
+                        <a class="nav-link active"  th:href="@{/buyer/catalog}">Catalog</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
@@ -91,7 +91,7 @@
                         </button>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
                             Profile
                         </a>
                         <ul class="dropdown-menu">
@@ -162,9 +162,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <ul class="list-group">
+                <ul class="list-group" th:each="notification:${notifications}">
                     <!-- You can dynamically populate notifications here -->
-                    <li class="list-group-item">New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+                    <li class="list-group-item" th:text="${notification.notifyContent}">
+                        New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
 
                     <!-- ... (More notifications) ... -->
                 </ul>
@@ -175,6 +176,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Menu Section -->
 <section class="menu-section">

@@ -38,7 +38,7 @@ public class ItemServiceImpl implements ItemService {
 
 
 
-        Category category = categoryService.getByIdNoOpt(itemDto.getCategory());
+        Category category = categoryService.getByIdNoOpt(itemDto.getCategory()).get();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.getByEmail(email).orElse(new User());

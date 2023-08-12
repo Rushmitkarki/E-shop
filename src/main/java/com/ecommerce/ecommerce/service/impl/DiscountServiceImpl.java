@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -26,8 +27,12 @@ public class DiscountServiceImpl implements DiscountService{
         }
         Random random = new Random();
         int index = random.nextInt(id.size());
-        Category category = categoryService.getByIdNoOpt(index);
-        discount.setCategory(category);
+        Optional<Category> category = categoryService.getByIdNoOpt(index);
+        if(category.isEmpty()) {
+            addDiscount();
+        }else{
+            discount.setCategory(category.get());
+        }
 
         discount.setDiscountCode(generateRandomCode());
 
@@ -40,6 +45,18 @@ public class DiscountServiceImpl implements DiscountService{
     @Override
     public List<Discount> getData() {
         return discountRepo.findAllByStatus();
+    }
+
+    @Override
+    public Optional<Discount> getByCode(String code) {
+        return discountRepo.findByDiscountCode(code);
+    }
+
+    @Override
+    public void setDiscountStatus(String code) {
+        Discount discount = discountRepo.findByDiscountCode(code).get();
+        discount.setDiscountStatus("inactive");
+        discountRepo.save(discount);
     }
 
     public static String generateRandomCode() {

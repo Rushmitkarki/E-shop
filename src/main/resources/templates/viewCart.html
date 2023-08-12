@@ -23,13 +23,13 @@
       <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/dashboard/}">Home</a>
+            <a class="nav-link" th:href="@{/buyer/dashboard}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  th:href="@{/buyer/catalog}">Menu</a>
+            <a class="nav-link"  th:href="@{/buyer/catalog}">Catalog</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
+            <a class="nav-link active" th:href="@{/buyer/cart/view}">Cart</a>
           </li>
           <li class="nav-item">
             <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#notificationsModal">
@@ -37,7 +37,7 @@
             </button>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle " role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
               Profile
             </a>
             <ul class="dropdown-menu">
@@ -108,9 +108,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <ul class="list-group">
+        <ul class="list-group" th:each="notification:${notifications}">
           <!-- You can dynamically populate notifications here -->
-          <li class="list-group-item">New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+          <li class="list-group-item" th:text="${notification.notifyContent}">
+            New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
 
           <!-- ... (More notifications) ... -->
         </ul>
@@ -122,47 +123,7 @@
   </div>
 </div>
 
-<footer class="footer">
-  <div class="container">
-    <div class="row">
-      <div class="footer-col">
-        <h4>company</h4>
-        <ul>
-          <li><a href="/user/about">about us</a></li>
-          <li><a href="#">our services</a></li>
-          <li><a href="/user/terms">terms and condition</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4></h4>
-        <ul>
-          <li><a href="#">Feedback</a></li>
-          <li><a href="#">shipping</a></li>
-          <li><a href="#">returns</a></li>
-          <li><a href="#">order status</a></li>
-          <li><a href="#">payment options</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>online shop</h4>
-        <ul>
-          <li><a href="#">shoes</a></li>
-          <li><a href="#">dress</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>follow us</h4>
-        <div class="social-links">
-          <a href="https://www.facebook.com/slesha.dahal.3"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.tiktok.com/@prociyashrestha"><i class="fab fa-tiktok"></i></a>
-          <a href="https://www.instagram.com/kriteemmuu/"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.linkedin.com/in/abhigya-shrestha-585564231/"><i class="fab fa-linkedin-in"></i></a>
 
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
 <main>
 
   <div class="container mt-5">
@@ -270,7 +231,47 @@
     </div>
   </div>
 </main>
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="footer-col">
+        <h4>company</h4>
+        <ul>
+          <li><a href="/user/about">about us</a></li>
+          <li><a href="#">our services</a></li>
+          <li><a href="/user/terms">terms and condition</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4></h4>
+        <ul>
+          <li><a href="#">Feedback</a></li>
+          <li><a href="#">shipping</a></li>
+          <li><a href="#">returns</a></li>
+          <li><a href="#">order status</a></li>
+          <li><a href="#">payment options</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>online shop</h4>
+        <ul>
+          <li><a href="#">shoes</a></li>
+          <li><a href="#">dress</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>follow us</h4>
+        <div class="social-links">
+          <a href="https://www.facebook.com/slesha.dahal.3"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@prociyashrestha"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.instagram.com/kriteemmuu/"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/abhigya-shrestha-585564231/"><i class="fab fa-linkedin-in"></i></a>
 
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
