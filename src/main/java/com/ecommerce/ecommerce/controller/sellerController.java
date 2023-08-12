@@ -1,9 +1,11 @@
 package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.entity.Item;
+import com.ecommerce.ecommerce.entity.Sales;
 import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.service.CategoryService;
 import com.ecommerce.ecommerce.service.ItemService;
+import com.ecommerce.ecommerce.service.SaleService;
 import com.ecommerce.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -26,6 +30,8 @@ public class SellerController {
     private  final ItemService itemService;
 
     private final CategoryService categoryService;
+
+    private final SaleService saleService;
     @GetMapping("/verify/{email}")
     public String sellerVerify(@PathVariable String email, Model model){
         model.addAttribute("email", email);
@@ -40,10 +46,47 @@ public class SellerController {
 
     @GetMapping("/dashboard")
     public String sellerDashboard(Model model){
-        model.addAttribute("user",userService.getActiveUser().orElse(null));
+        User user = userService.getActiveUser().get();
+        saleService.saveSale(user);
+        model.addAttribute("user",user);
+        List<Sales> sales=saleService.pastSevenDaysSales(user);
+
+        List<LocalDate> totalDates=getDatesBetween();
+        List<Double> totalSalesList=getTotalSales(totalDates,sales);
+
+        model.addAttribute("soldItem",saleService.getSalesCount(user));
         model.addAttribute("count",itemService.getItemCount());
 
+        model.addAttribute("totalSales",totalSalesList);
+        model.addAttribute("day",totalDates);
         return "sellerDashboard";
+    }
+
+    public List<Double> getTotalSales(List<LocalDate> totalDates,List<Sales> sales){
+        double[] totalSales=new double[7];
+        for(int i=0;i<7;i++){
+            for(Sales sale:sales){
+                if(sale.getDate().equals(totalDates.get(i))){
+                    totalSales[i]=sale.getTotal();
+                }
+            }
+        }
+        List<Double> totalSalesList= new ArrayList<>();
+        for(double sale:totalSales){
+            totalSalesList.add(sale);
+        }
+        return totalSalesList;
+    }
+
+    public List<LocalDate> getDatesBetween(){
+        LocalDate start = LocalDate.now().minusDays(7);
+        LocalDate end = LocalDate.now();
+        List<LocalDate> totalDates = new ArrayList<>();
+        while (!start.isAfter(end)) {
+            totalDates.add(start);
+            start = start.plusDays(1);
+        }
+        return totalDates;
     }
 
     @GetMapping("/inventory")

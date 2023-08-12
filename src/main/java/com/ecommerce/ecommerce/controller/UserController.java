@@ -93,9 +93,23 @@ public class UserController {
         return base64;
     }
 
-    @GetMapping("/sendEmail/{email}")
-    public String sendEmail(@PathVariable String email){
-        userService.sendEmail(email);
-        return "redirect:/user/view";
+
+
+    @GetMapping("/sendEmail")
+    public String sendEmail(@RequestParam String email,Model model){
+        this.userService.sendEmail(email);
+        model.addAttribute("email",email);
+        return "resetPassword";
     }
+
+    @PostMapping("/resetPass")
+    public String resetPassword(@RequestParam("email") String email,@RequestParam("password") String password,@RequestParam("otp") String otp,@RequestParam("cPassword") String cPass) throws IOException  {
+        if(!password.equals(cPass)){
+            return "redirect:/user/sendResetEmail/"+email+"?error=Password and Confirm Password must be same";
+        }
+
+        userService.resetPass(email,password,otp);
+        return "redirect:/user/login";
+    }
+
 }

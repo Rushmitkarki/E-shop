@@ -19,4 +19,8 @@ public interface CartService {
     List<Cart> getCartByBillId(int billId);
 
     void addBillId(Bill bill, Cart cart);
+
+    List<Cart> getByItemId(Integer itemId);
+
+    List<Cart> getByItemIdAndStatus(Integer itemId);
 }

@@ -34,4 +34,5 @@ public interface UserService {
 
     void sendEmail(String email);
 
+    void resetPass(String email, String password, String otp) throws IOException;
 }

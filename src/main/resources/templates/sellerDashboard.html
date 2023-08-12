@@ -107,38 +107,25 @@
   <h1>Welcome </h1>
 </div>
 <div class="row p-5" >
-  <div class="card text-white bg-primary mb-1 mt-5 m-5" style="max-width: 30rem;">
-    <div class="card-header fw-bold fs-3">Rs 9,99,999</div>
-    <div class="card-body">
-      <h5 class="card-title">Revenue</h5>
-      <p class="card-text">Congratulation, You have made revenue of Rs 9,99,999 this year.</p>
-    </div>
-  </div>
-  <div class="card text-white bg-danger mb-1 mt-5 m-5" style="max-width: 30rem;">
-    <div class="card-header fw-bold fs-3">999</div>
-    <div class="card-body">
-      <h5 class="card-title">Orders</h5>
-      <p class="card-text">You have 999 orders left!.</p>
-    </div>
-  </div>
   <div class="card text-white bg-success mb-1 mt-5 m-5" style="max-width: 30rem;">
-    <div class="card-header fw-bold fs-3">9999</div>
+    <div class="card-header fw-bold fs-3"><p th:text="${soldItem}"></p></div>
     <div class="card-body">
       <h5 class="card-title">Item Sold</h5>
-      <p class="card-text">You have sold 9999 Items this year.</p>
+      <p class="card-text">You have sold <span th:text="${soldItem}"></span> Items this year.</p>
     </div>
   </div>
 </div>
 </div>
 <div class="container-fluid p-5">
  <div class="row" >
-      <div 
-        id="curve_chart" style="width: 1100px; height: 500px">
-      </div>
-      <div
-        id="piechart" style="width: 600px; height: 600px;">
-      </div>
-    </div> 
+   <div class="row">
+     <div class="chart-container mx-auto">
+       <h2>Seven Days History</h2>
+       <canvas id="barChart" width="300" height="150"></canvas>
+       <p>This is a bar chart that displays the historical data for the past seven days.</p>
+     </div>
+   </div>
+    </div>
 
 </div>
 </main>
@@ -208,67 +195,39 @@
 
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript">
+  // Sample data for the charts
+  const barData = [[${totalSales}]];
 
-<script>
-  $(document).ready(function() {
-    $("#modal").on("show.bs.modal", function(event) {
-      var notification = $(event.relatedTarget).data("notification");
-      $("#notifyId").text(notification.notifyId);
-      $("#username").text(notification.user);
-    });
+  // Date labels for the previous ten days
+  const dateLabels = [[${day}]];
+
+  // Create the bar chart
+  const barChartCtx = document.getElementById('barChart').getContext('2d');
+  const barChart = new Chart(barChartCtx, {
+    type: 'bar',
+    data: {
+      labels: dateLabels,
+      datasets: [{
+        label: 'Bar Chart',
+        data: barData,
+        backgroundColor: 'rgba(75, 192, 192, 0.8)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
   });
 </script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
 
-  function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['Month', 'Sales', 'Expenses'],
-      ['June',  1000,      400],
-      ['July',  1170,      460],
-      ['August',  660,       1120],
-      ['September',  1030,      540]
-    ]);
 
-    var options = {
-      title: 'Your Performance',
-      curveType: 'function',
-      legend: { position: 'bottom' }
-    };
-
-    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-    chart.draw(data, options);
-  }
-</script>
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
-
-  function drawChart() {
-
-    var data = google.visualization.arrayToDataTable([
-      ['Category', 'Item Sold'],
-      ['Clothing',     11],
-      ['Shoes',      2],
-      ['Boots',  2],
-      ['Laptop', 2],
-
-    ]);
-
-    var options = {
-      title: 'No of Item sold'
-    };
-
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-    chart.draw(data, options);
-  }
-</script>
 
 
 </body>

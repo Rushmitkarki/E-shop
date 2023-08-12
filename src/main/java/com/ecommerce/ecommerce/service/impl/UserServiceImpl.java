@@ -1,7 +1,7 @@
 package com.ecommerce.ecommerce.service.impl;
 
 import com.ecommerce.ecommerce.config.PasswordEncoderUtil;
-import com.ecommerce.ecommerce.dto.ItemDto;
+
 import com.ecommerce.ecommerce.dto.UserDto;
 import com.ecommerce.ecommerce.entity.Bill;
 import com.ecommerce.ecommerce.entity.Cart;
@@ -9,6 +9,7 @@ import com.ecommerce.ecommerce.entity.Comment;
 import com.ecommerce.ecommerce.entity.Item;
 import com.ecommerce.ecommerce.entity.Rating;
 import com.ecommerce.ecommerce.entity.User;
+import com.ecommerce.ecommerce.entity.Otp;
 import com.ecommerce.ecommerce.repo.*;
 import com.ecommerce.ecommerce.service.UserService;
 
@@ -32,6 +33,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
     private final BillRepo billRepo;
     private final RatingRepo ratingRepo;
     private final CommentRepo commentRepo;
+    private final OtpRepo otpRepo;
     private static final ModelMapper modelMapper = new ModelMapper();
     private final JavaMailSender getJavaMailSender;
     private final EmailCredRepo emailCredRepo;
@@ -235,6 +238,11 @@ public class UserServiceImpl implements UserService {
             Map<String, String> model = new HashMap<>();
             model.put("name", user.getFname() + " " + user.getLname());
             String otpCode= generateRandomNumber();
+            Otp otp = otpRepo.findByEmail(email).orElse(new Otp());
+            otp.setEmail(email);
+            otp.setOtp(otpCode);
+            otp.setDate(getDate());
+            otpRepo.save(otp);
             model.put("otp", otpCode);
 
             MimeMessage message = getJavaMailSender.createMimeMessage();
@@ -267,6 +275,24 @@ public class UserServiceImpl implements UserService {
         return String.valueOf(otp);
         // Generates a random number between 100000 and 999999 (inclusive)
     }
+
+    @Override
+    public void resetPass(String email, String password, String Otp) {
+        Otp otp1 = otpRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Email not found"));
+        if (otp1.getOtp().equals(Otp) && otp1.getDate().isAfter(LocalDateTime.now())) {
+            User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+            user.setPassword(PasswordEncoderUtil.getInstance().encode(password));
+            userRepo.save(user);
+        } else {
+            throw new RuntimeException("Invalid OTP");
+        }
+    }
+
+    public LocalDateTime getDate() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return localDateTime.plusHours(1);
+    }
+
 
 
 

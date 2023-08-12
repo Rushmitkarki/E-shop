@@ -81,5 +81,15 @@ public class CartServiceImpl implements CartService {
         cartRepo.save(cart);
     }
 
+    @Override
+    public List<Cart> getByItemId(Integer itemId) {
+        return cartRepo.getByItemId(itemId);
+    }
+
+    @Override
+    public List<Cart> getByItemIdAndStatus(Integer itemId) {
+        return cartRepo.getByItemIdAndStatus(itemId);
+    }
+
 
 }
