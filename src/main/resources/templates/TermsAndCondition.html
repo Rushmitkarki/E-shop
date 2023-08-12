@@ -2,47 +2,600 @@
 <html lang="en">
 <head>
     <title>Terms And Condition</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  />
+
+    <link href="../static/CSS/header.css" rel="stylesheet" th:href="@{/CSS/header.css}">
+    <link href="../static/CSS/footer.css" rel="stylesheet" th:href="@{/CSS/footer.css}">
+
+
+    <style>
+       main{
+            margin: auto;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .terms-box{
+            max-width: 1060px;
+            background-color: whitesmoke;
+            color: black;
+            font-family: "Times New Roman";
+            padding: 60px 30px;
+        }
+        .terms-text{
+            padding: 0 20px;
+            height: 40px;
+            overflow-y: auto;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+
+
+
+        }
+        .terms-text::-webkit-scrollbar{
+            width: 2px;
+            background-color: #282828;
+
+
+
+        }
+        .terms-text::-webkit-scrollbar-thumb{
+            background-color: #d13639;
+        }
+        .terms-text h2{
+            text-transform: uppercase;
+        }
+        .terms-box h4{
+            font-size: 20px;
+            text-align: center;
+            padding: 0 40px;
+
+
+
+        }
+        .terms-box h4 span{
+            color: #d13639;
+        }
+        .buttons{
+            display: flex;
+            padding: 0 20px;
+            justify-content: space-between;
+
+
+
+        }
+        .btn{
+            height: 50px;
+            width: calc(50% - 6px);
+            border: 0;
+            border-radius:6px ;
+            font-size: 19px;
+            font-weight: 500;
+            color: white;
+            transition: .3s linear;
+            cursor: pointer;
+        }
+        .red-btn{
+            background-color: #d13639;
+        }
+        .grey-btn{
+            background-color: #282828;
+        }
+        .btn:hover{
+            opacity: .6;
+        }
+    </style>
 </head>
 <body>
+<header class="sticky-top" th:if="${user.role=='Seller'}">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid" style="min-height: 80px">
+            <a class="navbar-brand" href="#">
+                <!-- Replace the text with your logo or image -->
+                <img src="../static/IMG/logo.png" alt="Logo" th:src="@{/IMG/logo.png}" style="height: 5em;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sellerNavbarSupportedContent" aria-controls="sellerNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="sellerNavbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/seller/dashboard}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  th:href="@{/seller/inventory}">Inventory</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" type="button"  data-toggle="modal" data-target="#myModal" href="#"><i  ></i> Notification <span th:text="${count}"></span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/user/view">View Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteSellerConfirmationModal">Delete Account</button></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" data-bs-target="#logoutSellerConfirmationModal" data-bs-toggle="modal">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<div class="container mt-3">
-    <h3>Modal Example</h3>
-    <p>Click on the button to open the modal.</p>
+</header>
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-        Open modal
-    </button>
-</div>
-
-<!-- The Modal -->
-<div class="modal" id="myModal">
+<!--Logout Confirmation model-->
+<div class="modal fade" id="logoutSellerConfirmationModal" tabindex="-1" aria-labelledby="logoutSellerConfirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-
-            <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title" id="logoutSellerConfirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-            <!-- Modal body -->
             <div class="modal-body">
-                Modal body..
+                Are you sure you want to log out?
             </div>
-
-            <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <!-- Delete link to the delete URL -->
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
             </div>
-
         </div>
     </div>
 </div>
 
+<!--Delete Modal-->
+<div class="modal fade" id="deleteSellerConfirmationModal" tabindex="-1" aria-labelledby="deleteSellerConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteSellerConfirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this account?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <!-- Delete link to the delete URL -->
+                <form th:action="@{/user/delete}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header class="sticky-top" th:if="${user.role=='Buyer'}">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid" style="min-height: 80px">
+            <a class="navbar-brand" href="#">
+                <!-- Replace the text with your logo or image -->
+                <img src="../static/IMG/logo.png" alt="Logo" th:src="@{/IMG/logo.png}" style="height: 5em;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#buyerNavbarSupportedContent" aria-controls="buyerNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/buyer/dashboard}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  th:href="@{/buyer/catalog}">Catalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                            <i class="fas fa-bell"></i> Notifications
+                        </button>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/user/view">View Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteBuyerConfirmationModal">Delete Account</button></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" data-bs-target="#logoutBuyerConfirmationModal" data-bs-toggle="modal">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+</header>
+<!--Delete Modal-->
+<div class="modal fade" id="deleteBuyerConfirmationModal" tabindex="-1" aria-labelledby="deleteBuyerConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteBuyerConfirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this account?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <!-- Delete link to the delete URL -->
+                <form th:action="@{/user/delete}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="logoutBuyerConfirmationModal" tabindex="-1" aria-labelledby="logoutBuyerConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutBuyerConfirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to log out?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <!-- Delete link to the delete URL -->
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notifications Modal -->
+<div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group" th:each="notification:${notifications}">
+                    <!-- You can dynamically populate notifications here -->
+                    <li class="list-group-item" th:text="${notification.notifyContent}">
+                        New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+
+                    <!-- ... (More notifications) ... -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<main>
+    <div class="terms-box">
+    <div class="terms-text"></div>
+    <h2>Terms and Conditions</h2>
+    <p>Last Edit:08/02/2023</p>
+    <p>Dear User,</p>
+    <p>Please read the Terms and Conditions carefully before using  Guitar Shop.</p>
+
+
+
+    <p>This electronic record is generated by a computer system and does not require any physical or digital signatures.</p>
+
+
+
+    <p><br> 1. INTRODUCTION<br>
+
+
+
+        <br>Welcome to  Guitar Shop also hereby known as “we", "us" or " Guitar Shop". We are an online marketplace and these are the terms and conditions governing your access and use of  Guitar Shop along with its related sub-domains, sites, mobile app, services and tools (the "Site"). By using the Site, you hereby accept these terms and conditions (including the linked information herein) and represent that you agree to comply with these terms and conditions (the "User Agreement"). This User Agreement is deemed effective upon your use of the Site which signifies your acceptance of these terms. If you do not agree to be bound by this User Agreement please do not access, register with or use this Site.
+        <br> The Site reserves the right to change, modify, add, or remove portions of these Terms and Conditions at any time without any prior notification. Changes will be effective when posted on the Site with no other notice provided. Please check these Terms and Conditions regularly for updates. Your continued use of the Site following the posting of changes to Terms and Conditions of use constitutes your acceptance of those changes.
+    </p>
+
+
+
+    <p><br>2. CONDITIONS OF USE<br>
+
+
+
+        <br>A. YOUR ACCOUNT
+        <br>To access certain services offered by the platform, we may require that you create an account with us or provide personal information to complete the creation of an account. We may at any time in our sole and absolute discretion, invalidate the username and/or password without giving any reason or prior notice and shall not be liable or responsible for any losses suffered by, caused by, arising out of, in connection with or by reason of such request or invalidation.
+        <br>You are responsible for maintaining the confidentiality of your user identification, password, account details and related private information. You agree to accept this responsibility and ensure your account and its related details are maintained securely at all times and all necessary steps are taken to prevent misuse of your account. You should inform us immediately if you have any reason to believe that your password has become known to anyone else, or if the password is being, or is likely to be, used in an unauthorized manner. You agree and acknowledge that any use of the Site and related services offered and/or any access to private information, data or communications using your account and password shall be deemed to be either performed by you or authorized by you as the case may be. You agree to be bound by any access of the Site and/or use of any services offered by the Site (whether such access or use are authorized by you or not). You agree that we shall be entitled (but not obliged) to act upon, rely on or hold you solely responsible and liable in respect thereof as if the same were carried out or transmitted by you. You further agree and acknowledge that you shall be bound by and agree to fully indemnify us against any and all losses arising from the use of or access to the Site through your account.
+        <br>Please ensure that the details you provide us with are correct and complete at all times. You are obligated to update details about your account in real time by accessing your account online. For pieces of information you are not able to update by accessing Your Account on the Site, you must inform us via our customer service communication channels to assist you with these changes. We reserve the right to refuse access to the Site, terminate accounts, remove or edit content at any time without prior notice to you. We may at any time in our sole and absolute discretion, request that you update your Personal Data or forthwith invalidate the account or related details without giving any reason or prior notice and shall not be liable or responsible for any losses suffered by or caused by you or arising out of or in connection with or by reason of such request or invalidation. You hereby agree to change your password from time to time and to keep your account secure and also shall be responsible for the confidentiality of your account and liable for any disclosure or use (whether such use is authorised or not) of the username and/or password.
+    </p>
+    <p>B. PRIVACY
+        <br>Please review our Privacy Agreement, which also governs your visit to the Site. The personal information / data provided to us by you or your use of the Site will be treated as strictly confidential, in accordance with the Privacy Agreement and applicable laws and regulations. If you object to your information being transferred or used in the manner specified in the Privacy Agreement, please do not use the Site.
+    </p>
+    <p>C. PLATFORM FOR COMMUNICATION
+        <br>You agree, understand and acknowledge that the Site is an online platform that enables you to purchase products listed at the price indicated therein at any time from any location using a payment method of your choice (  Guitar Shop may charge you a fee for choosing various options available on the platform). You further agree and acknowledge that we are only a facilitator and cannot be a party to or control in any manner any transactions on the Site or on a payment gateway as made available to you by an independent service provider. Accordingly, the contract of sale of products on the Site shall be a strictly bipartite contract between you and the sellers on our Site while the payment processing occurs between you, the service provider and in case of prepayments with electronic cards your issuer bank. Accordingly, the contract of payment on the Site shall be strictly a bipartite contract between you and the service provider as listed on our Site.
+    </p>
+    <br>F. COMMUNICATING WITH US
+    <br>When you visit the Site, or send e-mails to us, you are communicating with us electronically. You will be required to provide a valid phone number while placing an order with us. We may communicate with you by e-mail, SMS, phone call or by posting notices on the Site or by any other mode of communication we choose to employ. For contractual purposes, you consent to receive communications (including transactional, promotional and/or commercial messages), from us with respect to your use of the website (and/or placement of your order) and agree to treat all modes of communication with the same importance.
+    </p>
+
+
+
+
+
+    <p>G. LOSSES
+        <br>We will not be responsible for any business or personal losses (including but not limited to loss of profits, revenue, contracts, anticipated savings, data, goodwill, or wasted expenditure) or any other indirect or consequential loss that is not reasonably foreseeable to both you and us when you commenced using the Site.
+    </p>
+
+
+
+
+
+
+
+    <p>H. CONTACT US
+        <br>You may reach us here.
+    </p>
+
+
+
+
+
+    <p><br>3. CONDITIONS OF SALE (BETWEEN SELLERS AND CUSTOMERS)<br>
+        <br>Please read these conditions carefully before placing an order for any products with the Sellers (“We” or “Our” or “Us”, wherever applicable) on the Site. These conditions signify your agreement to be bound by these conditions.
+    </p>
+
+
+
+
+
+
+
+    <p>A. CONDITIONS RELATED TO SALE OF THE PRODUCT OR SERVICE
+        <br>This section deals with conditions relating to the sale of products or services on the Site.
+    </p>
+
+
+
+    <p>B. THE CONTRACT
+        <br>Your order is a legal offer to the seller to buy the product or service displayed on our Site. When you place an order to purchase a product, any confirmations or status updates received prior to the dispatch of your order serves purely to validate the order details provided and in no way implies the confirmation of the order itself. The acceptance of your order is considered confirmed when the product is dispatched to you. If your order is dispatched in more than one package, you may receive separate dispatch confirmations. Upon time of placing the order, we indicate an approximate timeline that the processing of your order will take however we cannot guarantee this timeline to be rigorously precise in every instance as we are dependent on third party service providers to preserve this commitment. We commit to you to make every reasonable effort to ensure that the indicative timeline is met. All commercial/contractual terms are offered by and agreed to between you and the sellers alone. The commercial/contractual terms include without limitation price, shipping costs, payment methods, payment terms, date, period and mode of delivery, warranties related to products and services and after sales services related to products and services.  Guitar Shop does not have any control or does not determine or advise or in any way involve itself in the offering or acceptance of such commercial/contractual terms between the you and the Sellers. The seller retains the right to cancel any order at its sole discretion prior to dispatch. We will ensure that there is timely intimation to you of such cancellation via an email or sms. Any prepayments made in case of such cancellation(s), shall be refunded to you within the time frames stipulated here.
+
+
+
+        <br>You confirm that the product(s) or service(s) ordered by you are purchased for your internal / personal consumption and not for commercial re-sale. You authorize us to declare and provide declaration to any governmental authority on your behalf stating the aforesaid purpose for your orders on the Site. The Seller or the Site may cancel an order wherein the quantities exceed the typical individual consumption. This applies both to the number of products ordered within a single order and the placing of several orders for the same product where the individual orders comprise a quantity that exceeds the typical individual consumption. What comprises a typical individual's consumption quantity limit shall be based on various factors and at the sole discretion of the Seller or ours and may vary from individual to individual.
+
+
+
+        <br>You may cancel your order at no cost any time before the item is dispatched to you.
+
+
+
+        <br>Please note that we sell products only in quantities which correspond to the typical needs of an average household. This applies both to the number of products ordered within a single order and the placing of several orders for the same product where the individual orders comprise a quantity typical for a normal household.
+    </p>
+
+
+
+    <p>C. RETURNS
+        <br>Please review our Returns Policy for details.
+    </p>
+
+
+
+
+
+    <p>D. PRICING, AVAILABILITY AND ORDER PROCESSING
+
+
+
+        <br>All prices are listed in Nepalese Rupees and are inclusive of VAT and are listed on the Site by the seller that is selling the product or service. Items in your Shopping Cart will always reflect the most recent price displayed on the item's product detail page. Please note that this price may differ from the price shown for the item when you first placed it in your cart. Placing an item in your cart does not reserve the price shown at that time. It is also possible that an item's price may decrease between the time you place it in your basket and the time you purchase it.
+
+
+
+        <br>We do not offer price matching for any items sold by any seller on our Site or other websites.
+
+
+
+        <br>We are determined to provide the most accurate pricing information on the Site to our users; however, errors may still occur, such as cases when the price of an item is not displayed correctly on the Site. As such, we reserve the right to refuse or cancel any order. In the event that an item is mispriced, we may, at our own discretion, either contact you for instructions or cancel your order and notify you of such cancellation. We shall have the right to refuse or cancel any such orders whether or not the order has been confirmed and your prepayment processed. If such a cancellation occurs on your prepaid order, our policies for refund will apply.
+
+
+
+        <br>We list availability information for products listed on the Site, including on each product information page. Beyond what we say on that page or otherwise on the Site, we cannot be more specific about availability. Please note that dispatch estimates are just that. They are not guaranteed dispatch times and should not be relied upon as such. As we process your order, you will be informed by e-mail or sms if any products you order turn out to be unavailable.
+
+
+
+        <br>Please note that there are cases when an order cannot be processed for various reasons. The Site reserves the right to refuse or cancel any order for any reason at any given time. You may be asked to provide additional verifications or information, including but not limited to phone number and address, before we accept the order.
+
+
+
+        <br>In order to avoid any fraud with credit or debit cards, we reserve the right to obtain validation of your payment details before providing you with the product and to verify the personal information you shared with us. This verification can take the shape of an identity, place of residence, or banking information check. The absence of an answer following such an inquiry will automatically cause the cancellation of the order within a reasonable timeline. We reserve the right to proceed to direct cancellation of an order for which we suspect a risk of fraudulent use of banking instruments or other reasons without prior notice or any subsequent legal liability.
+
+
+
+        <br>Refund Voucher
+
+
+
+
+
+        <br>Refund voucher can be redeemed on our Website, as full or part payment of products from our Website within the given timeline.
+        <br>Refund voucher cannot be used from different account.
+        <br>Vouchers are not replaceable if expired.
+        <br>Each issued promotional voucher (App voucher and New customer voucher) will be valid for use by a customer only once. Multiple usages changing the identity is illegal.
+        <br>Promotional voucher is non-refundable and cannot be exchanged for cash in part or full and is valid for a single transaction only.
+        <br>Promotional voucher may not be valid during sale or in conjunction with any special promotion.
+        <br>Voucher will work only if minimum purchase amount and other conditions are met.
+        <br>Guitar Shop reserves the right to vary or terminate the operation of any voucher at any time without notice.
+        <br>Guitar Shop shall not be liable to any customer or household for any financial loss arising out of the refusal, cancellation or withdrawal of any voucher or any failure or inability of a customer to use a voucher for any reason.
+        <br>Vouchers are not replaceable if expired.
+
+
+
+        <br>Security and Fraud
+
+
+
+        <br>When you use a voucher, you warrant to  Guitar Shop that you are the duly authorized recipient of the voucher and that you are using it in good faith.
+        <br>If you redeem, attempt to redeem or encourage the redemption of voucher to obtain discounts to which you are not entitled you may be committing a civil or criminal offence.
+        <br>If we reasonably believe that any voucher is being used unlawfully or illegally we may reject or cancel any voucher/order and you agree that you will have no claim against us in respect of any rejection or cancellation.  Guitar Shop reserves the right to take any further action it deems appropriate in such instances.
+    </p>
+
+
+
+    <p>E. RESELLING  Guitar Shop PRODUCTS
+        <br>Reselling  Guitar Shop products for business purpose is strictly prohibited. If any unauthorized personnel is found committing the above act, legal action may be taken against him/her.
+
+
+
+    </p>
+
+
+
+
+
+    <p>G. COMMUNICATING WITH US
+        <br>When you visit the Site, or send e-mails to us, you are communicating with us electronically. You will be required to provide a valid phone number while placing an order with us. We may communicate with you by e-mail, SMS, phone call or by posting notices on the website or by any other mode of communication we choose to employ. For contractual purposes, you consent to receive communications (including transactional, promotional and/or commercial messages), from us with respect to your use of the website (and/or placement of your order) and agree to treat all modes of communication with the same importance.
+    </p>
+
+
+
+
+
+
+
+    <p>H. LOSSES
+        <br>We will not be responsible for any business or personal losses (including but not limited to loss of profits, revenue, contracts, anticipated savings, data, goodwill, or wasted expenditure) or any other indirect or consequential loss that is not reasonably foreseeable to both you and us when you commenced using the website.
+
+
+
+    </p>
+
+
+
+
+
+    <p>I. AMENDMENTS TO CONDITIONS OR ALTERATIONS OF SERVICE AND RELATED PROMISE
+        <br>We reserve the right to make changes to the Site, its policies, these terms and conditions and any other publicly displayed condition or service promise at any time. You will be subject to the policies and terms and conditions in force at the time you used the website unless any change to those policies or these conditions is required to be made by law or government authority (in which case it will apply to orders previously placed by you). If any of these conditions is deemed invalid, void, or for any reason unenforceable, that condition will be deemed severable and will not affect the validity and enforceability of any remaining condition.
+    </p>
+
+
+
+
+
+
+
+    <p>J. EVENTS BEYOND OUR CONTROL
+        <br>We will not be held responsible for any delay or failure to comply with our obligations under these conditions if the delay or failure arises from any cause which is beyond our reasonable control. This condition does not affect your statutory rights.
+
+
+
+    </p>
+
+
+
+
+
+    <p>K. WAVIER
+        <br>You acknowledge and recognize that we are a private commercial enterprise and reserve the right to conduct business to achieve our objectives in a manner we deem fit. You also acknowledge that if you breach the conditions stated on our Site and we take no action, we are still entitled to use our rights and remedies in any other situation where you breach these conditions.
+
+
+
+    </p>
+
+
+
+
+
+    <p>L. GOVERNING LAW AND JURISDICTION
+        <br>These terms and conditions are governed by and construed in accordance with the laws of the Federal Democratic Republic of Nepal. You agree, as we do, to submit to the exclusive jurisdiction of the courts in Kathmandu.
+    </p>
+
+
+
+
+
+
+
+    <p>M. REPRESENTATIONS AND WARRANTIES
+        <br>We do not make any representation or warranty as to specifics (such as quality, value, saleability, etc) of the products or services listed to be sold on the Site when products or services are sold by third parties. We do not implicitly or explicitly support or endorse the sale or purchase of any products or services on the Site. We accept no liability for any errors or omissions, whether on behalf of itself or third parties.
+
+
+
+        <br>We are not responsible for any non-performance or breach of any contract entered into between you and the sellers. We cannot and do not guarantee your actions or those of the sellers as they conclude transactions on the Site. We are not required to mediate or resolve any dispute or disagreement arising from transactions occurring on our Site.
+
+
+
+        <br>We do not at any point of time during any transaction as entered into by you with a third party on our Site, gain title to or have any rights or claims over the products or services offered by a seller. Therefore, we do not have any obligations or liabilities in respect of such contract(s) entered into between you and the seller(s). We are not responsible for unsatisfactory or delayed performance of services or damages or delays as a result of products which are out of stock, unavailable or back ordered.
+
+
+
+        <br>Pricing on any product(s) or related information as reflected on the Site may due to some technical issue, typographical error or other reason by incorrect as published and as a result you accept that in such conditions the seller or the Site may cancel your order without prior notice or any liability arising as a result. Any prepayments made for such orders will be refunded to you per our refund policy as stipulated.</br>
+    </p>
+
+
+
+
+
+</div>
+</main>
+
+
+<footer class="footer mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col">
+                <h4>company</h4>
+                <ul>
+                    <li><a href="/user/about">about us</a></li>
+                    <li><a href="#">our services</a></li>
+                    <li><a href="/user/term">terms and condition</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4></h4>
+                <ul>
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">shipping</a></li>
+                    <li><a href="#">returns</a></li>
+                    <li><a href="#">order status</a></li>
+                    <li><a href="#">payment options</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>online shop</h4>
+                <ul>
+                    <li><a href="#">shoes</a></li>
+                    <li><a href="#">dress</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>follow us</h4>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/slesha.dahal.3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.tiktok.com/@prociyashrestha"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/kriteemmuu/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/abhigya-shrestha-585564231/"><i class="fab fa-linkedin-in"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>

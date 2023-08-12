@@ -14,9 +14,13 @@ public interface CartService {
 
     void deleteCart(int id);
 
-    void setStatus(int id);
+    void setStatus(Cart cart);
 
     List<Cart> getCartByBillId(int billId);
 
     void addBillId(Bill bill, Cart cart);
+
+    List<Cart> getByItemId(Integer itemId);
+
+    List<Cart> getByItemIdAndStatus(Integer itemId);
 }

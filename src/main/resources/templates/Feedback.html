@@ -3,18 +3,18 @@
 <head>    
 <meta name="viewport" content="width=device-width, initial-scale=1">    
 <style>    
-* {    
+main {
   box-sizing: border-box;    
 }    
     
-input[type=text], select, textarea {    
+main input[type=text], select, textarea {
   width: 100%;    
   padding: 12px;    
   border: 1px solid rgb(70, 68, 68);    
   border-radius: 4px;    
   resize: vertical;    
 }    
-input[type=email], select, textarea {    
+main input[type=email], select, textarea {
   width: 100%;    
   padding: 12px;    
   border: 1px solid rgb(70, 68, 68);    
@@ -22,12 +22,12 @@ input[type=email], select, textarea {
   resize: vertical;    
 }    
     
-label {    
+main label {
   padding: 12px 12px 12px 0;    
   display: inline-block;    
 }    
     
-input[type=submit] {    
+main input[type=submit] {
   background-color: rgb(37, 116, 161);    
   color: white;    
   padding: 12px 20px;    
@@ -37,99 +37,347 @@ input[type=submit] {
   float: right;    
 }    
     
-input[type=submit]:hover {    
+main input[type=submit]:hover {
   background-color: #45a049;    
 }    
     
-.container {    
+main .container {
   border-radius: 5px;    
   background-color: #f2f2f2;    
   padding: 20px;    
 }    
     
-.col-25 {    
+main .col-25 {
   float: left;    
   width: 25%;    
   margin-top: 6px;    
 }    
     
-.col-75 {    
+main .col-75 {
   float: left;    
   width: 75%;    
   margin-top: 6px;    
 }    
     
 /* Clear floats after the columns */    
-.row:after {    
+main .row:after {
   content: "";    
   display: table;    
   clear: both;    
 }    
     
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */    
-</style>    
-</head>    
-<body>    
-<h2>FEED BACK FORM</h2>    
-<div class="container">    
-  <form th:action="@{/feedback/save}" method="post">
-    <div class="row">    
-      <div class="col-25">    
-        <label for="fname">First Name</label>    
-      </div>    
-      <div class="col-75">    
-        <input type="text" id="fname" name="firstname" placeholder="Your name..">    
-      </div>    
-    </div>    
-    <div class="row">    
-      <div class="col-25">    
-        <label for="lname">Last Name</label>    
-      </div>    
-      <div class="col-75">    
-        <input type="text" id="lname" name="lastname" placeholder="Your last name..">    
-      </div>    
-    </div>    
-    <div class="row">    
-        <div class="col-25">    
-          <label for="email">Email</label>    
-        </div>    
-        <div class="col-75">    
-          <input type="email" id="email" name="email" placeholder="Your email id..">    
-        </div>    
-      </div>    
-    <div class="row">    
-      <div class="col-25">    
-        <label for="country">Country</label>    
-      </div>    
-      <div class="col-75">    
-        <select id="country" name="country">    
-            <option value="none">Select Country</option>    
-          <option value="australia">Australia</option>    
-          <option value="canada">Canada</option>    
-          <option value="usa">USA</option>    
-          <option value="russia">Russia</option>    
-          <option value="japan">Japan</option>    
-          <option value="india">India</option>    
-          <option value="china">China</option>
-          <option value="nepal">Nepal</option>  
-          <option value="switzerland">Nepal</option>    
-          <option value="newzealand">NewZealand</option>
-        </select>    
-      </div>    
-    </div>    
-    <div class="row">    
-      <div class="col-25">    
-        <label for="subject">Feed Back</label>
-      </div>    
-      <div class="col-75">    
-        <textarea id="subject" name="feedback" placeholder="Write something.." style="height:200px"></textarea>
-      </div>    
-    </div>    
-    <div class="row">    
-      <input type="submit" value="Submit">    
-    </div>    
-  </form>    
-</div>    
-    
+</style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  />
+
+  <link href="../static/CSS/header.css" rel="stylesheet" th:href="@{/CSS/header.css}">
+  <link href="../static/CSS/footer.css" rel="stylesheet" th:href="@{/CSS/footer.css}">
+</head>
+
+<body>
+<header class="sticky-top" th:if="${user.role=='Buyer'}">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid" style="min-height: 80px">
+      <a class="navbar-brand" href="#">
+        <!-- Replace the text with your logo or image -->
+        <img src="../static/IMG/logo.png" alt="Logo" th:src="@{/IMG/logo.png}" style="height: 5em;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#buyerNavbarSupportedContent" aria-controls="buyerNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/buyer/dashboard}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  th:href="@{/buyer/catalog}">Catalog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+              <i class="fas fa-bell"></i> Notifications
+            </button>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle " role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+              Profile
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/user/view">View Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteBuyerConfirmationModal">Delete Account</button></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" type="button" data-bs-target="#logoutBuyerConfirmationModal" data-bs-toggle="modal">Logout</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+</header>
+<!--Delete Modal-->
+<div class="modal fade" id="deleteBuyerConfirmationModal" tabindex="-1" aria-labelledby="deleteBuyerConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteBuyerConfirmationModalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this account?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <!-- Delete link to the delete URL -->
+        <form th:action="@{/user/delete}" method="post">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="logoutBuyerConfirmationModal" tabindex="-1" aria-labelledby="logoutBuyerConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutBuyerConfirmationModalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to log out?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <!-- Delete link to the delete URL -->
+        <form th:action="@{/logout}" method="post">
+          <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notifications Modal -->
+<div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group" th:each="notification:${notifications}">
+          <!-- You can dynamically populate notifications here -->
+          <li class="list-group-item" th:text="${notification.notifyContent}">
+            New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+
+          <!-- ... (More notifications) ... -->
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="sticky-top" th:if="${user.role=='Seller'}">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid" style="min-height: 80px">
+      <a class="navbar-brand" href="#">
+        <!-- Replace the text with your logo or image -->
+        <img src="../static/IMG/logo.png" alt="Logo" th:src="@{/IMG/logo.png}" style="height: 5em;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sellerNavbarSupportedContent" aria-controls="sellerNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="sellerNavbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" th:href="@{/seller/dashboard}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  th:href="@{/seller/inventory}">Inventory</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" type="button"  data-toggle="modal" data-target="#myModal" href="#"><i  ></i> Notification <span th:text="${count}"></span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+              Profile
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/user/view">View Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteSellerConfirmationModal">Delete Account</button></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" type="button" data-bs-target="#logoutSellerConfirmationModal" data-bs-toggle="modal">Logout</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+<!--Logout Confirmation model-->
+<div class="modal fade" id="logoutSellerConfirmationModal" tabindex="-1" aria-labelledby="logoutSellerConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutSellerConfirmationModalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to log out?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <!-- Delete link to the delete URL -->
+        <form th:action="@{/logout}" method="post">
+          <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="deleteSellerConfirmationModal" tabindex="-1" aria-labelledby="deleteSellerConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteSellerConfirmationModalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this account?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <!-- Delete link to the delete URL -->
+        <form th:action="@{/user/delete}" method="post">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <h2>FEED BACK FORM</h2>
+  <div class="container">
+    <form th:action="@{/feedback/save}" method="post">
+      <div class="row">
+        <div class="col-25">
+          <label for="fname">First Name</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="fname" name="firstname" placeholder="Your name..">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="lname">Last Name</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="email">Email</label>
+        </div>
+        <div class="col-75">
+          <input type="email" id="email" name="email" placeholder="Your email id..">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="country">Country</label>
+        </div>
+        <div class="col-75">
+          <select id="country" name="country">
+            <option value="none">Select Country</option>
+            <option value="australia">Australia</option>
+            <option value="canada">Canada</option>
+            <option value="usa">USA</option>
+            <option value="russia">Russia</option>
+            <option value="japan">Japan</option>
+            <option value="india">India</option>
+            <option value="china">China</option>
+            <option value="nepal">Nepal</option>
+            <option value="switzerland">Nepal</option>
+            <option value="newzealand">NewZealand</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="subject">Feed Back</label>
+        </div>
+        <div class="col-75">
+          <textarea id="subject" name="feedback" placeholder="Write something.." style="height:200px"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <input type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="footer-col">
+        <h4>company</h4>
+        <ul>
+          <li><a href="/user/about">about us</a></li>
+          <li><a href="#">our services</a></li>
+          <li><a href="/user/terms">terms and condition</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4></h4>
+        <ul>
+          <li><a href="#">Feedback</a></li>
+          <li><a href="#">shipping</a></li>
+          <li><a href="#">returns</a></li>
+          <li><a href="#">order status</a></li>
+          <li><a href="#">payment options</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>online shop</h4>
+        <ul>
+          <li><a href="#">shoes</a></li>
+          <li><a href="#">dress</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>follow us</h4>
+        <div class="social-links">
+          <a href="https://www.facebook.com/slesha.dahal.3"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@prociyashrestha"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.instagram.com/kriteemmuu/"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/abhigya-shrestha-585564231/"><i class="fab fa-linkedin-in"></i></a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
 </body>    
 </html>

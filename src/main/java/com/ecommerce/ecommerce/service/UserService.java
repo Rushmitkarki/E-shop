@@ -32,4 +32,7 @@ public interface UserService {
 
     void deleteAccount();
 
+    void sendEmail(String email);
+
+    void resetPass(String email, String password, String otp) throws IOException;
 }

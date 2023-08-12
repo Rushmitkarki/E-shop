@@ -37,7 +37,7 @@ public class BillServiceImpl implements BillService {
 
         double billSubAmount = billDto.getBillSubAmount();
         bill.setBillSubAmount(billSubAmount);
-        double discount = billSubAmount*0.05;
+        double discount = billDto.getDiscount();
         bill.setDiscount(discount);
         double tax= billSubAmount*0.1;
         bill.setTax(tax);
@@ -56,6 +56,7 @@ public class BillServiceImpl implements BillService {
         bill.setBillPayment(billDto.getBillPayment());
         billRepo.save(bill);
         for(Cart cart: carts){
+            cartService.setStatus(cart);
             cartService.addBillId(bill, cart);
         }
     }

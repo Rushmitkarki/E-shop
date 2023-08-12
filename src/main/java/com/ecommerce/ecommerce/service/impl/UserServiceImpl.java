@@ -1,7 +1,7 @@
 package com.ecommerce.ecommerce.service.impl;
 
 import com.ecommerce.ecommerce.config.PasswordEncoderUtil;
-import com.ecommerce.ecommerce.dto.ItemDto;
+
 import com.ecommerce.ecommerce.dto.UserDto;
 import com.ecommerce.ecommerce.entity.Bill;
 import com.ecommerce.ecommerce.entity.Cart;
@@ -9,22 +9,32 @@ import com.ecommerce.ecommerce.entity.Comment;
 import com.ecommerce.ecommerce.entity.Item;
 import com.ecommerce.ecommerce.entity.Rating;
 import com.ecommerce.ecommerce.entity.User;
+import com.ecommerce.ecommerce.entity.Otp;
 import com.ecommerce.ecommerce.repo.*;
 import com.ecommerce.ecommerce.service.UserService;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +46,14 @@ public class UserServiceImpl implements UserService {
     private final BillRepo billRepo;
     private final RatingRepo ratingRepo;
     private final CommentRepo commentRepo;
+    private final OtpRepo otpRepo;
     private static final ModelMapper modelMapper = new ModelMapper();
+    private final JavaMailSender getJavaMailSender;
+    private final EmailCredRepo emailCredRepo;
+    private final ThreadPoolTaskExecutor taskExecutor;
+    @Autowired
+    @Qualifier("emailConfigBean")
+    private Configuration emailConfig;
 
     @Override
     public void registerUser(UserDto userDto) {
@@ -85,7 +102,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getData() {
-        return null;
+        return userRepo.findAll();
     }
 
     @Override
@@ -212,5 +229,71 @@ public class UserServiceImpl implements UserService {
             System.out.println("The user is not a buyer or a seller");
         }
     }
+
+    @Override
+    public void sendEmail(String email) {
+        try {
+            User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+
+            Map<String, String> model = new HashMap<>();
+            model.put("name", user.getFname() + " " + user.getLname());
+            String otpCode= generateRandomNumber();
+            Otp otp = otpRepo.findByEmail(email).orElse(new Otp());
+            otp.setEmail(email);
+            otp.setOtp(otpCode);
+            otp.setDate(getDate());
+            otpRepo.save(otp);
+            model.put("otp", otpCode);
+
+            MimeMessage message = getJavaMailSender.createMimeMessage();
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+
+            Template template = emailConfig.getTemplate("resetPass.ftl");
+            String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setText(html, true);
+            mimeMessageHelper.setSubject("Reset Password");
+            mimeMessageHelper.setFrom("eshop6371@gmail.com");;
+
+
+            taskExecutor.execute(new Thread() {
+                public void run() {
+                    getJavaMailSender.send(message);
+                }
+            });
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    public static String generateRandomNumber() {
+        Random random = new Random();
+
+        int otp=100000 + random.nextInt(900000);
+        return String.valueOf(otp);
+        // Generates a random number between 100000 and 999999 (inclusive)
+    }
+
+    @Override
+    public void resetPass(String email, String password, String Otp) {
+        Otp otp1 = otpRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Email not found"));
+        if (otp1.getOtp().equals(Otp) && otp1.getDate().isAfter(LocalDateTime.now())) {
+            User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+            user.setPassword(PasswordEncoderUtil.getInstance().encode(password));
+            userRepo.save(user);
+        } else {
+            throw new RuntimeException("Invalid OTP");
+        }
+    }
+
+    public LocalDateTime getDate() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return localDateTime.plusHours(1);
+    }
+
+
+
 
 }

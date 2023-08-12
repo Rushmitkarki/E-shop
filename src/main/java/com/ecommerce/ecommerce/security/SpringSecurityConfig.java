@@ -38,7 +38,7 @@ public class SpringSecurityConfig {
     protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/login","/register","/CSS/**","/JS/**","/IMG/**","/webjars/**","/save","/verify/**","/forgotPassword/**","/resetPassword/**","seller/verify/**")
+                .requestMatchers("/login","/register","/CSS/**","/JS/**","/IMG/**","/webjars/**","/save","/verify/**","/forgotPassword/**","/resetPassword/**","/seller/verify/**","/user/sendEmail/**","/user/resetPass")
                 .permitAll()
                 .requestMatchers("/seller/**")
                 .hasAuthority("Seller")
@@ -53,7 +53,13 @@ public class SpringSecurityConfig {
                 .usernameParameter("email")
                 .permitAll()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
 
         return httpSecurity.build();
     }

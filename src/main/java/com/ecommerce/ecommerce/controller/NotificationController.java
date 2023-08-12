@@ -15,6 +15,6 @@ public class NotificationController {
     private final NotificationService notificationService;
     @PostMapping("/add")
     public void addNotification(@RequestBody NotificationDto notificationDto){
-        notificationService.addNotification(notificationDto);
+        notificationService.addNotification();
     }
 }

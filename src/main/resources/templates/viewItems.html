@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Latest compiled and minified CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Latest compiled JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <title> E-shop</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <title> Add to cart</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  />
 
+  <link href="../static/CSS/header.css" rel="stylesheet" th:href="@{/CSS/header.css}">
+  <link href="../static/CSS/footer.css" rel="stylesheet" th:href="@{/CSS/footer.css}">
   <style>
     
     .content-section {
@@ -62,57 +63,119 @@
   </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light fs-3 pt-3 pb-3" style="background-color: #98b4ca">
-  <div class="container-fluid " >
-    <img src="../static/IMG/logo.png" th:src="@{/IMG/logo.png}" alt="" width="100" height="100">
+<header class="sticky-top" th:if="${user.role=='Buyer'}">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid" style="min-height: 80px">
+      <a class="navbar-brand" href="#">
+        <!-- Replace the text with your logo or image -->
+        <img src="../static/IMG/logo.png" alt="Logo" th:src="@{/IMG/logo.png}" style="height: 5em;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#buyerNavbarSupportedContent" aria-controls="buyerNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="buyerNavbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/buyer/dashboard}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  th:href="@{/buyer/catalog}">Catalog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/buyer/cart/view}">Cart</a>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+              <i class="fas fa-bell"></i> Notifications
+            </button>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
+              Profile
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/user/view">View Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteBuyerConfirmationModal">Delete Account</button></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" type="button" data-bs-target="#logoutBuyerConfirmationModal" data-bs-toggle="modal">Logout</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse ps-5" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item ps-5">
-          <a class="nav-link" aria-current="page" th:href="@{/buyer/dashboard}"><i class="fa-solid fa-house"></i> Home</a>
 
-        </li>
-        <li class="nav-item dropdown ps-5">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-             data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-list"></i>
-            Categories
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" th:href="@{/buyer/catalog}">All Products</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li th:each="category : ${Categories}">
-              <a class="dropdown-item" th:href="@{/buyer/catalog/{id}(id=${category.catId})}" th:text="${category.catName}"></a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item ps-5">
-          <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i> My Cart</a>
-        </li>
-        <li class="nav-item ps-5">
-          <a class="nav-link" href="#"><i class="fa-solid fa-user"></i> <span th:text="${user.fname}+${user.lname}"></span></a>
-        </li>
-        <li class="nav-item ps-5">
-          <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About Us</a>
-        </li>
-        <li class="nav-item ps-5">
-          <a href="#" class="nav-link">Logout</a>
-        </li>
-        <li class="nav-item ps-5">
-          <a href="#" class="nav-link">Delete Account</a>
-        </li>
-      </ul>
-      <form class="d-flex" th:action="@{/buyer/search}" th:method="post">
-        <input class="form-control me-2" type="search" name="searchName" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-      </form>
-
+</header>
+<!--Delete Modal-->
+<div class="modal fade" id="deleteBuyerConfirmationModal" tabindex="-1" aria-labelledby="deleteBuyerConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteBuyerConfirmationModalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this account?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <!-- Delete link to the delete URL -->
+        <form th:action="@{/user/delete}" method="post">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
     </div>
   </div>
-</nav>
+</div>
+
+<div class="modal fade" id="logoutBuyerConfirmationModal" tabindex="-1" aria-labelledby="logoutBuyerConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutBuyerConfirmationModalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to log out?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <!-- Delete link to the delete URL -->
+        <form th:action="@{/logout}" method="post">
+          <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notifications Modal -->
+<div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group" th:each="notification:${notifications}">
+          <!-- You can dynamically populate notifications here -->
+          <li class="list-group-item" th:text="${notification.notifyContent}">
+            New Offer: Get 20% off on shoes! Use code <strong>SHOE20</strong>.</li>
+
+          <!-- ... (More notifications) ... -->
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <main>
   <div class="row p h-100">
@@ -126,8 +189,12 @@
             <div class="col-md-6">
               <div class="row"></div>
               <h1 class="fw-bold mb-3" th:text="${item.itemName}">Item Name</h1>
-              <div class="btns">
-                <Button type="button" onclick="Toogle1();" id="btnh1" class="btn"><i class="fa-solid fa-heart"></i></Button>
+              <div class="btn">
+                <form th:action="@{/favorite/add}" method="post">
+                  <input type="hidden" name="itemId" th:value="${item.itemId}">
+                <button type="submit"  class="btn" style="color:red;" th:if="${isFavorite}=='true'" disabled><i class="fa-solid fa-heart"></i></button>
+                  <button type="submit"  class="btn" th:unless="${isFavorite}=='true'" ><i class="fa-solid fa-heart"></i></button>
+                </form>
             </div>
               <h3 class="mb-3" th:text="${item.category.catName}">Category</h3>
               <p class="mb-3" id="itemDescription">Item Description</p>
@@ -149,9 +216,6 @@
                 <div class="row">
                   <div class="col-5">
                     <button type="submit" class="btn btn-primary mt-3 mb-3">Add to Cart</button>
-                  </div>
-                  <div class="col-2">
-                    <button type="button" class="btn btn-primary mt-3 mb-3" style="background-color: #FFC128;">Favourites</button>
                   </div>
                 </div>
               </form>
@@ -214,9 +278,9 @@
             </div>
           </div>
         </div>
-        <div class="row mt-3">
+          <div class="row mt-3">
           <div class="col-12">
-            <h4>Rate the Seller</h4>
+            <h4>Rate the Item</h4>
               <div class="rating">
                 <input type="radio" id="star5" name="rating" value="5" checked>
                 <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
@@ -236,25 +300,21 @@
             </form>
           </div>
         </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <a th:href="@{/report/{id}(id=${item.itemId})}" class="btn" style="background: #cc0f0f;color: white">Report</a>
+            </div>
+          </div>
       </div>
     </div>
   </div>
-
-
+  </div>
 </main>
 
 
 
 <script>
-  var btnvar1 = document.getElementById('btnh1');
-  function Toogle1(){
-      if (btnvar1.style.color == "red") {
-          btnvar1.style.color = "grey"
-      }
-      else{
-          btnvar1.style.color = "red"
-      }
-  }
+
 
   document.getElementById("showMoreBtn").addEventListener("click", function(e) {
     e.preventDefault();
@@ -284,5 +344,47 @@
   });
 
 </script>
+<footer class="footer mt-3">
+  <div class="container">
+    <div class="row">
+      <div class="footer-col">
+        <h4>company</h4>
+        <ul>
+          <li><a href="/user/about">about us</a></li>
+          <li><a href="#">our services</a></li>
+          <li><a href="/user/term">terms and condition</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4></h4>
+        <ul>
+          <li><a href="#">Feedback</a></li>
+          <li><a href="#">shipping</a></li>
+          <li><a href="#">returns</a></li>
+          <li><a href="#">order status</a></li>
+          <li><a href="#">payment options</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>online shop</h4>
+        <ul>
+          <li><a href="#">shoes</a></li>
+          <li><a href="#">dress</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>follow us</h4>
+        <div class="social-links">
+          <a href="https://www.facebook.com/slesha.dahal.3"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@prociyashrestha"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.instagram.com/kriteemmuu/"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/abhigya-shrestha-585564231/"><i class="fab fa-linkedin-in"></i></a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

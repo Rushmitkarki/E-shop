@@ -32,6 +32,7 @@ public class ItemController {
     @GetMapping("/add")
     public String getAddItemPage(Model model){
         model.addAttribute("categories", categoryService.getData());
+        model.addAttribute("user",userService.getActiveUser().get());
 
         return "addItem.html";
     }
@@ -49,7 +50,7 @@ public class ItemController {
         return "redirect:/seller/item/add";
     }
 
-    @GetMapping("/update/{id}")
+    @GetMapping("/edit/{id}")
     public String getUpdateItemPage(Model model,@PathVariable("id") int id){
         model.addAttribute("user",userService.getActiveUser().orElse(null));
 

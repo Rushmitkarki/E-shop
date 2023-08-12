@@ -7,9 +7,11 @@ import com.ecommerce.ecommerce.entity.Notification;
 import java.util.List;
 
 public interface NotificationService {
-    void addNotification(NotificationDto notificationDto);
+    void addNotification();
 
     List<Notification> getData();
 
     Notification getByIdNoOpt(Integer id);
+
+    List<Notification> getNotification();
 }

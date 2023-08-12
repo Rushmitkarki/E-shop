@@ -1,5 +1,6 @@
 package com.ecommerce.ecommerce.controller;
 
+import com.ecommerce.ecommerce.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,16 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("")
 public class LoginController {
+    private final NotificationService notificationService;
     @GetMapping("/login")
     public String getLoginPage(){
-        return "login.html";
+        notificationService.addNotification();
+        return "login";
     }
 
     @PostMapping("/logout")
     public String logout(Authentication authentication){
-        if (authentication.isAuthenticated()){
-            SecurityContextHolder.clearContext();
-        }
-        return "redirect:/login";
+        SecurityContextHolder.clearContext();
+        return "redirect:/user/login";
     }
 }

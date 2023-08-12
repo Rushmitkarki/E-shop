@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Table
 @Entity
 @AllArgsConstructor
@@ -38,4 +40,7 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "bill_id")
     private Bill bill;
+
+    @Column(name = "cart_date")
+    private LocalDate date;
 }

@@ -7,6 +7,7 @@ import com.ecommerce.ecommerce.entity.Item;
 import com.ecommerce.ecommerce.entity.User;
 import com.ecommerce.ecommerce.repo.BillRepo;
 import com.ecommerce.ecommerce.repo.CartRepo;
+import com.ecommerce.ecommerce.repo.ItemRepo;
 import com.ecommerce.ecommerce.service.CartService;
 import com.ecommerce.ecommerce.service.ItemService;
 import com.ecommerce.ecommerce.service.UserService;
@@ -29,21 +30,26 @@ public class CartServiceImpl implements CartService {
     private final CartRepo cartRepo;
 
     private final BillRepo billRepo;
+
+    private final ItemRepo itemRepo;
     @Override
     public void addCart(CartDto cartDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.getByEmail(email).orElse(new User());
-        Item item = itemService.getByIdNoOpt(cartDto.getItemId()).orElse(null);
+        Item item = itemService.getByIdNoOpt(cartDto.getItemId()).get();
         Cart cart = new Cart();
-
-        int Quantity = cartDto.getQuantity();
+        int quantity = cartDto.getQuantity();
         int price = item.getItemPrice();
-        cart.setQuantity(cartDto.getQuantity());
+        int itemQuantity = item.getItemQuantity() - quantity;
+        item.setItemQuantity(itemQuantity);
+        cart.setQuantity(quantity);
         cart.setItem(item);
         cart.setUser(user);
-        cart.setTotal(Quantity*price);
+        cart.setStatus("unPaid");
+        cart.setTotal(quantity*price);
 
+        itemRepo.save(item);
         cartRepo.save(cart);
 
     }
@@ -59,8 +65,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void setStatus(int id) {
-        Cart cart = cartRepo.findById(id).orElse(null);
+    public void setStatus(Cart cart) {
         cart.setStatus("Paid");
         cartRepo.save(cart);
     }
@@ -74,6 +79,16 @@ public class CartServiceImpl implements CartService {
     public void addBillId(Bill bill, Cart cart) {
         cart.setBill(bill);
         cartRepo.save(cart);
+    }
+
+    @Override
+    public List<Cart> getByItemId(Integer itemId) {
+        return cartRepo.getByItemId(itemId);
+    }
+
+    @Override
+    public List<Cart> getByItemIdAndStatus(Integer itemId) {
+        return cartRepo.getByItemIdAndStatus(itemId);
     }
 
 
