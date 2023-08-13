@@ -56,7 +56,7 @@ public class BillServiceImpl implements BillService {
         bill.setBillPayment(billDto.getBillPayment());
         billRepo.save(bill);
         for(Cart cart: carts){
-            cartService.setStatus(cart);
+            cartService.setStatusTime(cart);
             cartService.addBillId(bill, cart);
         }
     }

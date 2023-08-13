@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -42,15 +43,20 @@ public class CartServiceImpl implements CartService {
         int quantity = cartDto.getQuantity();
         int price = item.getItemPrice();
         int itemQuantity = item.getItemQuantity() - quantity;
-        item.setItemQuantity(itemQuantity);
-        cart.setQuantity(quantity);
-        cart.setItem(item);
-        cart.setUser(user);
-        cart.setStatus("unPaid");
-        cart.setTotal(quantity*price);
+        if(itemQuantity<0){
+            throw new RuntimeException("Item out of stock");
+        }
 
-        itemRepo.save(item);
-        cartRepo.save(cart);
+            item.setItemQuantity(itemQuantity);
+            itemRepo.save(item);
+            cart.setQuantity(quantity);
+            cart.setTotal(quantity*price);
+            cart.setItem(item);
+            cart.setUser(user);
+            cart.setStatus("Unpaid");
+            cartRepo.save(cart);
+
+
 
     }
 
@@ -65,7 +71,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void setStatus(Cart cart) {
+    public void setStatusTime(Cart cart) {
+        LocalDate localDate = LocalDate.now();
+        cart.setDate(localDate);
         cart.setStatus("Paid");
         cartRepo.save(cart);
     }

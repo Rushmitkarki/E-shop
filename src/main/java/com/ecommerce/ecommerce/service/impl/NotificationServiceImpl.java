@@ -26,14 +26,15 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void addNotification() {
         Notification notification = new Notification();
-        discountService.addDiscount();
+        if(discountService.getData().size()<=100){
+            discountService.addDiscount();
+        }
         List<Discount> discounts = discountService.getData();
         Discount discount=getRandomDiscount(discounts);
         String message = "Discount code "+discount.getDiscountCode()+" is active for "+discount.getCategory().getCatName()+" category with "+discount.getDiscountPercentage()+"% discount";
         notification.setNotifyContent(message);
         notification.setUser(getRandomUser());
         notificationRepo.save(notification);
-
         }
 
     private Discount getRandomDiscount(List<Discount> discounts) {

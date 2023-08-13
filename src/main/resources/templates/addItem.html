@@ -10,7 +10,9 @@
 
     <link href="../static/CSS/header.css" rel="stylesheet" th:href="@{/CSS/header.css}">
     <link href="../static/CSS/footer.css" rel="stylesheet" th:href="@{/CSS/footer.css}">
-    <title>Add ITem</title>
+    <title>E-shop</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/IMG/logo.png}" />
+
 </head>
 <body>
 <header class="sticky-top" th:if="${user.role=='Seller'}">
@@ -26,13 +28,13 @@
             <div class="collapse navbar-collapse" id="sellerNavbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/seller/dashboard}">Home</a>
+                        <a class="nav-link" th:href="@{/seller/dashboard}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"  th:href="@{/seller/inventory}">Inventory</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" type="button"  data-toggle="modal" data-target="#myModal" href="#"><i  ></i> Notification <span th:text="${count}"></span></a>
+                        <a class="nav-link active" th:href="@{/seller/item/add}">Add Items</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -167,13 +169,13 @@
                 <ul>
                     <li><a href="/user/about">about us</a></li>
                     <li><a href="#">our services</a></li>
-                    <li><a href="/user/term">terms and condition</a></li>
+                    <li><a href="/user/terms">terms and condition</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4></h4>
+                <h4>FAQ</h4>
                 <ul>
-                    <li><a href="#">Feedback</a></li>
+                    <li><a href="/feedback">Feedback</a></li>
                     <li><a href="#">shipping</a></li>
                     <li><a href="#">returns</a></li>
                     <li><a href="#">order status</a></li>

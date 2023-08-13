@@ -33,9 +33,14 @@ public class CartController {
 
     @PostMapping("/add")
     public String addToCart(CartDto cartDto) {
-        System.out.println(cartDto.getItemId());
-        cartService.addCart(cartDto);
-        return "redirect:/buyer/dashboard";
+        try{
+            System.out.println(cartDto.getItemId());
+            cartService.addCart(cartDto);
+            return "redirect:/buyer/catalog";
+        }
+        catch (Exception e){
+            return "redirect:/buyer/catalog?error="+e.getMessage();
+        }
     }
 
     @GetMapping("/view")

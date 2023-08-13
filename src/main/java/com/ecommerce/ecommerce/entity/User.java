@@ -58,6 +58,9 @@ public class User implements UserDetails {
         @Column(name="image",length=500)
         private String image;
 
+        @Column(name="deleted",length=500,columnDefinition = "boolean default false")
+        private boolean deleted;
+
     @Transient
     private String imageBase64;
 
