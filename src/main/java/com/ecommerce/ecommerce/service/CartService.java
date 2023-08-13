@@ -14,7 +14,7 @@ public interface CartService {
 
     void deleteCart(int id);
 
-    void setStatus(Cart cart);
+    void setStatusTime(Cart cart);
 
     List<Cart> getCartByBillId(int billId);
 

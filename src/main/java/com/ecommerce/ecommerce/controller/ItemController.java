@@ -34,19 +34,16 @@ public class ItemController {
         model.addAttribute("categories", categoryService.getData());
         model.addAttribute("user",userService.getActiveUser().get());
 
-        return "addItem.html";
+        return "addItem";
     }
 
 
 
     @PostMapping("/save")
-    public String saveItem(ItemDto itemDto) throws IOException {
-
-
-
+    public String saveItem(ItemDto itemDto,Model model) throws IOException {
         // Call your itemService to save the itemDto object
         itemService.addItem(itemDto);
-
+        model.addAttribute("user",userService.getActiveUser().get());
         return "redirect:/seller/item/add";
     }
 

@@ -76,7 +76,7 @@ public class BillController {
             return "redirect:/buyer/bill/show/"+billId;
         }
 
-        return "redirect:/buyer/bill/QR";
+        return "redirect:/buyer/bill/QR?id="+billId;
 
     }
 
@@ -93,12 +93,15 @@ public String showBill(Model model, @PathVariable int id){
 
 
     @GetMapping("/QR")
-    public String getQR() {
+    public String getQR(Model model)
+    {
+        User user = userService.getActiveUser().orElse(new User());
+        model.addAttribute("user", user);
         return "multiplePaymentMethod";
     }
 
-    @PostMapping("/upload")
-    public String uploadBill(BillDto billDto) {
-        return "redirect:/buyer/bill/checkout";
+    @PostMapping("/upload/{id}")
+    public String uploadBill(BillDto billDto, @PathVariable String id) {
+        return "redirect:/buyer/bill/show/"+id;
     }
 }

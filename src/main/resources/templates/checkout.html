@@ -9,7 +9,9 @@
 
     <link href="../static/CSS/header.css" rel="stylesheet" th:href="@{/CSS/header.css}">
     <link href="../static/CSS/footer.css" rel="stylesheet" th:href="@{/CSS/footer.css}">
-    <title>Checkout</title>
+    <title>E-shop</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/IMG/logo.png}" />
+
 </head>
 <header class="sticky-top" th:if="${user.role=='Buyer'}">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -360,13 +362,13 @@
                 <ul>
                     <li><a href="/user/about">about us</a></li>
                     <li><a href="#">our services</a></li>
-                    <li><a href="/user/term">terms and condition</a></li>
+                    <li><a href="/user/terms">terms and condition</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4></h4>
+                <h4>FAQ</h4>
                 <ul>
-                    <li><a href="#">Feedback</a></li>
+                    <li><a href="/feedback">Feedback</a></li>
                     <li><a href="#">shipping</a></li>
                     <li><a href="#">returns</a></li>
                     <li><a href="#">order status</a></li>

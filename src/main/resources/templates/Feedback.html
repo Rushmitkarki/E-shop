@@ -1,6 +1,9 @@
 <!DOCTYPE html>    
 <html>    
-<head>    
+<head>
+  <title>E-shop</title>
+  <link rel="shortcut icon" type="image/x-icon" th:href="@{/IMG/logo.png}" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1">    
 <style>    
 main {
@@ -210,7 +213,7 @@ main .row:after {
             <a class="nav-link"  th:href="@{/seller/inventory}">Inventory</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" type="button"  data-toggle="modal" data-target="#myModal" href="#"><i  ></i> Notification <span th:text="${count}"></span></a>
+            <a class="nav-link" th:href="@{/seller/item/add}">Add Items</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" th:text="${user.fname}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -338,7 +341,7 @@ main .row:after {
     </form>
   </div>
 </main>
-<footer class="footer">
+<footer class="footer mt-3">
   <div class="container">
     <div class="row">
       <div class="footer-col">
@@ -350,9 +353,9 @@ main .row:after {
         </ul>
       </div>
       <div class="footer-col">
-        <h4></h4>
+        <h4>FAQ</h4>
         <ul>
-          <li><a href="#">Feedback</a></li>
+          <li><a href="/feedback">Feedback</a></li>
           <li><a href="#">shipping</a></li>
           <li><a href="#">returns</a></li>
           <li><a href="#">order status</a></li>

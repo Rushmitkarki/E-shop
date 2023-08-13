@@ -9,7 +9,9 @@
 
     <link href="../static/CSS/header.css" rel="stylesheet" th:href="@{/CSS/header.css}">
     <link href="../static/CSS/footer.css" rel="stylesheet" th:href="@{/CSS/footer.css}">
-    <title>Update Item</title>
+    <title>E-shop</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/IMG/logo.png}" />
+
 </head>
 <body>
 <header class="sticky-top" th:if="${user.role=='Seller'}">
@@ -157,7 +159,7 @@
         </div>
     </div>
 </main>
-<footer class="footer">
+<footer class="footer mt-3">
     <div class="container">
         <div class="row">
             <div class="footer-col">
@@ -169,9 +171,9 @@
                 </ul>
             </div>
             <div class="footer-col">
-                <h4></h4>
+                <h4>FAQ</h4>
                 <ul>
-                    <li><a href="#">Feedback</a></li>
+                    <li><a href="/feedback">Feedback</a></li>
                     <li><a href="#">shipping</a></li>
                     <li><a href="#">returns</a></li>
                     <li><a href="#">order status</a></li>
@@ -198,6 +200,7 @@
         </div>
     </div>
 </footer>
+
 <!--Modal -->
 <div class="modal" id="myModal">
     <div class="modal-dialog">

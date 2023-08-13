@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(UserDto userDto) {
-        User user = new User();
+        User user = userRepo.findByDeletedEmail(userDto.getEmail()).orElse(new User());
         user.setStatus("ACTIVE");
         user.setFname(userDto.getFname());
         user.setLname(userDto.getLname());
@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(PasswordEncoderUtil.getInstance().encode(userDto.getPassword()));
         user.setSq(userDto.getSq());
         user.setRole(userDto.getRole());
+        user.setDeleted(false);
         userRepo.save(user);
     }
 
@@ -171,63 +172,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteAccount() {
         User user = getActiveUser().get();
-
-        // Check if the user is a buyer
-        if (user.getRole().equals("Buyer")) {
-            // Delete the buyer's carts
-            List<Cart> carts = cartRepo.findByUserId(user.getUserId());
-
-            for (Cart cart : carts) {
-                cartRepo.delete(cart);
-            }
-
-            // Delete the buyer's bills
-            List<Bill> bills = billRepo.getByUserId(user.getUserId());
-
-            for (Bill bill : bills) {
-                billRepo.delete(bill);
-            }
-
-            List<Rating> ratings = ratingRepo.getByUserId(user.getUserId());
-            for (Rating rating : ratings) {
-                ratingRepo.delete(rating);
-            }
-
-            List<Comment> comments = commentRepo.getByUserId(user.getUserId());
-            for (Comment comment : comments) {
-                commentRepo.delete(comment);
-            }
-
-            // Delete the buyer
-            userRepo.delete(user);
-        } else if (user.getRole().equals("Seller")) {
-            // Delete the seller's items
-            List<Item> items = itemRepo.getBySellerId(user.getUserId());
-
-            for (Item item : items) {
-                List<Cart> carts = cartRepo.getByItemId(item.getItemId());
-                for (Cart cart : carts) {
-                    cartRepo.delete(cart);
-                }
-
-                List<Rating> ratings = ratingRepo.getByItemId(item.getItemId());
-                for (Rating rating : ratings) {
-                    ratingRepo.delete(rating);
-                }
-
-                List<Comment> comments = commentRepo.getCommentsByItemId(item.getItemId());
-                for (Comment comment : comments) {
-                    commentRepo.delete(comment);
-                }
-                itemRepo.delete(item);
-            }
-
-            // Delete the seller
-            userRepo.delete(user);
-        } else {
-            // The user is not a buyer or a seller
-            System.out.println("The user is not a buyer or a seller");
-        }
+        user.setDeleted(true);
+        userRepo.save(user);
     }
 
     @Override

@@ -67,7 +67,7 @@ public class UserController {
         return "AboutUs";
     }
 
-    @GetMapping("/term")
+    @GetMapping("/terms")
     public String term(Model model){
         User user   = userService.getActiveUser().orElse(null);
         if (user == null){
